@@ -1,0 +1,80 @@
+float3 ToonStep(float feather, float halfLambert, float threshold )
+{
+	return smoothstep(threshold - feather, threshold + feather, halfLambert);
+}
+
+half Fresnel(half Exponent, half BaseReflectionFraction, half3 N, half3 V)
+{
+	half NoV = dot(N, V);
+	NoV = max(NoV, 0.0f);
+	half Fres = pow(abs(1 - max(NoV, 0.0f)), Exponent);
+	Fres = Fres * (1 - BaseReflectionFraction) + BaseReflectionFraction;
+	return Fres;
+}
+
+float StrandSpecular(float3 T, float3 V, float3 L, float exponent, float scale)
+{
+	float3 H = normalize(L + V);
+	float dotTH = dot(T, H);
+	float sinTH = sqrt(1.0 - dotTH * dotTH);
+	float dirAtten = smoothstep(-1.0, 0.0, dotTH);
+	return dirAtten * pow(sinTH, exponent) * scale;
+}
+
+float3 ShiftT(float3 T, float3 N, float shift)
+{
+	return normalize(T + shift * N);
+}
+
+float CelShadowMask(float X, float Y)
+{
+	Y *= 0.1f;
+	return smoothstep(0.5f - Y, 0.5f + Y, X);
+}
+
+float GetToonSurfaceShadow(float Shadow, float ShadowAttenuationSpeed)
+{
+	return CelShadowMask(Shadow, ShadowAttenuationSpeed);
+}
+//皮肤shadow处理
+float3 LerpMultiFloat3(float3 Var1, float3 Var2, float3 Var3, float3 Var4, float S)
+{
+	S *= 3;
+	float3 Res;
+	Res = lerp(Var1, Var2, saturate(S));
+	S--;
+	Res = lerp(Res, Var3, saturate(S));
+	S--;
+	Res = lerp(Res, Var4, saturate(S));
+	return Res;
+}
+
+float3 GetSkinShadow(float Shadow, float3 Color0)
+{
+	float3 Color1 = Color0 * float3(0.5,0,0);
+	float3 Color2 = Color0 * float3(1.0, 0.5, 0);
+	return LerpMultiFloat3(0, Color1, Color2, 1, Shadow);
+}
+
+//float3 ToonDiffuseRamp(half3 N, half3 L, float ToonCurve)
+//{
+//	float NoL = dot(N, L);
+//	float RampNoL = saturate(NoL * .5 + .5);
+//	float3 ToonRampColor = Texture2DSampleLevel(View.ToonShaderShadowAtlas, View.ToonShaderShadowAtlasSampler, float2(max(RampNoL, 0.01), ToonCurve), 0).rgb;
+//	return ToonRampColor;
+//}
+
+//float3 ToonSpecularRamp(float InRamp, float ToonCurve)
+//{
+//	float3 ToonRampColor = Texture2DSampleLevel(View.ToonShaderSpecularAtlas, View.ToonShaderSpecularAtlasSampler, float2(saturate(InRamp), ToonCurve), 0).rgb;
+//	return ToonRampColor;
+//}
+//float ToonSpecularGGX(float Roughness, BxDFContext Context, half NoL, FAreaLight AreaLight)
+//{
+//	float a2 = Pow4(Roughness);
+//	float Energy = EnergyNormalization(a2, Context.VoH, AreaLight);
+//	float D = D_GGX(a2, Context.NoH) * Energy;
+//	float Vis = Vis_SmithJointApprox(a2, Context.NoV, NoL);
+//	float3 F = F_Schlick(1.0f, Context.VoH);
+//	return (D * Vis) * F.r;
+//}
