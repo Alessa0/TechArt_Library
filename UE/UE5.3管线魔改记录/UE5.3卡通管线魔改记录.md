@@ -990,6 +990,21 @@ void UToonRenderingSettings::LoadDefaultObjects()
 
 解决方法：先注释#include "UToonRenderingSettings.generated.h"，然后运行GenerateProjectFiles.bat重新生成，目的是触发UHT，然后打开取消注释后再次重新生成即可。
 
+创建"UToonRenderingSettings.generated.h"：
+
+1.先在编辑器打开工程创建UToonRenderingSettings类，然后找到工程里UToonRenderingSettings.generated.h和.cpp复制到引擎里
+
+<img src=".\创建类1.png" alt="创建类" style="zoom:80%;" />
+
+2.修改宏，具体详细对比文件
+<img src=".\创建类2.png" alt="创建类" style="zoom:80%;" />
+
+<img src=".\创建类3.png" alt="创建类" style="zoom:80%;" />
+
+<img src=".\创建类4.png" alt="创建类" style="zoom:80%;" />
+
+<img src=".\创建类5.png" alt="创建类" style="zoom:80%;" />
+
 ### 1.8 回到SceneRendering.cpp，修改传入贴图RHI的部分
 
 ![Skin_7](.\Skin_7.png)

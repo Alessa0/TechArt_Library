@@ -4,7 +4,7 @@
 
  games101、102 
 
-渲染管线 
+渲染管线 ：forward/ forward+ / deferred管线
 
 pbr相关 
 
@@ -17,6 +17,8 @@ earlyZ做了什么工作，原理是什么？
 为什么深度测试要放在像素着色器之后而不能放在之前呢？ 
 
 ## unity： 
+
+forward/ forward+ / deferred管线在Unity中的实现
 
 urp的过程 
 
