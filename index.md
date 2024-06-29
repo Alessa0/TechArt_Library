@@ -20,6 +20,8 @@ earlyZ做了什么工作，原理是什么？
 
 forward/ forward+ / deferred管线在Unity中的实现
 
+额外：延迟渲染、遗留的顶点光照渲染、遗留的延迟渲染
+
 urp的过程 
 
 srp 
