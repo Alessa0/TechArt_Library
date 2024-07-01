@@ -248,49 +248,258 @@ public sealed class GlobalFog_Volume : VolumeComponent
 }
 ```
 
-## 三、使用案例（以全局雾效为例）
+## 三、使用案例
 
-### 1.下载地址：Aqua的知识宝库
+### 案例1
 
-百度网盘链接：[https://pan.baidu.com/s/1rSl6rgOTaNO2UWwc-X2uzg?pwd=2233](https://link.zhihu.com/?target=https%3A//pan.baidu.com/s/1rSl6rgOTaNO2UWwc-X2uzg%3Fpwd%3D2233) 提取码：2233
+一、RenderFeature的渲染流程
 
-Git链接：[GitHub - RewriteHJ/Aqua-treasure-of-knowledge: 知识与你分享~](https://link.zhihu.com/?target=https%3A//github.com/RewriteHJ/Aqua-treasure-of-knowledge)
+URP中，ScriptableRenderer类用来实现一套具体的渲染策略。它描述了渲染管线总如何进行裁剪，灯光如何工作的细节过程。目前URP中主要有ForwardRender和2dRender两种ScriptableRenderer。用户可以自己创建类继承自ScriptableRenderer来实现定制化Renderer。
 
-### 2.使用方式
+![img](https://pic1.zhimg.com/80/v2-0f0ec7ecde1aef3d5c73388148c10208_720w.webp)
 
-下载UnityPackage后，新建一个URP工程，拖进去覆盖即可。（实测版本为2021.3.26）
+在ScriptableRenderer中可以添加自定义的RenderFeature
 
-### 3.使用解析
+![img](https://pic2.zhimg.com/80/v2-ec4aa78cd97834cd8fb9d71ceb96b729_720w.webp)
 
-**①写出GlobalFog_RenderPass类，继承自TK_RenderPassBase：**一般只用重写Render( )就行，把Render( )当成OnRenderImage( )用。（我写Fog的时候，需要一张Noise图做扰动，所以多写了一个构造函数，用于读取图片）
+用户自定义的RenderFeature会被填入到ScriptableRenderer中的一个列表中，即代码中的m_RendererFeatures。然后在ScriptableRenderer Setup的时候会调用AddRenderPasses方法，将RenderFeature中的ScriptableRenderPass填入ScriptRenderer的m_ActiveRenderPassQueue中。这样当渲染时，ScriptableRenderPass中的Execute方法就会被调用。
 
-```csharp
-public class GlobalFog_RenderPass : TK_RenderPassBase
+ScriptableRenderer中RendererFeature相关代码：
+
+```text
+    public abstract partial class ScriptableRenderer : IDisposable
+    {        
+        List<ScriptableRendererFeature> m_RendererFeatures = new List<ScriptableRendererFeature>(10);
+        
+        protected List<ScriptableRendererFeature> rendererFeatures
+        {
+            get => m_RendererFeatures;
+        }
+
+        protected void AddRenderPasses(ref RenderingData renderingData)
+        {
+            using var profScope = new ProfilingScope(null, Profiling.addRenderPasses);
+
+            // Add render passes from custom renderer features
+            for (int i = 0; i < rendererFeatures.Count; ++i)
+            {
+                if (!rendererFeatures[i].isActive)
+                {
+                    continue;
+                }
+                rendererFeatures[i].AddRenderPasses(this, ref renderingData);
+            }
+
+            // Remove any null render pass that might have been added by user by mistake
+            int count = activeRenderPassQueue.Count;
+            for (int i = count - 1; i >= 0; i--)
+            {
+                if (activeRenderPassQueue[i] == null)
+                    activeRenderPassQueue.RemoveAt(i);
+            }
+        }
+    }
+```
+
+以RenderObjects类为例
+
+```text
+public class RenderObjects : ScriptableRendererFeature
+{ 
+        RenderObjectsPass renderObjectsPass;
+
+        public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+        {
+            renderer.EnqueuePass(renderObjectsPass);
+        }
+}
+```
+
+会覆写AddRenderPasses方法，然后在方法中将RenderObjectsPass填入ScriptableRenderer中。
+
+```text
+    public abstract partial class ScriptableRenderer : IDisposable
+    {   
+        ...    
+        public void EnqueuePass(ScriptableRenderPass pass)
+        {
+            m_ActiveRenderPassQueue.Add(pass);
+        }
+        ...
+
+        void ExecuteRenderPass(ScriptableRenderContext context, ScriptableRenderPass renderPass, ref RenderingData renderingData)
+        {
+            using var profScope = new ProfilingScope(null, renderPass.profilingSampler);
+
+            ref CameraData cameraData = ref renderingData.cameraData;
+
+            CommandBuffer cmd = CommandBufferPool.Get();
+
+            // Track CPU only as GPU markers for this scope were "too noisy".
+            using (new ProfilingScope(cmd, Profiling.RenderPass.configure))
+            {
+                renderPass.Configure(cmd, cameraData.cameraTargetDescriptor);
+                SetRenderPassAttachments(cmd, renderPass, ref cameraData);
+            }
+
+            // Also, we execute the commands recorded at this point to ensure SetRenderTarget is called before RenderPass.Execute
+            context.ExecuteCommandBuffer(cmd);
+            CommandBufferPool.Release(cmd);
+
+            renderPass.Execute(context, ref renderingData);
+        }
+        ...
+    }
+```
+
+二、Renderer Feature 的属性简介
+
+![img](https://pic2.zhimg.com/80/v2-0a1b7365c68d88c09974dc401b8f46c9_720w.webp)
+
+
+1.Name：首先是这个Feature的名字；
+
+2.Event (事件)：当Unity执行这个Renderer Feature 的时候，这个事件Event在通用渲染管线中的执行顺序；
+
+3.Filters：这个设置允许我们给这个Renderer Feature 去配置要渲染哪些对象；这里面有两个参数，一个是Queue，一个是Layer Mask。
+
+Queue：这个Feature选择渲染透明物体还是不透明物体；
+Layer Mask：这个Feature选择渲染哪个图层中的对象；
+
+4.Shader Passes Name：如果shader中的一个pass具有 LightMode Pass 这个标记的话，那我们的Renderer Feature仅处理 LightMode Pass Tag 等于这个Shader Passes Name的Pass。
+
+5.Overrides：使用这个Renderer Feature 进行渲染时，这部分的设置可让我们配置某些属性进行重写覆盖。
+
+Material：渲染对象时，Unity会使用该材质替换分配给它的材质。
+
+Depth：选择此选项可以指定这个Renderer Feature如何影响或使用深度缓冲区。此选项包含以下各项：
+
+Write Depth：写入深度，此选项定义渲染对象时这个Renderer Feature是否更新深度缓冲区。
+Depth Test：深度测试，决定renderer feature是否渲染object的片元。
+
+Stencil：选中此复选框后，Renderer将处理模板缓冲区值。
+
+Camera：选择此选项可让您覆盖以下“摄像机”属性：
+
+Field of View：渲染对象时，渲染器功能使用此Field of View（视场），而不是在相机上指定的值。
+
+Position Offset：渲染对象时，Renderer Feature将其移动此偏移量。Restore：选中此选项，在此Renderer Feature中执行渲染过程后，Renderer Feature将还原原始相机矩阵。
+
+三、Renderer Feature 案例
+
+1.官方案例，主要包括描边效果，被遮挡物体Dither着色效果，FPS枪单独渲染效果
+
+[Unity官方：URP系列教程 | 手把手教你如何用Renderer Feature97 赞同 · 8 评论文章![img](https://pic2.zhimg.com/v2-10180c8a9416a6ec8987546fbb8e5c39_180x120.jpg)](https://zhuanlan.zhihu.com/p/348500968)
+
+[Unity-Technologies/UniversalRenderingExamplesgithub.com/Unity-Technologies/UniversalRenderingExamples![img](https://pic3.zhimg.com/v2-35e96592dfcf032c21c4a5ba90f6b606_180x120.jpg)](https://link.zhihu.com/?target=https%3A//github.com/Unity-Technologies/UniversalRenderingExamples)
+
+2.Planar Shadow（适用于地面比较平整的情况）
+
+原理是使用顶点投射的方法，将顶点的位置投影到平面，然后用shader去绘制。具体的公式推导可以参考下文：
+
+[喵喵Mya：使用顶点投射的方法制作实时阴影328 赞同 · 47 评论文章![img](https://pic4.zhimg.com/v2-b27654a1d8063527266fa196d44d9f67_180x120.jpg)](https://zhuanlan.zhihu.com/p/31504088)
+
+具体实现效果如下：
+
+![img](https://pic3.zhimg.com/80/v2-0aca157bc7d2c7b05301341900ab2046_720w.webp)
+
+可以因为做了阴影渐变的效果，顶点比较集中的地方就会出现阴影不均匀的现象。这个可以通过开始模板测试来解决，具体参数如下：
+
+![img](https://pic1.zhimg.com/80/v2-88d23cecdedb6d7aad9459b2a6889b94_720w.webp)
+
+模板缓冲值默认为0，当第一次有片元通过测试后，会将模板缓冲值做invert操作，导致后面的片元无法通过测试，这样就不会被重复修改了。效果如下：
+
+![img](https://pic4.zhimg.com/80/v2-78526d9483f879a7ac6ccf51bd50f5a3_720w.webp)
+
+四、自定义RenderFeature
+
+创建一个名为VRenderFeature的类，让其继承自ScriptableRendererFeature：
+
+```text
+public class VRendererFeature : ScriptableRendererFeature
+```
+
+这样就定义了一个自定义的RenderFeature。点击AddRendererFeature按钮时可以看到自定义的类。
+
+![img](https://pic4.zhimg.com/80/v2-ea5d8fd6fb81a0b29fb1b3eea741300f_720w.webp)
+
+有两个主要的方法需要覆写，分别是Create方法和AddRenderPasses方法。然后每个VRendererFeature都需要一个RenderPass来负责具体渲染工作。这里我们创建一个VRendererPass类，继承自ScriptableRenderPass：
+
+```text
+public class VRendererPass : ScriptableRenderPass
+```
+
+VRendererPass需要覆写Execute方法，在里面进行渲染工作。
+
+VRendererFeature和VRendererPass的完整代码如下：
+
+```text
+public class VRendererFeature : ScriptableRendererFeature
 {
-    public Texture2D noiseMap = new Texture2D(1024, 1024);
-    public GlobalFog_RenderPass(RenderPassEvent evt, Shader shader) : base(evt, shader)
+    public Settings settings = new Settings();
+
+    private VRendererPass m_VRenderPass = null;
+
+    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        具体实现（详见下载的源码）
+        renderer.EnqueuePass(m_VRenderPass);
     }
 
-    protected override void Render(CommandBuffer cmd, ref RenderingData renderingData)
+    public override void Create()
     {
-        具体实现（详见下载的源码）
+        m_VRenderPass = new VRendererPass(settings, "VRenderPass", settings.Event);
+    }
+
+    [System.Serializable]
+    public class Settings
+    {
+        public Mesh mesh;
+        public Material material;
+        public RenderPassEvent Event = RenderPassEvent.AfterRenderingOpaques;
+    }
+}
+
+public class VRendererPass : ScriptableRenderPass
+{
+    private ProfilingSampler m_ProfilingSampler;
+
+    private FilteringSettings m_FilteringSettings;
+    private string m_ProfilerTag;
+    private VRendererFeature.Settings m_Settings;
+
+    public VRendererPass(VRendererFeature.Settings settings, string profilerTag, RenderPassEvent renderPassEvent)
+    {
+        m_Settings = settings;
+        m_ProfilerTag = profilerTag;
+        m_ProfilingSampler = new ProfilingSampler(profilerTag);
+
+        this.renderPassEvent = renderPassEvent;
+    }
+
+    public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+    {
+        CommandBuffer cmd = CommandBufferPool.Get();
+        using (new ProfilingScope(cmd, m_ProfilingSampler))
+        {
+            cmd.DrawMesh(m_Settings.mesh, Matrix4x4.identity, m_Settings.material);
+        }
+
+        context.ExecuteCommandBuffer(cmd);
+        cmd.Clear();
+        CommandBufferPool.Release(cmd);
     }
 }
 ```
 
-**②写出GlobalFog_Volume类，继承自VolumeComponent：**源码就是上面的第三点，不做赘述
+参数配置如下：
 
-**③配置RenderData：**
+![img](https://pic3.zhimg.com/80/v2-c4bd39496fc5d4ff3dba2e74de386e32_720w.webp)
 
-![img](https://pic1.zhimg.com/80/v2-fabb8e1bba5e54addc39d1b709bc0b08_720w.webp)
+FrameDebugger结果如下：
 
-**④愉快地调整Volume**
+![img](https://pic1.zhimg.com/80/v2-33ab2a6266fda26f71878986e0dc5724_720w.webp)
 
-![img](https://pic2.zhimg.com/80/v2-0ccbed27f13a96f3a1ee0e3c540b2489_720w.webp)
-
-注意开启相机组件的后处理
+因为我们没有对Pass过滤，所以Lit.shader中的5个pass都被调用了。
 
 ## 四、关于性能与开发效率
 

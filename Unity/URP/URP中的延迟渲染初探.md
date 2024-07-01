@@ -203,3 +203,57 @@ struct FragmentOutput
 ![deferred4](.\imgs\deferred4.png)
 
 ![deferred5](.\imgs\deferred5.png)
+
+
+
+
+
+## 实现
+
+> 渲染模式（LightMode）:
+> 渲染模式是关于渲染方式的设置。
+> 渲染模式需要在shader中的 Pass > Tags中设置
+> pass内的tags有别与subshader中的tags，主要用于渲染模式设置
+
+pass内的tags说明:
+
+| 取值                           | 例子                          | 说明                                                         |
+| ------------------------------ | ----------------------------- | ------------------------------------------------------------ |
+| Always                         | “LightMode”=“Always”          | 不管是用哪种渲染路径，该pass总是会被渲染。但不计算任何光照   |
+| Forwardbase                    | “LightMode”=“ForwardBase”     | 用于向前渲染，该pass会计算环境光，重要的平行光，逐顶点/SH光源和lightmaps |
+| ForwardAdd                     | “LightMode”=“ForwardAdd”      | 用于向前渲染，该pass会计算额外的逐像素光源，每个pass对应一个光源 |
+| Deferred                       | “LightMode”=“Deferred”        | 用于延迟渲染，该pass会渲染G缓冲，G-buffer                    |
+| ShadowCaster                   | “LightMode”=“ShadowCaster”    | 把物体的深度信息渲染到阴影映射纹理（shadowmap）或一张深度纹理中，用于渲染产生阴影的物体 |
+| ShadowCollector                | “LightMode”=“ShadowCollector” | 用于收集物体阴影到屏幕坐标Buffer里                           |
+| PrepassBase                    |                               | 用于遗留的延迟渲染，该pass会渲染法线和高光反射的指数部分     |
+| PrepassFinal                   |                               | 用于遗留的延迟渲染，该pass通过合并纹理、光照和自发光来渲染得到最后的颜色 |
+| Vertex、VertexLMRGBM和VertexLM |                               | 用于遗留的顶点照明渲染                                       |
+
+ 延迟渲染的基础说明:
+【简介】延迟渲染是正向渲染的优化方法。正向渲染支持的光源有限，也更消耗性能。延迟渲染可以支持跟多的灯光，性能消耗也更低。在正向渲染中假设有x个物体和y个灯光，那么总共要执行shader x * y次。如果使用延迟渲染则只需执行 x + y次
+【原理】原理是先深度测试后着色计算，即先将三维世界进行深度测试，取得二维世界的屏幕像素信息，然后再进光照等着色计算。
+
+【优点】不必对那些没有通过深度测试的像素进行光照计算，有效增强了性能。
+可以在着色计算的时候获取到深度值，正向渲染是不能的。光照的开销与场景复杂度无关。
+
+【缺点】限制比较多：
+
+显卡必须支持MRT、Shader Mode 3.0及以上
+深度渲染纹理以及双面的模板缓冲
+在移动端，需要硬件支持 OpenGL ES 3.0 以上
+如果摄像机的 Projection 设置为了 Orthographi（正交相机），那么摄像机会回退到前向渲染。因为延迟渲染只支持透视投影
+不支持半透明物体处理，不支持真正的抗锯齿。
+【缺点解决方案】
+1 使用支持DX10及以上的驱动和硬件。
+2 使用边缘检测处理可以在一定限度的实现软体抗锯齿（我博客里有），虽然没有硬件抗锯齿性能、效果好，但在一定程度上可以接受。
+3 对不透明物体采用延迟渲染，透明物体采用正向渲染，可以解决Alpha Blend的问题（Unity3D采用这种解决方案）
+4 有个叫延迟光照的技术。
+2.2 向前、延迟渲染切换
+向前渲染和延迟渲染可以混合使用。但要显示延迟显示的shader必须经过设置。而正向渲染的shader无需做任何设置。
+两种切换方式
+第一种：
+Main Camera 的 Inspector 面包中的 Rendering Path 选择Deferred
+第二种：
+Edit > ProjectSettings > Graphics > Tier Settings
+去掉相应质量设置下的Use Default勾选，然后设置Rendering Path 为Deferred
+这样就从forward（向前渲染）切换到了Deferred（延迟渲染）
