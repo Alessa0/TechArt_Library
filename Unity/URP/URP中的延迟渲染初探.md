@@ -210,6 +210,8 @@ struct FragmentOutput
 
 ## 实现
 
+#### 条件配置
+
 > 渲染模式（LightMode）:
 > 渲染模式是关于渲染方式的设置。
 > 渲染模式需要在shader中的 Pass > Tags中设置
@@ -257,3 +259,329 @@ Main Camera 的 Inspector 面包中的 Rendering Path 选择Deferred
 Edit > ProjectSettings > Graphics > Tier Settings
 去掉相应质量设置下的Use Default勾选，然后设置Rendering Path 为Deferred
 这样就从forward（向前渲染）切换到了Deferred（延迟渲染）
+
+#### Shader代码
+
+https://blog.csdn.net/weixin_45776473/article/details/121073159
+
+延迟渲染通过两个Shader实现。分别是GBuffer Shader（缓冲着色）和Light Shader（灯光着色）
+
+##### GBuffer Shader
+
+【作用】渲染物体的漫反射颜色、高光反射颜色、平滑度、深度等信息并存储到GBuffer中，实际上就是对每个物体进行光源以外的着色操作, 即获取经过深度测试后的到投影屏幕的2维像素信息。
+【用法】放置到场景中需要渲染的物体上，每个物体执行一次该Shader。
+【补充说明】
+GBuffer Shader 与普通shader最大的区别除了pass tag 中的light mode要选择延迟渲染外，shander的输出信息不再是S_Target 或 Color。而是包含多个渲染纹理的输出。
+默认Gbuffer的渲染纹理信息包括：
+
+| 调用参数名 | 数据格式                            | 作用                                                         |
+| ---------- | ----------------------------------- | ------------------------------------------------------------ |
+| SV_TARGET0 | ARGB32                              | RGB存储漫反射颜色，A通道存储遮罩                             |
+| SV_TARGET1 | ARGB32                              | RGB存储高光（镜面）反射颜色，A通道存储高光反射的指数部分，也就是平滑度 |
+| SV_TARGET2 | ARGB2101010                         | RGB通道存储世界空间法线，A通道没用                           |
+| SV_TARGET3 | ARGB2101010（非HDR）或ARGBHalf（HDR | Emission + lighting + lightmaps + reflection probes (高动态光照渲染/低动态光照渲染)用于存储自发光+lightmap+反射探针深度缓冲和模板缓冲 |
+|            |                                     | 深度+模板缓冲区                                              |
+| Depth      |                                     | 深度信息                                                     |
+
+【GBuffer shader 代码】
+
+```
+Shader "Custom/deferred"
+{
+    //unity参数入口 
+	Properties
+	{
+		_MainTex("贴图",2D)="white"{}
+		_Diffuse("漫反射",Color) = (1,1,1,1)
+		_Specular("高光色",Color) = (1,1,1,1)
+		_Gloss("平滑度",Range(1,100)) = 50
+	}
+	SubShader
+	{
+        //非透明队列
+		Tags { "RenderType" = "Opaque" }
+		LOD 100
+        //延迟渲染
+		Pass
+		{
+            //设置 光照模式为延迟渲染
+			Tags{"LightMode" = "Deferred"}
+			CGPROGRAM
+				// 声明顶点着色器、片元着色器和输出目标
+				#pragma target 3.0
+				#pragma vertex vert
+				#pragma fragment frag
+				//排除不支持MRT的硬件
+				//#pragma exclude_renderers norm
+				// unity 函数库
+				#include"UnityCG.cginc"
+				//定义UNITY_HDR_ON关键字
+				//在c# 中 Shader.EnableKeyword("UNITY_HDR_ON"); Shader.DisableKeyword("UNITY_HDR_ON");
+				// 设定hdr是否开启
+				#pragma multi_compile __ UNITY_HDR_ON
+				// 贴图
+				sampler2D _MainTex;
+				// 题图uv处理
+				float4 _MainTex_ST;
+				// 漫反射光
+				float4 _Diffuse;
+				// 高光
+				float4 _Specular;
+				// 平滑度
+				float _Gloss;
+				// 顶点渲染器所传入的参数结构，分别是顶点位置、法线信息、uv坐标
+				struct a2v
+				{
+					float4 pos:POSITION;
+					float3 normal:NORMAL;
+					float2 uv:TEXCOORD0;
+				};
+				// 片元渲染器所需的传入参数结构，分别是像素位置、uv坐标、像素世界位置、像素世界法线
+				struct v2f
+				{
+					float4 pos:SV_POSITION;
+					float2 uv : TEXCOORD0;
+					float3 worldPos:TEXCOORD1;
+					float3 worldNormal:TEXCOORD2;
+				};
+				// 延迟渲染所需的输出结构。正向渲染只需要输出1个Target，而延迟渲染的片元需要输出4个Target  
+				struct DeferredOutput
+				{
+					// RGB存储漫反射颜色，A通道存储遮罩
+					float4 gBuffer0:SV_TARGET0;
+					// RGB存储高光（镜面）反射颜色，A通道存储高光反射的指数部分，也就是平滑度
+					float4 gBuffer1:SV_TARGET1;
+					// RGB通道存储世界空间法线，A通道没用
+					float4 gBuffer2:SV_TARGET2;
+					// Emission + lighting + lightmaps + reflection probes (高动态光照渲染/低动态光照渲染)用于存储自发光+lightmap+反射探针深度缓冲和模板缓冲
+					float4 gBuffer3:SV_TARGET3;
+				};
+				// 顶点渲染器
+				v2f vert(a2v v)
+				{
+					v2f o;
+					// 获取裁剪空间下的顶点坐标
+					o.pos = UnityObjectToClipPos(v.pos);
+					// 应用uv设置，获取正确的uv
+					o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+					// 获取顶点的世界坐标
+					o.worldPos = mul(unity_ObjectToWorld, v.pos).xyz;
+					// 获取世界坐标下的法线
+					o.worldNormal = UnityObjectToWorldNormal(v.normal);
+					return o;
+				}
+				// 片元着色器
+				DeferredOutput frag(v2f i)
+				{
+					DeferredOutput o;
+					// 像素颜色 = 贴图颜色 * 漫反射颜色
+					fixed3 color = tex2D(_MainTex, i.uv).rgb * _Diffuse.rgb;
+					// 默认使用高光反射输出！！
+					o.gBuffer0.rgb = color; // RGB存储漫反射颜色，A通道存储遮罩
+					o.gBuffer0.a = 1; // 漫反射的透明度
+					o.gBuffer1.rgb = _Specular.rgb; // RGB存储高光（镜面）反射颜色，
+					o.gBuffer1.a = _Gloss / 100; // 高光（镜面）反射颜色 的
+					o.gBuffer2 = float4(i.worldNormal * 0.5 + 0.5, 1); // RGB通道存储世界空间法线，A通道没用
+					// 如果没开启HDR，要给颜色编码转换一下数据exp2，后面在lightpass2里则是进行解码log2
+					#if !defined(UNITY_HDR_ON)
+						color.rgb = exp2(-color.rgb);
+					#endif
+					// Emission + lighting + lightmaps + reflection probes (高动态光照渲染/低动态光照渲染)用于存储自发光+lightmap+反射探针深度缓冲和模板缓冲
+					o.gBuffer3 = fixed4(color, 1);
+					return o;
+				}
+			ENDCG
+		}
+	}
+}
+```
+
+##### Lighting Shader
+
+【作用】直接对Gbuffer中的像素信息进行光照计算，并存储到帧缓冲中。每个光源执行一次该shader。
+【用法】unity有内建的shader。所以如果没有定制需求，不编写这个shader也是可以的。如果需要自己写light shader
+需要在编写好shader后将edit -> project settings -> Graphics -> Deferred 设置为costom shader，并指定自定义文件。
+
+![deferred5](.\imgs\deferred6.png)
+
+【light shader 代码】
+
+    Shader "Unlit/deferredLight"
+    {
+        SubShader
+        {
+            // 第一个pass用于合成灯光
+            Pass
+            {
+                // 由于像素信息已经经过深度测试，所以可以关闭深度写入
+    			ZWrite Off
+                // 如果开启了LDR混合方案就是DstColor zero（当前像素 + 0），
+                // 如果开启了HDR混合方案就是One One（当前像素 + 缓冲像素），由于延迟渲染就是等于把灯光渲染到已存在的gbuffer上，所以使用one one
+    			Blend [_SrcBlend] [_DstBlend]
+                CGPROGRAM
+                // 定义运行平台
+    			#pragma target 3.0
+                // 我们需要所有的关于灯光的变体，使用multi_compile_lightpass
+    			#pragma multi_compile_lightpass 
+                // 不使用nomrt着色器
+    			#pragma exclude_renderers nomrt
+                //定义UNITY_HDR_ON关键字
+    			//在c# 中 Shader.EnableKeyword("UNITY_HDR_ON"); Shader.DisableKeyword("UNITY_HDR_ON");
+    			// 设定hdr是否开启 
+    			#pragma multi_compile __ UNITY_HDR_ON
+                // 定义顶点渲染器和片元渲染器的输入参数
+                #pragma vertex vert
+                #pragma fragment frag
+                // 引入shader 相关宏宏
+    			#include "UnityCG.cginc"
+    			#include "UnityDeferredLibrary.cginc"
+    			#include "UnityGBuffer.cginc"
+                //定义从 Deferred模型对象输入的屏幕像素数据 
+    			sampler2D _CameraGBufferTexture0;// 漫反射颜色
+    			sampler2D _CameraGBufferTexture1;// 高光、平滑度
+    			sampler2D _CameraGBufferTexture2;// 世界法线
+                //顶点渲染器输出参数结构，包含顶点坐标、法线
+    			struct a2v
+    			{
+    				float4 pos:POSITION;
+    				float3 normal:NORMAL;
+    			};
+                //片元渲染器输出结构，包含像素坐标、uv坐标
+    			struct Deffred_v2f
+    			{
+    				float4 pos: SV_POSITION;
+    				float4 uv:TEXCOORD;
+    				float3 ray : TEXCOORD1;
+    			};
+                // 顶点渲染器
+    			Deffred_v2f vert(a2v v)
+    			{
+    				Deffred_v2f o;
+                    //将顶点坐标从模型坐标转化为裁剪坐标
+    				o.pos = UnityObjectToClipPos(v.pos);
+                    // 获取屏幕上的顶点坐标
+    				o.uv = ComputeScreenPos(o.pos);
+                    // 模型空间转 视角空间做i奥
+    				o.ray =	UnityObjectToViewPos(v.pos) * float3(-1,-1,1);
+                    // 插值
+    				o.ray = lerp(o.ray, v.normal, _LightAsQuad);
+    				return o;
+    			}
+    //片段渲染器
+            //设置片段渲染器输出结果的数据格式。如果开始hdr就使用half4,否则使用fixed4
+    		#ifdef UNITY_HDR_ON
+    		    half4
+    		#else
+    		    fixed4
+    		#endif
+    		frag(Deffred_v2f i) : SV_Target
+    		{
+                // 定义光照属性
+    			float3 worldPos;//像素的世界位置
+    			float2 uv;//uv
+    			half3 lightDir;//灯光方向
+    			float atten;// 衰减
+    			float fadeDist;// 衰减距离
+                //计算灯光数据，并填充光照属性数据，返回灯光的坐标，uv、方向衰减等等
+    			UnityDeferredCalculateLightParams(i, worldPos, uv, lightDir, atten, fadeDist);
+    
+    			// 灯光颜色
+    			half3 lightColor = _LightColor.rgb * atten;
+                //gbuffer与灯光合成后的像素数据
+    			half4 diffuseColor = tex2D(_CameraGBufferTexture0, uv);// 漫反射颜色
+    			half4 specularColor = tex2D(_CameraGBufferTexture1, uv);// 高光颜色
+    			float gloss = specularColor.a * 100;//平滑度
+    			half4 gbuffer2 = tex2D(_CameraGBufferTexture2, uv);// 法线
+    			float3 worldNormal = normalize(gbuffer2.xyz * 2 - 1);// 世界法线
+    
+                // 视角方向 = 世界空间的摄像机位置 - 像素的位置
+    			fixed3 viewDir = normalize(_WorldSpaceCameraPos - worldPos);
+                // 计算高光的方向 = 灯光方向与视角方向中间的点
+    			fixed3 halfDir = normalize(lightDir + viewDir);
+    
+                // 漫反射 = 灯光颜色 * 漫反射颜色 * max（dot（像素世界法线， 灯光方向））
+    			half3 diffuse = lightColor * diffuseColor.rgb * max(0,dot(worldNormal, lightDir));
+                // 高光 =  灯光颜色 * 高光色  * pow(max(0,dot(像素世界法线，计算高光的方向)), 平滑度);
+    			half3 specular = lightColor * specularColor.rgb * pow(max(0,dot(worldNormal, halfDir)),gloss);
+                // 像素颜色 = 漫反射+高光，透明度为1
+    			half4 color = float4(diffuse + specular,1);
+    
+                //如果开启了hdr则使用exp2处理颜色
+    			#ifdef UNITY_HDR_ON
+    			    return color;
+    			#else 
+    			    return exp2(-color);
+    			#endif
+    		}
+    
+            ENDCG
+        }
+    
+    	//转码pass,主要用于LDR转码
+    	Pass
+    	{
+            //使用深度测试，关闭剔除
+    		ZTest Always
+    		Cull Off
+    		ZWrite Off
+            //模板测试
+    		Stencil
+    		{
+    			ref[_StencilNonBackground]
+    			readMask[_StencilNonBackground]
+    
+    			compback equal
+    			compfront equal
+    		}
+    		CGPROGRAM
+            //输出平台
+    		#pragma target 3.0
+    		#pragma vertex vert
+            #pragma fragment frag
+            // 剔除渲染器
+    		#pragma exclude_renderers nomrt
+            //
+    		#include "UnityCG.cginc"
+            //缓冲区颜色
+    		sampler2D _LightBuffer;
+            struct a2v
+    		{
+    			float4 pos:POSITION;
+    			float2 uv:TEXCOORD0;
+    		};
+    		struct v2f
+    		{
+    			float4 pos:SV_POSITION;
+    			float2 uv:TEXCOORD0;
+    
+    		};
+            //顶点渲染器
+    		v2f vert(a2v v)
+    		{
+    			v2f o;
+                // 坐标转为裁剪空间
+    			o.pos = UnityObjectToClipPos(v.pos);
+    			o.uv = v.uv;
+                // 通常用于判断D3D平台，在开启抗锯齿的时候图片采样会用到
+    			#ifdef  UNITY_SINGLE_PASS_STEREO
+    			    o.uv = TransformStereoScreenSpaceTex(o.uv,1.0);
+    			#endif
+    			return o;
+    		}
+            //片段渲染器
+    		fixed4 frag(v2f i): SV_Target
+    		{
+    			return -log2(tex2D(_LightBuffer,i.uv));
+    		}
+    
+    		ENDCG
+    	}
+    }
+    }
+##### 延迟渲染的实现流程步骤
+
+1. 首先按上面 2.2所说的将unity切换为延迟渲染
+2. 点击场景中需要启用的光源，然后在Inspactor窗口中设置RenderMode 为Important或Auto，如果设置为Not Important 就不会被shader处理了
+3. 然后在asset窗口中分别创建GBuffer Shader并创建相对应的Materal
+4. 将附有GBuffer Shader的材质 赋给需要延迟渲染的物体
+5. 如果有自定义的 Light Shader，在asset窗口中创建好，并在工具栏edit -> project settings -> Graphics -> Deferred 设置为costom shader，并关联创建的Light Shader。
