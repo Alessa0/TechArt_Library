@@ -1,6 +1,5 @@
 # 关于ForwardRenderer
-
-ForwardRenderer继承自ScriptableRenderer
+### 概述
 
 ```text
     public sealed class ForwardRenderer : ScriptableRenderer
@@ -8,11 +7,65 @@ ForwardRenderer继承自ScriptableRenderer
 
 关于ScriptableRenderer的代码可以参考这篇：[ScriptableRenderer分析（一）](ScriptableRenderer分析（一）.md)
 
+ForwardRenderer继承自ScriptableRenderer，ScriptableRenderer的组织结构如下:
+
+- ScriptableRenderer
+  - Block1
+    - Pass1
+    - Pass2
+    - ....
+  - Block2
+  - ....
+
+Block是根据渲染阶段分的，当前有4个Block:
+
+```
+static class RenderPassBlock
+{
+    // Executes render passes that are inputs to the main rendering
+    // but don't depend on camera state. They all render in monoscopic mode. f.ex, shadow maps.
+    public static readonly int BeforeRendering = 0;
+
+    // Main bulk of render pass execution. They required camera state to be properly set
+    // and when enabled they will render in stereo.
+    public static readonly int MainRenderingOpaque = 1;
+    public static readonly int MainRenderingTransparent = 2;
+
+    // Execute after Post-processing.
+    public static readonly int AfterRendering = 3;
+}
+```
+
+每个Block中，又包含了多个Pass,这些Pass，是通过 `ScriptableRenderer.EnqueuePass`，加入到管线中的。
+
+那么，接下来我们就要看看，ForwardRenderer往ScriptableRenderer中，到底加入了哪些Pass。
+
+搜索所有调用`EnqueuePass`的地方，列出几项主要的:
+
+- EnqueuePass(m_MainLightShadowCasterPass);
+- EnqueuePass(m_AdditionalLightsShadowCasterPass);
+- EnqueuePass(m_DepthPrepass);
+- EnqueuePass(m_ColorGradingLutPass);
+- EnqueuePass(m_RenderOpaqueForwardPass);
+- EnqueuePass(m_DrawSkyboxPass);
+- EnqueuePass(m_CopyDepthPass);
+- EnqueuePass(m_CopyColorPass);
+- EnqueuePass(m_RenderTransparentForwardPass);
+- EnqueuePass(m_OnRenderObjectCallbackPass);
+- EnqueuePass(m_PostProcessPass);
+- EnqueuePass(m_CapturePass);
+- EnqueuePass(m_FinalPostProcessPass);
+- EnqueuePass(m_FinalBlitPass);
+
+这些Pass并不是同时生效的，而是根据管线的配置情况，有条件的组合生效。所有的Pass实现代码位于:`Packages/com.unity.render-pipelines.universal/Runtime/Passes`
+
+
+
 ForwardRenderer中有各种pass，可以简单将其理解成驱动各个pass执行的一个管理者，pass则实现了具体的渲染逻辑。每一帧都会往列表里加入Pass，帧中执行Pass得到每一个过程的渲染结果，帧末清空列表，等待下一帧的填充。它渲染的资源被序列化成ScriptableRendererData。
 
 ScriptableRenderer里面最核心的两个方法是Setup(...)和Execute(...)，这两个方法在每一帧里都会被执行。Setup(...)会根据渲染数据，将本帧要执行的Pass加入到ScriptableRenderPass的列表中；Execute(...)从ScriptableRenderPass的列表中将Pass按照渲染时序分类（即RenderPassEvent）取出来，并执行这个过程。
 
---------------------------------------变量-------------------------------------------------
+### 变量
 
 1.各种pass
 
