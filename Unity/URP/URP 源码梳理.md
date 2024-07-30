@@ -636,5 +636,4 @@ m_ShaderTagIdList.Add(new ShaderTagId("SRPDefaultUnlit"));
 ShaderTagId m_ShaderTagId = new ShaderTagId("DepthOnly");
 ```
 
-因为URP默认是不支持多pass的，所以在论坛上也看到有人建议，如果要做双pass或者三pass效果，可以一次给pass打上UniversalForward，LightweightForward和SRPDefaultUnlit的tag，也算是利用默认的管线变相实现多pass了。确实，感觉挺鬼才的hhhhhh~
-那么至此，整个URP的工作流程已经梳理完成了-3-
+因为URP默认是不支持多pass的，所以在论坛上也看到有人建议，如果要做双pass或者三pass效果，可以一次给pass打上UniversalForward，LightweightForward和SRPDefaultUnlit的tag，也算是利用默认的管线变相实现多pass了。
