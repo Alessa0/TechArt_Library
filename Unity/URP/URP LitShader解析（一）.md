@@ -18,7 +18,7 @@ $\Large 输出颜色 = (漫反射+镜面反射)*光源颜色*(入射向量⋅法
 
 以上，是PBR模型的标准公式，但在Unity中，使用的并不是这一套公式，而是由**ARM公司在SIGGRAPH 2020公开课上分享的近似模型**
 
-[Moving Mobile Graphicscommunity.arm.com/arm-community-blogs/b/graphics-gaming-and-vr-blog/posts/moving-mobile-graphics#siggraph2015![img](https://pic4.zhimg.com/v2-adaa6606e78565217391120f44dd2777_180x120.jpg)](https://link.zhihu.com/?target=https%3A//community.arm.com/arm-community-blogs/b/graphics-gaming-and-vr-blog/posts/moving-mobile-graphics%23siggraph2015)
+[Moving Mobile Graphicscommunity.arm.com/arm-community-blogs/b/graphics-gaming-and-vr-blog/posts/moving-mobile-graphics#siggraph2015](https://link.zhihu.com/?target=https%3A//community.arm.com/arm-community-blogs/b/graphics-gaming-and-vr-blog/posts/moving-mobile-graphics%23siggraph2015)
 
 具体课件下载地址：
 
