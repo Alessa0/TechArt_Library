@@ -1,5 +1,7 @@
 # WorldCreator初探
 
+[UE地形标准](https://dev.epicgames.com/documentation/zh-cn/unreal-engine/landscape-technical-guide-in-unreal-engine)
+
 ## 重要功能（2023.1）
 
 与2.4.0的区别：
@@ -79,6 +81,23 @@ Sculpt			 雕刻
 
 ![img](./imgs/界面4.png)
 
-Edit中可以使用笔刷
+Edit中可以使用笔刷，但这里的笔刷工具不算太精细
+
+![img](./imgs/界面11.png)
 
 ![img](./imgs/界面2.png)
+
+### Mask图层
+
+主要应用于Filters
+
+使用步骤：1.先创建好Mask，绘制区域 2.在需要调整的过滤器下添加Distribution：Mask，并选择刚刚创建的Mask
+
+![img](./imgs/界面12.png)
+
+![img](./imgs/界面13.png)
+
+<img src="./imgs/界面14.png" alt="img" style="zoom:50%;" />
+
+<img src="./imgs/界面15.png" alt="img" style="zoom:67%;" />
+
