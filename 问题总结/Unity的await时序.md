@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/65a7c8d8-c165-4283-8b92-b01be9b4c52a)
+![image](./imgs/Await1.png)
 
 结论1：主线程Start()里，不能调用await，可以开启异步调.Forget()。只有在async方法里，才能调await
 
