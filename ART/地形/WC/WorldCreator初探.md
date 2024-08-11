@@ -28,18 +28,18 @@
 
 ![img](./imgs/界面1.png)
 
-| General 常规     | Design  设计    | Effect  效果         | Dry硬                | Ridged      山脊类 | Terrace           阶梯形状 | Drift   偏流       | Simulation    模拟 | Erosion    侵蚀     | Sediment       沉积 | Experimental         实验功能 |
-| ---------------- | --------------- | -------------------- | -------------------- | ------------------ | -------------------------- | ------------------ | ------------------ | ------------------- | ------------------- | ----------------------------- |
-| Add/Set          | Voronoi圆       | Crater坑             | Canyon峡谷           | Ridged山脊         | 陡峭Steep                  | Wind风化           | Hydraulic栅格模拟  | Rocky岩石侵蚀       | FillSoft填充        | sand沙地                      |
-| ZeroEdge平坦边缘 | Cutoff截断      | AngleBlur角度模糊    | RockeySharp锐利岩石  |                    | 不规则Irregular            | AngleBreak角度断开 |                    | SoftFlows河流侵蚀   | Talus               | ParticleSediment              |
-| Flatten平整      | Curve曲线       | SmoothRidged平滑山脊 | RockeyHard硬岩石     |                    | 简单Simple                 |                    |                    | WideFlows山脉侵蚀   | Mud复合沉积         | HydraulicSediment             |
-| BorderBlend      | HeightMap高度图 | Blocks块状           | RockeyWide山脉       |                    |                            |                    |                    | ThinFlows稀薄侵蚀   |                     | ModifySediment                |
-|                  |                 | Deflate压缩          | RockeyPlateaus裂断   |                    |                            |                    |                    | RidgedFlows流水侵蚀 |                     | SimulateFluid                 |
-|                  |                 | Denoise降噪          | RockeyCliffs多坑悬崖 |                    |                            |                    |                    |                     |                     |                               |
-|                  |                 | Distortion扭曲       |                      |                    |                            |                    |                    |                     |                     |                               |
-|                  |                 | Rugged崎岖           |                      |                    |                            |                    |                    |                     |                     |                               |
-|                  |                 | Balloon气球形        |                      |                    |                            |                    |                    |                     |                     |                               |
-|                  |                 | Inflate膨胀          |                      |                    |                            |                    |                    |                     |                     |                               |
+| General 常规     | Design  设计      | Effect  效果         | Dry硬                | Ridged      山脊类 | Terrace           阶梯形状 | Drift   偏流       | Simulation    模拟 | Erosion    侵蚀     | Sediment       沉积 | Experimental         实验功能 |
+| ---------------- | ----------------- | -------------------- | -------------------- | ------------------ | -------------------------- | ------------------ | ------------------ | ------------------- | ------------------- | ----------------------------- |
+| Add/Set          | Voronoi泰森多边形 | Crater坑             | Canyon峡谷           | Ridged山脊         | 陡峭Steep                  | Wind风化           | Hydraulic栅格模拟  | Rocky岩石侵蚀       | FillSoft填充        | sand沙地                      |
+| ZeroEdge平坦边缘 | Cutoff截断        | AngleBlur角度模糊    | RockeySharp锐利岩石  |                    | 不规则Irregular            | AngleBreak角度断开 |                    | SoftFlows河流侵蚀   | Talus               | ParticleSediment              |
+| Flatten平整      | Curve曲线         | SmoothRidged平滑山脊 | RockeyHard硬岩石     |                    | 简单Simple                 |                    |                    | WideFlows山脉侵蚀   | Mud复合沉积         | HydraulicSediment             |
+| BorderBlend      | HeightMap高度图   | Blocks块状           | RockeyWide山脉       |                    |                            |                    |                    | ThinFlows稀薄侵蚀   |                     | ModifySediment                |
+|                  |                   | Deflate压缩          | RockeyPlateaus裂断   |                    |                            |                    |                    | RidgedFlows流水侵蚀 |                     | SimulateFluid                 |
+|                  |                   | Denoise降噪          | RockeyCliffs多坑悬崖 |                    |                            |                    |                    |                     |                     |                               |
+|                  |                   | Distortion扭曲       |                      |                    |                            |                    |                    |                     |                     |                               |
+|                  |                   | Rugged崎岖           |                      |                    |                            |                    |                    |                     |                     |                               |
+|                  |                   | Balloon气球形        |                      |                    |                            |                    |                    |                     |                     |                               |
+|                  |                   | Inflate膨胀          |                      |                    |                            |                    |                    |                     |                     |                               |
 
 细节设置
 
@@ -56,6 +56,12 @@ Distribution（分布）
 这里可以一直细分
 
 ![img](./imgs/界面8.png)
+
+#### **Filter使用小技巧**
+
+1.Voronoi泰森多边形
+
+给地形添加一些高度分块，适用于平原上的高度起伏
 
 ### 材质
 
