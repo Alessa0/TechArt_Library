@@ -32,6 +32,10 @@ Houdini每个层级都有属性用来计算,如点、顶点、边、面、detail
 
 ![img](./imgs/Attribute7.png)
 
+例：在整数0、1之间随机
+
+![img](./imgs/Attribute20.png)
+
 ## AttribAdjust调整属性
 
 对各个类型的属性值进一步调整

@@ -35,3 +35,13 @@
 2.贝塞尔曲线通过**Convert**节点连接
 
 ![img](./imgs/Poly5.png)
+
+## CopyToPoint
+
+把模型生成在点上
+
+![img](./imgs/Poly6.png)
+
+## CopyToCurve
+
+原理同CopyToPoint
