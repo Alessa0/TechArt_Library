@@ -54,6 +54,8 @@
 
 [Unity的PBR文档](https://docs.unity3d.com/Manual/StandardShaderMaterialCharts.html)
 
+[PBR白皮书 - 毛星云](./PBR-White-Paper By QianMo/content/part 2/README.md)
+
 具体说明见贴图文档
 
 通俗的讲，自然界中的物体，比如金属，往往有着自己的固有色如上图中展示的一些材质，一些更复杂的物体如钻石，还会有更复杂的光学特性。
