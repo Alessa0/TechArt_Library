@@ -44,7 +44,7 @@ Houdini每个层级都有属性用来计算,如点、顶点、边、面、detail
 
 ## AttribNoise利用噪声调整属性
 
-类似AttribAdjust，但这是利用噪声调整属性值
+类似AttribAdjust，但这是利用噪声调整属性值，通常用来打乱
 
 ![img](./imgs/Attribute10.png)
 
