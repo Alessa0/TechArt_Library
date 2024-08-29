@@ -10,6 +10,8 @@
 
 用于数学计算  [文档](https://dev.epicgames.com/documentation/zh-cn/unreal-engine/math-material-functions-in-unreal-engine)
 
+https://dev.epicgames.com/documentation/en-us/unreal-engine/math-material-expressions-in-unreal-engine?application_version=5.4#appendvector
+
 ![imgs](./imgs/UEM_Node1.png)
 
 常用：
@@ -83,3 +85,33 @@ BreakOut节点也可以分离通道
 ![imgs](./imgs/UE7.png)
 
 TwoSidedSign：法线正方向输出1，反之输出-1（常用于矫正植被）
+
+## 深度
+
+![imgs](./imgs/UE10.png)
+
+Depth Fade：用来隐藏半透明对象与不透明对象相交时出现的接缝，常用于材质混合
+
+像素深度：某物体到屏幕像素的深度
+
+## 坐标和向量（很常用）
+
+![imgs](./imgs/UE11.png)
+
+注：Actor Position是物体坐标轴位置。
+
+## 像素控制（后处理相关）
+
+![imgs](./imgs/UE12.png)
+
+SceneTexture可以读取GraphicsBuffer里的数据，开启自定义深度需要在actor里也开启选项
+
+![imgs](./imgs/UE13.png)
+
+ddx和ddy表示像素尺度上x和y轴的导数
+
+## 距离场SDF
+
+![imgs](./imgs/UE14.png)
+
+判断位置关系
