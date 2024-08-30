@@ -16,6 +16,10 @@
 
 ![img](./imgs/operation4.png)
 
+**轴对齐节点axis_align**
+
+![img](./imgs/Poly10.png)
+
 **物体对齐**，在手柄上右键选择对齐（或快捷键）进入对齐模式，可以对齐到任意目标物体的点线面（移动并旋转或只旋转对齐）。
 
 ![img](./imgs/operation5.png)
@@ -36,7 +40,15 @@
 
 ## PolyBevel倒角
 
-顾名思义
+顾名思义，可以调整倒角各项数值，还可以选择忽略扁平边缘（很重要）
+
+![img](./imgs/Poly7.png)
+
+## PolyFill填充
+
+填充环形边
+
+![img](./imgs/Poly8.png)
 
 ## TopoBuild拓扑操作
 
@@ -71,3 +83,9 @@
 ## CopyToCurve
 
 原理同CopyToPoint
+
+## Divide除法节点
+
+作用：1.增加拓扑，可以选择三角面（convex）和四边面（Bricker）
+
+![img](./imgs/Poly9.png)
