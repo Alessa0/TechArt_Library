@@ -102,6 +102,8 @@ Depth Fade：用来隐藏半透明对象与不透明对象相交时出现的接�
 
 ## 像素控制（后处理相关）
 
+https://dev.epicgames.com/documentation/en-us/unreal-engine/post-process-materials-in-unreal-engine?application_version=5.4
+
 ![imgs](./imgs/UE12.png)
 
 SceneTexture可以读取GraphicsBuffer里的数据，开启自定义深度需要在actor里也开启选项
