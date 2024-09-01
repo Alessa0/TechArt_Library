@@ -16,9 +16,13 @@
 
 ![img](./imgs/operation4.png)
 
-**轴对齐节点axis_align**
+### **轴对齐节点axis_align**
 
 ![img](./imgs/Poly10.png)
+
+### 调整轴心点Match Size（新Labs_axis_align）
+
+![img](./imgs/Poly12.png)
 
 **物体对齐**，在手柄上右键选择对齐（或快捷键）进入对齐模式，可以对齐到任意目标物体的点线面（移动并旋转或只旋转对齐）。
 
@@ -89,3 +93,9 @@
 作用：1.增加拓扑，可以选择三角面（convex）和四边面（Bricker）
 
 ![img](./imgs/Poly9.png)
+
+## Skin
+
+把曲线变成面或把面变成曲线，通过Connectivity进行选择曲线、四边面或三角面。曲线转换成面后才能够在生成的面上撒点，否则只能在曲线上撒点。
+
+![img](./imgs/Poly11.png)
