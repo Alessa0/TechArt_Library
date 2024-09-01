@@ -33,3 +33,28 @@ HDA设置，可以先点击apply然后在houdini里预览，确定后再点Accep
 示例：此案例中若要让这个曲线从UE中输入，则要把它替换为input，然后从外部把曲线连入![img](./imgs/13.png)
 
 ![img](./imgs/14.png)
+
+## 三.连接UE
+
+安装Houdini Engine插件，目录:（引擎目录\UE_5.4\Engine\Plugins\Runtime）
+
+导入资源后需要出现Ready才能使用
+
+![img](./imgs/15.png)
+
+设置简介
+Recook、ReBuild：重新生成
+Bake：把HDA内容烘焙到引擎里调用
+Inputs：即在houdini中设置的输入项（关键）
+
+![img](./imgs/16.png)
+
+可以在Input里选择Houdini的曲线测试输入：
+
+![img](./imgs/17.png)
+
+用UE的曲线测试：创建Spline后，在HDA里选择world input，选择这个样条线，发现明显坐标有问题
+
+![img](./imgs/20.png)
+
+## 四.HDA实时调试
