@@ -58,3 +58,51 @@ Inputs：即在houdini中设置的输入项（关键）
 ![img](./imgs/20.png)
 
 ## 四.HDA实时调试
+
+![img](./imgs/21.png)
+
+成功后会有提示
+
+![img](./imgs/22.png)
+
+打开初始状态和原先工程内不同
+
+![img](./imgs/25.png)
+
+回到UE里在场景的hda里点击**Rebuild**，houdini里面就会出现输出的HDA。打开后点击解锁修改，即可实时调试HDA
+
+![img](./imgs/26.png)
+
+![img](./imgs/27.png)
+
+![img](./imgs/28.png)
+
+### Houdini和UE的区别
+
+可以看到这个例子中，copy to points这步以及生成的位置出现了错误。
+
+![img](./imgs/32.png)
+
+原因是这里的目标点是UE中传入的（关闭这个开关可以验证），UE传入的点会带有奇怪的属性，可以在Input位置删除它们
+
+![img](./imgs/31.png)
+
+![img](./imgs/33.png)
+
+删除后结果
+
+![img](./imgs/34.png)
+
+### 位置修正
+
+这里缩放时没有依据几何中心，而是样条线的起点。
+
+![img](./imgs/35.png)
+
+![img](./imgs/36.png)
+
+变换轴心点，使用**centroid**表达式
+
+![img](./imgs/37.png)
+
+![img](./imgs/38.png)
