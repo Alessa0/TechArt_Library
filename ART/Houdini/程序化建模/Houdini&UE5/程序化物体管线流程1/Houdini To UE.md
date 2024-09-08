@@ -147,7 +147,9 @@ Inputs：即在houdini中设置的输入项（关键）
 
 ![img](./imgs/48.png)
 
+在UE中调试
 
+![img](./imgs/49.png)
 
 ## 五.保存HDA
 
