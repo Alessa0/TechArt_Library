@@ -106,3 +106,55 @@ Inputs：即在houdini中设置的输入项（关键）
 ![img](./imgs/37.png)
 
 ![img](./imgs/38.png)
+
+### 获取landscape数据
+
+同上使用第二个输入接口传入地形数据
+
+![img](./imgs/39.png)
+
+用这个地形取代原先的skin节点，连到ray上。
+
+![img](./imgs/40.png)
+
+![img](./imgs/41.png)
+
+### 道路生成和自定义参数
+
+修改输入节点和制作基本道路
+
+![img](./imgs/42.png)
+
+![img](./imgs/43.png)
+
+剔除道路上的房子：使用Ray节点即可（同房屋的剔除）
+
+自定义参数：在此界面拖动即可添加
+
+![img](./imgs/44.png)
+
+注意命名
+
+![img](./imgs/45.png)
+
+调用参数：`ch(' ')`，这里`../`表示上一级也就是刚刚自定义参数的作用域层级。
+
+![img](./imgs/46.png)
+
+设置默认值和范围
+
+![img](./imgs/47.png)
+
+![img](./imgs/48.png)
+
+
+
+## 五.保存HDA
+
+调整好后在这里保存HDA
+
+![img](./imgs/save1.png)
+
+然后再UE里重新导入
+
+![img](./imgs/save2.png)
