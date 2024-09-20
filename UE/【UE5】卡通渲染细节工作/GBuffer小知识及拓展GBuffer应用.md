@@ -522,7 +522,565 @@ GetGBufferData 函数中添加采样
 
 # 4.实践（二）.卡通渲染中GBuffer应用
 
-4.1SceneTexturesConfig添加GBuffer绑定
+## 4.1  SceneTexturesConfig添加GBuffer绑定
+
+```
+// Toon Buffer step 1
+// 定义ToonBufferTexture
+SHADER_PARAMETER_RDG_TEXTURE(Texture2D<uint4>, TBufferATexture)
+SHADER_PARAMETER_RDG_TEXTURE(Texture2D, TBufferBTexture)
+SHADER_PARAMETER_RDG_TEXTURE(Texture2D, TBufferCTexture)
+// Toon Shadow
+SHADER_PARAMETER_RDG_TEXTURE(Texture2D, ToonShadowTexture)
+// ToonActorTexture
+SHADER_PARAMETER_RDG_TEXTURE(Texture2D, ToonActorTexture)
+```
+
+![img](./imgs/13.png)
+
+## 4.2  SceneTextures.h添加绑定
+
+```
+// Toon Buffer step 2
+// 在ScreenTexture中定义Toon Buffer
+FRDGTextureRef TBufferA{};
+FRDGTextureRef TBufferB{};
+FRDGTextureRef TBufferC{};
+// Toon Shadow
+FRDGTextureRef ToonShadow{};
+// ToonActorTexture
+FRDGTextureRef ToonActor{};
+```
+
+![img](./imgs/14.png)
+
+## 4.3   FastVRamConfig中定义Toon Buffer,用于创建控制台变量(Console Variable)
+
+```
+// Toon Buffer step 3-1
+// FastVRamConfig中定义Toon Buffer,用于创建控制台变量(Console Variable)
+FASTVRAM_CVAR(TBufferA, 0);
+FASTVRAM_CVAR(TBufferB, 0);
+FASTVRAM_CVAR(TBufferC, 0);
+```
+
+![img](./imgs/15.png)
+
+## 4.4  通过CVarFastVRam来更新TextureCreateFlags
+
+![img](./imgs/16.png)
+
+## 4.5  定义TextureCreateFlags
+
+```
+// Toon Buffer step 4
+// 定义TextureCreateFlags
+ETextureCreateFlags TBufferA;
+ETextureCreateFlags TBufferB;
+ETextureCreateFlags TBufferC;
+// Toon Shadow
+ETextureCreateFlags ToonShadow;
+```
+
+![img](./imgs/17.png)
+
+## 4.6  在自定义的PassRendering中创建BufferTexture
+
+```
+// Toon Buffer step 5-1
+// // 用于获取ToonBufferTexture的FRDGTextureDesc，FRDGTextureDesc存储了texture的一些描述信息，如大小，格式，MipMap层数等
+// FRDGTextureDesc GetToonBufferTextureDesc(FIntPoint Extent, ETextureCreateFlags CreateFlags);
+// // 用于创建一张ToonBufferTexture
+// FRDGTextureRef CreateToonBufferTexture(FRDGBuilder& GraphBuilder, FIntPoint Extent, ETextureCreateFlags CreateFlags, const TCHAR* Name);
+
+struct FFastVramConfig;
+void CreateToonBuffers(FRDGBuilder& GraphBuilder, FSceneTextures& SceneTexture, FIntPoint Extent, const FFastVramConfig& FastVRamConfig);
+```
+
+```
+// Toon Buffer step 5-2
+// FRDGTextureDesc GetToonBufferTextureDesc(FIntPoint Extent, ETextureCreateFlags CreateFlags)
+// {
+//  //输入的参数：
+//  //Extent：贴图尺寸；PF_R8G8B8A8_UINT：贴图格式，表示RGBA各个通道均为8bit uint
+//  //FClearValueBinding::Black:清除值，表示清除贴图时将其清除为黑色
+//  //TexCreate_UAV：Unordered Access View，允许在着色器中进行随机读写操作
+//  //TexCreate_RenderTargetable：表示纹理可作为渲染目标使用
+//  //TexCreate_ShaderResource：表示纹理可作为着色器资源，可以在着色器中进行采样等操作
+//  return FRDGTextureDesc(FRDGTextureDesc::Create2D(Extent, PF_R8G8B8A8_UINT, FClearValueBinding::Black, TexCreate_UAV | TexCreate_RenderTargetable | TexCreate_ShaderResource | CreateFlags));
+// }
+// // Toon Buffer step 5-3
+// FRDGTextureRef CreateToonBufferTexture(FRDGBuilder& GraphBuilder, FIntPoint Extent, ETextureCreateFlags CreateFlags, const TCHAR* Name)
+// {    
+//  return GraphBuilder.CreateTexture(GetToonBufferTextureDesc(Extent, CreateFlags), Name);
+// }
+
+void CreateToonBuffers(FRDGBuilder& GraphBuilder, FSceneTextures& SceneTexture, FIntPoint Extent, const FFastVramConfig& FastVRamConfig)
+{
+    const FRDGTextureDesc TBufferADesc = FRDGTextureDesc(FRDGTextureDesc::Create2D(Extent, PF_R8G8B8A8_UINT,
+       FClearValueBinding::Black, TexCreate_UAV | TexCreate_RenderTargetable | TexCreate_ShaderResource | FastVRamConfig.TBufferA));
+    SceneTexture.TBufferA = GraphBuilder.CreateTexture(TBufferADesc, TEXT("TBufferA"));
+
+    const FRDGTextureDesc TBufferBDesc = FRDGTextureDesc(FRDGTextureDesc::Create2D(Extent, PF_R8G8B8A8,
+       FClearValueBinding::Black, TexCreate_UAV | TexCreate_RenderTargetable | TexCreate_ShaderResource | FastVRamConfig.TBufferB));
+    SceneTexture.TBufferB = GraphBuilder.CreateTexture(TBufferBDesc, TEXT("TBufferB"));
+
+    const FRDGTextureDesc TBufferCDesc = FRDGTextureDesc(FRDGTextureDesc::Create2D(Extent, PF_R8G8B8A8,
+       FClearValueBinding::Black, TexCreate_UAV | TexCreate_RenderTargetable | TexCreate_ShaderResource | FastVRamConfig.TBufferC));
+    SceneTexture.TBufferC = GraphBuilder.CreateTexture(TBufferCDesc, TEXT("TBufferC"));
+}
+```
+
+## 4.7  定义ToonBuffer的SetupMode
+
+```
+enum class ESceneTextureSetupMode : uint32
+{
+    None         = 0,
+    SceneColor    = 1 << 0,
+    SceneDepth    = 1 << 1,
+    SceneVelocity  = 1 << 2,
+    GBufferA      = 1 << 3,
+    GBufferB      = 1 << 4,
+    GBufferC      = 1 << 5,
+    GBufferD      = 1 << 6,
+    GBufferE      = 1 << 7,
+    GBufferF      = 1 << 8,
+    SSAO         = 1 << 9,
+    CustomDepth       = 1 << 10,
+    //-------------------------------------YK Engine Start----------------------------------------
+    // Toon Buffer step 6
+    // 定义ToonBuffer的SetupMode
+    TBufferA      = 1 << 11,
+    TBufferB      = 1 << 12,
+    TBufferC      = 1 << 13,
+    ToonShadow    = 1 << 14, // Toon Shadow
+    ToonActor     = 1 << 15, // ToonActorTexture
+    GBuffers      = GBufferA | GBufferB | GBufferC | GBufferD | GBufferE | GBufferF,
+    TBuffers      = TBufferA | TBufferB | TBufferC,
+    All             = SceneColor | SceneDepth | SceneVelocity | GBuffers | SSAO | CustomDepth | TBuffers | ToonShadow | ToonActor
+    //-------------------------------------YK Engine End------------------------------------------
+};
+```
+
+![img](./imgs/18.png)
+
+## 4.8  SceneTextures中引用自定义的PassRendering
+
+```
+CreateToonBuffers(GraphBuilder, SceneTextures, Config.Extent, GFastVRamConfig);
+```
+
+![img](./imgs/19.png)
+
+![img](./imgs/20.png)
+
+
+初始化ToonBufferTexture
+
+```
+SceneTextureParameters.TBufferATexture = SystemTextures.Black;
+SceneTextureParameters.TBufferBTexture = SystemTextures.Black;
+SceneTextureParameters.TBufferCTexture = SystemTextures.Black;
+```
+
+![img](./imgs/21.png)
+
+
+当有对应的SetupMode时，将SceneTextures的ToonBuffer与ToonBufferTexture绑定
+
+```
+if (EnumHasAnyFlags(SetupMode, ESceneTextureSetupMode::TBufferA) && HasBeenProduced(SceneTextures->TBufferA))
+{
+    SceneTextureParameters.TBufferATexture = SceneTextures->TBufferA;
+}
+if (EnumHasAnyFlags(SetupMode, ESceneTextureSetupMode::TBufferB) && HasBeenProduced(SceneTextures->TBufferB))
+{
+    SceneTextureParameters.TBufferBTexture = SceneTextures->TBufferB;
+}
+if (EnumHasAnyFlags(SetupMode, ESceneTextureSetupMode::TBufferC) && HasBeenProduced(SceneTextures->TBufferC))
+{
+    SceneTextureParameters.TBufferCTexture = SceneTextures->TBufferC;
+}
+// Toon Shadow
+if (EnumHasAnyFlags(SetupMode, ESceneTextureSetupMode::ToonShadow) && HasBeenProduced(SceneTextures->ToonShadow))
+{
+    SceneTextureParameters.ToonShadowTexture = SceneTextures->ToonShadow;
+}
+// ToonActorTexture
+if (EnumHasAnyFlags(SetupMode, ESceneTextureSetupMode::ToonActor) && HasBeenProduced(SceneTextures->ToonActor))
+{
+    SceneTextureParameters.ToonActorTexture = SceneTextures->ToonActor;
+}
+```
+
+![img](./imgs/22.png)
+
+## 4.9  将RenderTaarget设置为ToonBuffer
+
+```
+FToonBasePassParameters* GetToonPassParameters(FRDGBuilder& GraphBuilder, const FViewInfo& View, FSceneTextures& SceneTextures)
+{
+    FToonBasePassParameters* PassParameters = GraphBuilder.AllocParameters<FToonBasePassParameters>();
+    PassParameters->View = View.ViewUniformBuffer;
+    // Toon Buffer step 8
+    // 将RenderTaarget设置为ToonBuffer
+    PassParameters->RenderTargets[0] = FRenderTargetBinding(SceneTextures.TBufferA, ERenderTargetLoadAction::ELoad);
+    PassParameters->RenderTargets[1] = FRenderTargetBinding(SceneTextures.TBufferB, ERenderTargetLoadAction::ELoad);
+    PassParameters->RenderTargets[2] = FRenderTargetBinding(SceneTextures.TBufferC, ERenderTargetLoadAction::ELoad);
+    PassParameters->RenderTargets.DepthStencil = FDepthStencilBinding(SceneTextures.Depth.Target, ERenderTargetLoadAction::ELoad, ERenderTargetLoadAction::ELoad, FExclusiveDepthStencil::DepthWrite_StencilWrite);
+
+    return PassParameters;
+}
+```
+
+![img](./imgs/23.png)
+
+清空操作
+
+```
+void ClearToonBuffer(FRDGBuilder& GraphBuilder, const FViewInfo& View, FSceneTextures& SceneTextures)
+{
+    if (!HasBeenProduced(SceneTextures.TBufferA) || !HasBeenProduced(SceneTextures.TBufferB) || !HasBeenProduced(SceneTextures.TBufferC))
+    {
+       // 如果ToonBuffer没被创建，在这里创建
+       const FSceneTexturesConfig& Config = View.GetSceneTexturesConfig();
+       CreateToonBuffers(GraphBuilder, SceneTextures, Config.Extent, GFastVRamConfig);
+    }
+    FToonBasePassParameters* PassParameters = GraphBuilder.AllocParameters<FToonBasePassParameters>();
+    PassParameters->RenderTargets[0] = FRenderTargetBinding(SceneTextures.TBufferA, ERenderTargetLoadAction::ENoAction);
+    PassParameters->RenderTargets[1] = FRenderTargetBinding(SceneTextures.TBufferB, ERenderTargetLoadAction::ENoAction);
+    PassParameters->RenderTargets[2] = FRenderTargetBinding(SceneTextures.TBufferC, ERenderTargetLoadAction::ENoAction);
+    
+    GraphBuilder.AddPass(RDG_EVENT_NAME("TBufferClear"), PassParameters, ERDGPassFlags::Raster,
+          [PassParameters](FRHICommandList& RHICmdList)
+       {
+          // If no fast-clear action was used, we need to do an MRT shader clear.
+          const FRenderTargetBindingSlots& RenderTargets = PassParameters->RenderTargets;
+          FLinearColor ClearColors[MaxSimultaneousRenderTargets];
+          FRHITexture* Textures[MaxSimultaneousRenderTargets];
+          int32 TextureIndex = 0;
+
+          RenderTargets.Enumerate([&](const FRenderTargetBinding& RenderTarget)
+          {
+             FRHITexture* TextureRHI = RenderTarget.GetTexture()->GetRHI();
+             ClearColors[TextureIndex] = TextureRHI->GetClearColor();
+             Textures[TextureIndex] = TextureRHI;
+             ++TextureIndex;
+          });
+
+          DrawClearQuadMRT(RHICmdList, true, TextureIndex, ClearColors, false, 0, false, 0);
+          
+       });
+}
+```
+
+## 4.10  设置RenderTarget
+
+```
+void MainPS(
+    FSimpleMeshPassVSToPS In,
+    out uint4 OutColor1 : SV_Target0,
+    out float4 OutColor2 : SV_Target1,
+    out float4 OutColor3 : SV_Target2
+    )
+{
+    // 获取像素的材质参数(此处的材质就是材质辑器编辑出来的材质).
+    FMaterialPixelParameters MaterialParameters = GetMaterialPixelParameters(In.FactoryInterpolants, In.SvPosition);
+    
+    FToonBuffer ToonBuffer = GetToonBuffer(MaterialParameters);
+
+    EncodeToonBuffer(ToonBuffer, OutColor1, OutColor2, OutColor3);
+}
+```
+
+![img](./imgs/24.png)
+
+## 4.11  输出ToonBuffer
+
+```
+FToonBuffer GetToonBuffer(FMaterialPixelParameters MaterialParameters)
+{
+    FToonBuffer ToonBuffer;
+    ToonBuffer.SelfID = 0;
+    ToonBuffer.ObjectID = 0;
+    ToonBuffer.ToonModel = 0;
+    ToonBuffer.ShadowCastFlag = 0;
+    ToonBuffer.HairShadowOffset = 0.0f;
+    ToonBuffer.SpecularSmoothness = 0.5f;
+    ToonBuffer.SpecularOffset = 0.0f;
+    ToonBuffer.ToonBufferC = 0.0f;
+#if NUM_MATERIAL_OUTPUTS_GETTOONBUFFEROUTPUT
+    ToonBuffer.SelfID = clamp(GetToonBufferOutput0(MaterialParameters), 0.0f, 255.0f);
+    ToonBuffer.ObjectID = clamp(GetToonBufferOutput1(MaterialParameters), 0.0f, 255.0f);
+    ToonBuffer.ToonModel = clamp(GetToonBufferOutput2(MaterialParameters), 0.0f, 7.0f);
+    ToonBuffer.ShadowCastFlag = clamp(GetToonBufferOutput3(MaterialParameters), 0.0f, 32.0f);
+    ToonBuffer.HairShadowOffset = GetToonBufferOutput4(MaterialParameters);
+    ToonBuffer.SpecularSmoothness = GetToonBufferOutput5(MaterialParameters);
+    ToonBuffer.SpecularOffset = GetToonBufferOutput6(MaterialParameters);
+    ToonBuffer.ToonBufferC = GetToonBufferOutput7(MaterialParameters);
+#endif
+
+    return ToonBuffer;
+}
+```
+
+![img](./imgs/26.png)
+
+
+Toon材质的自定义属性输出
+
+```
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Materials/MaterialExpressionCustomOutput.h"
+#include "UObject/ObjectMacros.h"
+#include "MaterialExpressionToonBufferOutput.generated.h"
+
+/** Toon材质的自定义属性输出. */
+UCLASS(MinimalAPI, collapsecategories, hidecategories = Object)
+class UMaterialExpressionToonBufferOutput : public UMaterialExpressionCustomOutput
+{
+    GENERATED_UCLASS_BODY()
+
+    // uint 8bit [0 - 255]
+    UPROPERTY()
+    FExpressionInput SelfID;
+    // uint 8bit [0 - 255]
+    UPROPERTY()
+    FExpressionInput ObjectID;
+    // uint 3bit [0 - 7]
+    UPROPERTY()
+    FExpressionInput ToonModel;
+    // uint 5bit Mask
+    UPROPERTY()
+    FExpressionInput ShadowCastFlag;
+    UPROPERTY()
+    // float 8bit [0 - 1]
+    FExpressionInput HairShadowOffset;
+    // float 8bit [0 - 1]
+    UPROPERTY()
+    FExpressionInput SpecularSmoothness;
+    // float 8bit [-1 - 1]
+    UPROPERTY()
+    FExpressionInput SpecularOffset;
+    UPROPERTY()
+    FExpressionInput ToonDataC;
+
+public:
+#if WITH_EDITOR
+    //~ Begin UMaterialExpression Interface
+    // 主要的功能实现在Compile()函数种
+    virtual int32 Compile(class FMaterialCompiler* Compiler, int32 OutputIndex) override;
+    virtual void GetCaption(TArray<FString>& OutCaptions) const override;
+    virtual uint32 GetInputType(int32 InputIndex) override;
+    //~ End UMaterialExpression Interface
+#endif
+
+    //~ Begin UMaterialExpressionCustomOutput Interface
+    // 针脚的数量
+    virtual int32 GetNumOutputs() const override;
+    // 获取针脚属性的函数名
+    virtual FString GetFunctionName() const override;
+    // 节点的名称
+    virtual FString GetDisplayName() const override;
+    //~ End UMaterialExpressionCustomOutput Interface
+};
+```
+
+![img](./imgs/27.png)
+
+![img](./imgs/28.png)
+
+```
+// ----------------------------------YK Engine Start----------------------------------
+// Toon Buffer Output step 2_2
+/** Toon材质的自定义属性输出. */
+
+UMaterialExpressionToonBufferOutput::UMaterialExpressionToonBufferOutput(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    // Structure to hold one-time initialization
+    // 节点的分类
+    struct FConstructorStatics
+    {
+       FText NAME_Toon;
+       FConstructorStatics()
+          : NAME_Toon(LOCTEXT("Toon", "Toon"))
+       {
+       }
+    };
+    static FConstructorStatics ConstructorStatics;
+
+#if WITH_EDITORONLY_DATA
+    MenuCategories.Add(ConstructorStatics.NAME_Toon);
+#endif
+
+#if WITH_EDITOR
+    Outputs.Reset();
+#endif
+}
+
+#if WITH_EDITOR
+
+uint32 UMaterialExpressionToonBufferOutput::GetInputType(int32 InputIndex)
+{
+    if(InputIndex < 7)
+    {
+       return MCT_Float1;
+    }
+    if (InputIndex == 7)
+    {
+       return MCT_Float4;
+    }
+    check(false);
+    return MCT_Float3;
+}
+
+
+int32 UMaterialExpressionToonBufferOutput::Compile(class FMaterialCompiler* Compiler, int32 OutputIndex)
+{
+    int32 CodeInput = INDEX_NONE;
+
+    const bool bStrata = Strata::IsStrataEnabled();
+
+    // 这里会在BasePixelShader.usf.里生成一个获取针脚属性的函数
+    // 如获取第一个针脚的数据使用函数GetToonBufferOutput0(MaterialParameters)
+    // Generates function names GetToonBufferOutput{index} used in BasePixelShader.usf.
+    if (OutputIndex == 0)
+    {
+       CodeInput = SelfID.IsConnected() ? SelfID.Compile(Compiler) : Compiler->Constant(0);
+    }
+    if (OutputIndex == 1)
+    {
+       CodeInput = ObjectID.IsConnected() ? ObjectID.Compile(Compiler) : Compiler->Constant(0);
+    }
+    if (OutputIndex == 2)
+    {
+       CodeInput = ToonModel.IsConnected() ? ToonModel.Compile(Compiler) : Compiler->Constant(0);
+    }
+    if (OutputIndex == 3)
+    {
+       CodeInput = ShadowCastFlag.IsConnected() ? ShadowCastFlag.Compile(Compiler) : Compiler->Constant(0);
+    }
+    if (OutputIndex == 4)
+    {
+       CodeInput = HairShadowOffset.IsConnected() ? HairShadowOffset.Compile(Compiler) : Compiler->Constant(0);
+    }
+    if (OutputIndex == 5)
+    {
+       CodeInput = SpecularSmoothness.IsConnected() ? SpecularSmoothness.Compile(Compiler) : Compiler->Constant(0.5f);
+    }
+    if (OutputIndex == 6)
+    {
+       CodeInput = SpecularOffset.IsConnected() ? SpecularOffset.Compile(Compiler) : Compiler->Constant(0.5f);
+    }
+    if (OutputIndex == 7)
+    {
+       CodeInput = ToonDataC.IsConnected() ? ToonDataC.Compile(Compiler) : Compiler->Constant4(0.f, 0.f, 0.f, 0.f);
+    }
+
+    return Compiler->CustomOutput(this, OutputIndex, CodeInput);
+}
+
+void UMaterialExpressionToonBufferOutput::GetCaption(TArray<FString>& OutCaptions) const
+{
+    OutCaptions.Add(FString(TEXT("Toon Buffer")));
+}
+
+#endif // WITH_EDITOR
+
+int32 UMaterialExpressionToonBufferOutput::GetNumOutputs() const
+{
+    return 8;
+}
+
+FString UMaterialExpressionToonBufferOutput::GetFunctionName() const
+{
+    return TEXT("GetToonBufferOutput");
+}
+
+FString UMaterialExpressionToonBufferOutput::GetDisplayName() const
+{
+    return TEXT("Toon Buffer");
+}
+
+// Toon Light Output step 2_2
+
+UMaterialExpressionToonLightOutput::UMaterialExpressionToonLightOutput(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    // Structure to hold one-time initialization
+    // 节点的分类
+    struct FConstructorStatics
+    {
+       FText NAME_Toon;
+       FConstructorStatics()
+          : NAME_Toon(LOCTEXT("Toon", "Toon"))
+       {
+       }
+    };
+    static FConstructorStatics ConstructorStatics;
+
+#if WITH_EDITORONLY_DATA
+    MenuCategories.Add(ConstructorStatics.NAME_Toon);
+#endif
+
+#if WITH_EDITOR
+    Outputs.Reset();
+#endif
+}
+
+#if WITH_EDITOR
+
+uint32 UMaterialExpressionToonLightOutput::GetInputType(int32 InputIndex)
+{
+    if (InputIndex == 0) { return MCT_Float3; }       // ToonLighting
+    check(false);
+    return MCT_Float3;
+}
+
+
+int32 UMaterialExpressionToonLightOutput::Compile(class FMaterialCompiler* Compiler, int32 OutputIndex)
+{
+    int32 CodeInput = INDEX_NONE;
+
+    const bool bStrata = Strata::IsStrataEnabled();
+
+    // 这里会在BasePixelShader.usf.里生成一个获取针脚属性的函数
+    // 如获取第一个针脚的数据使用函数GetToonLightOutput0(MaterialParameters)
+    // Generates function names GetToonLightOutput{index} used in BasePixelShader.usf.
+    if (OutputIndex == 0)
+    {
+       CodeInput = ToonLighting.IsConnected() ? ToonLighting.Compile(Compiler) : Compiler->Constant(0);
+    }
+
+    return Compiler->CustomOutput(this, OutputIndex, CodeInput);
+}
+
+void UMaterialExpressionToonLightOutput::GetCaption(TArray<FString>& OutCaptions) const
+{
+    OutCaptions.Add(FString(TEXT("Toon Light")));
+}
+
+#endif // WITH_EDITOR
+
+int32 UMaterialExpressionToonLightOutput::GetNumOutputs() const
+{
+    return 1;
+}
+
+FString UMaterialExpressionToonLightOutput::GetFunctionName() const
+{
+    return TEXT("GetToonLightOutput");
+}
+
+FString UMaterialExpressionToonLightOutput::GetDisplayName() const
+{
+    return TEXT("Toon Light");
+}
+```
 
 # 5. 总结
 
