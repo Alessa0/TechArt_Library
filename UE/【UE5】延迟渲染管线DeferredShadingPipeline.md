@@ -4,7 +4,7 @@
 
 总览图如下，可结合着看，有错还请各位大佬指出
 
-![img](https://pic1.zhimg.com/80/v2-2682a3093dd4e860489a20c8b2ab209e_720w.webp)
+![img](./images/5.png)
 
 ## 一：SceneRender
 
