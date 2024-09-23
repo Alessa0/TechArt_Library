@@ -14,7 +14,7 @@
 
 # 1. 什么是GBuffer？
 
-延迟[渲染管线](https://zhida.zhihu.com/search?q=渲染管线&zhida_source=entity&is_preview=1)不了解的话可以直接参考 0向往0 dalao的文章了解
+延迟渲染管线不了解的话可以直接参考 0向往0 dalao的文章了解
 
 The G-buffer is the collective term of all textures used to store lighting-relevant data for the final lighting pass. (定义来自[here](https://link.zhihu.com/?target=https%3A//learnopengl.com/Advanced-Lighting/Deferred-Shading))
 
