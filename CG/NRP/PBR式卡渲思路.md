@@ -8,6 +8,258 @@
 
 
 
+### 材质设计思路
+
+充分利用真实感渲染的特性以及PBR的思想，补足卡通渲染在金属、皮革等材质上的不足，加上ibl同时探索材质抽象方式在整体和局部的合理表达。
+
+
+
+
+
+**通用**
+
+basemap：basemap与mainlight构成最基本的直接光漫反射。
+
+前向光：是一个使用NdotV构造的mask，用以改变模型的立体感。
+
+![img](https://pic1.zhimg.com/80/v2-5c6048c7ff09873c28be6dcb3b7c3e46_720w.webp)
+
+开启前向光
+
+![img](https://pic4.zhimg.com/80/v2-383a35a4638cdd31046a350e2eb31adf_720w.webp)
+
+关闭前向光
+
+描边：额外pass，模型背面法向偏移，随镜头远近改变粗细。（todo：顶点色控制描边粗细或显隐）
+
+2D ramp图：用以模拟难以被准确定义的“sss”效果、为面部、皮肤等模拟间接光漫反射、统一画面色彩。
+
+![img](https://pic1.zhimg.com/80/v2-5c6048c7ff09873c28be6dcb3b7c3e46_720w.webp)
+
+开启sss
+
+![img](https://pic4.zhimg.com/80/v2-872c53dff19c93afa3e9618a514a1025_720w.webp)
+
+关闭sss
+
+灵感来源于这篇文章
+
+[骨鱼子：厚涂风格实时二次元渲染(2)-厚涂风的皮肤渲染91 赞同 · 5 评论文章](https://zhuanlan.zhihu.com/p/548788797)
+
+深度边缘光：本质是对材质菲涅尔效果的显化。具体实现可参考喵佬文章
+
+![img](https://pic2.zhimg.com/80/v2-03f96e75c49445782856c6e222a15943_720w.webp)
+
+左：开启深度边缘光 右：关闭深度边缘光
+
+[Jason Ma：【JTRP】屏幕空间深度边缘光 Screen Space Depth Rimlight246 赞同 · 18 评论文章![img](https://picx.zhimg.com/v2-0cbd2fbb01756184d6674761e2a51e81_180x120.jpg)](https://zhuanlan.zhihu.com/p/139290492)
+
+（tips：深度贴图不需要采样两次，物体的初始深度贴图可用positionCS.w来代替）
+
+ibl模拟间接光漫反射：相对于只使用ramp图，理应能够让角色与场景更加统一。（todo：用球谐光照优化性能）
+
+环境反射贴图模拟间接光镜面反射：凸显光滑材质的质感。
+
+![img](https://pica.zhimg.com/80/v2-427715cc381939b504ee1bd54d08c464_720w.webp)
+
+开启间接光
+
+![img](https://pic4.zhimg.com/80/v2-54ca3287618e4d6763796023981a06e3_720w.webp)
+
+关闭间接光
+
+后处理：低阈值高散射bloom，原理在上文；aces色调映射，把颜色映射到它该去的位置；以及其他杂七杂八的后处理。
+
+![img](https://pic4.zhimg.com/80/v2-9bb764f5807c4ac0465af5b9e4bc27c3_720w.webp)
+
+无后处理
+
+![img](https://picx.zhimg.com/80/v2-9cc18806a117cf182b0c93f7fa6e51c3_720w.webp)
+
+后处理预设一，比较耐看
+
+![img](https://pica.zhimg.com/80/v2-e5f88760e85de265c78387ce84948f52_720w.webp)
+
+后处理预设二，比较二次元，有点晃眼
+
+
+
+**皮肤（除脸部）**
+
+两层smoothstep：模拟直接光漫反射与sss效果。
+
+图片看前面的就可以了。
+
+
+
+**脸部皮肤**
+
+面部法线传递：主要是让面部法线的x方向与z方向能够平滑过渡。
+
+sdf面部阴影：可以理解为制作很多阴影分布的关键帧，通过主光角度与面部法线计算出面部阴影的中间帧。具体可参考
+
+[MIZI：二次元角色卡通渲染—面部篇1138 赞同 · 63 评论文章![img](https://pic4.zhimg.com/v2-765fd44b57001ab0def27a3cb2655a67_180x120.jpg)](https://zhuanlan.zhihu.com/p/411188212)
+
+sdf面部阴影图的制作方法有很多，但我推荐这种使用SD制作的方法，可参考
+
+[如何控制三渲二中阴影分布的位置？83 赞同 · 5 评论回答![img](https://pic2.zhimg.com/v2-2d8066834cb2cefe82e97a0737f9e731_180x120.jpg)](https://www.zhihu.com/question/35398294/answer/2595705502)
+
+原因之一是流程较为程序化，制作中的每一个中间步骤都可以反复调节。原因之二是可以控制sdf图渐变的速度。有些特殊的主光角度可能会打出并不好看或者有瑕疵的阴影，为了减少出现这种阴影的概率，可以改变sdf图的渐变速度以实现。如果仔细观察原神中角色面部阴影随主光方向的改变速度也能发现这一特性，即阴影的过渡并非是线性的。不过我并不清楚他们是通过凹法线还是凹sdf图实现的。
+
+![img](https://pica.zhimg.com/80/v2-b9e78314eb17262bb4b792e89cc489d6_720w.webp)
+
+可能出现的奇怪阴影
+
+![img](https://pica.zhimg.com/80/v2-b234ef172272cd7b866238ebcb601b82_720w.webp)
+
+如果用SD制作sdf面部阴影图，就可以微调阴影的渐变速率，从而降低出现奇怪阴影的概率
+
+
+
+鼻尖高光：这个细节是参考了原神，如果不仔细看的话有点难看出来，制作思路和面部阴影是一样的，都是使用sdf图。
+
+![img](https://picx.zhimg.com/80/v2-ebfbbc22bbf2cc8fcdd34189f95c0ec3_720w.webp)
+
+背光时稍微看得清楚一些，但其实面光时也有
+
+鼻尖描边：在侧视面部的时候，由于有背面法线外扩描边，所以可以看出鼻子的轮廓，而在正视面部的时候，鼻子是有可能完全没有表达的，而在少前2的一些宣传片中，我们可以发现正视面部时鼻子也存在描边的效果，于是我参考了这个视频，放置了一个背面朝前的模型在鼻尖处。
+
+![img](https://pic1.zhimg.com/80/v2-3bb5282df0ebae3641d64fd4825ffc48_720w.webp)
+
+少前2宣传片的截图
+
+![img](https://pic1.zhimg.com/80/v2-df86c8bfa67c78a9ef1e88bd07ba9392_720w.webp)
+
+鼻尖描边和高光制作结果
+
+
+
+**眼睛**
+
+内凹法线计算漫反射，外凸法线计算镜面反射：参考真实的眼球结构，眼球中凹下去的结构漫反射较强，而凸出来的结构镜面反射较强，且是几乎透明的。
+
+![img](https://pic2.zhimg.com/80/v2-153a1ac54396126bc56a307fd62fc3d9_720w.webp)
+
+- 可旋转的环境反射贴图：使用了环境反射贴图来模拟眼球的镜面反射，在调节好粗糙度和旋转角度后，能够达到不错的效果，当然，使用matcap也可以，而且性能更好。
+
+![img](https://pic3.zhimg.com/80/v2-b16da4c580385ddb4dd8d9eb994af91c_720w.webp)
+
+感觉用matcap采样卡通图片更好看
+
+
+
+**头发**
+
+- flowmap修正切线：整体流程和原理可以参考这篇文章
+
+[YivanLee：虚幻4渲染编程（人物篇）【第一卷：Basic Human Hair - 上】97 赞同 · 11 评论文章![img](https://picx.zhimg.com/v2-e8ef43ef2f307cc186df2c4bb4da8533_180x120.jpg)](https://zhuanlan.zhihu.com/p/53407479)
+
+说一下踩过的坑。首先是关于笔刷角度究竟是设置为0度还是180度的问题，因为我看了很多人分享的文章，答案莫衷一是，实际上，这个角度与代码中的这个语句有关。
+
+```text
+tangent.x = -tangent.x;//有这句时，sp中的画笔方向为180度，没有为0度
+```
+
+代码参考：
+
+[马甲：丝绸效果的实现387 赞同 · 53 评论文章![img](https://pica.zhimg.com/v2-1bf77767a23021a8751010475f0ef500_180x120.jpg)](https://zhuanlan.zhihu.com/p/84313625)
+
+其次是在SP中绘制flowmap的操作问题。如果你的模型的头发UV是经过特殊处理的话就会很方便，比如已经打直、展在同一个地方等等。但如果你的UV是像闪电姐一样的话，那么就建议先把头发拆分成多个物体，这样就可以确保一笔不会画到多个物体。另外，一片头发的绘制尽量用大笔刷一笔完成，否则绘制的flowmap会在画笔相接处产生接缝，进而让头发高光断裂。
+
+- 两层kk各向异性高光：
+
+一般的卡通渲染的头发可能是使用绘制高光作为mask，再通过NdotH或NdotV等经验高光公式来计算是否出现高光，但这种画风对本作的风格来说显得太卡通了，故参考了米哈游的这一头发各向异性方案，使用kk公式实现。
+
+参考的方案如下
+
+[游戏葡萄：米哈游技术总监首次分享：移动端高品质卡通渲染的实现与优化方案1817 赞同 · 173 评论文章![img](https://pic4.zhimg.com/v2-14b29d5f41e2c85809fd26480c1b5557_180x120.jpg)](https://zhuanlan.zhihu.com/p/37001473)
+
+具体实现的参考
+
+[Time machine：Aniso Kajiya-Kay Flowmap179 赞同 · 14 评论文章![img](https://pica.zhimg.com/v2-e96851ee44ea24bbb39657d0f5f4afc2_ipico.jpg)](https://zhuanlan.zhihu.com/p/455213476)
+
+- 模板测试刘海阴影：如果单纯绘制阴影图的话，阴影无法随刘海飘动而变化（假如刘海有动画的话）。因此参考了这篇文章使用模板测试的方法，感觉比采样深度图的效果更好，几乎没有穿帮的地方。
+
+[流朔：【Unity URP】卡通渲染中的刘海投影·改169 赞同 · 10 评论文章![img](https://pica.zhimg.com/v2-480796738bf65f1546331545d5adbc46_180x120.jpg)](https://zhuanlan.zhihu.com/p/416577141)
+
+**皮革 + 金属**
+
+这个部分算得上是本篇的重点，但实现的思路其实并不困难。首先我们需要在shader中实现一套pbs算法，我这里参考了这篇文章，实现了ggx brdf，这样素材中的rmo贴图就能派上用场了。接下来就是探索如何对这套算法框架进行魔改了。
+
+[URP管线的自学HLSL之路 第三十七篇 造一个PBR的轮子www.bilibili.com/read/cv7510082![img](https://pic1.zhimg.com/v2-8917c9cb35b59ca1829b05f01b7d06c8_180x120.jpg)](https://link.zhihu.com/?target=https%3A//www.bilibili.com/read/cv7510082)
+
+啰嗦一句，在处理如本例中具有重叠UV的模型时，应注意模型的切线问题，如果不加以处理，在UV的对称接缝处就会出现一道明显的边界，边界两边的高光反馈方向相反。由于tangent.w的值与vertex的顺逆方向有关，所以负号使用与否取决于UV的对称方式。
+
+![img](https://pic4.zhimg.com/80/v2-f7c6a647f47eb1d571cfff6a216d7dbd_720w.webp)
+
+这种对称方式就要加负号
+
+![img](https://picx.zhimg.com/80/v2-cc46755ebf2dff1a84da22c1f7a99995_720w.webp)
+
+不改切线的话，切线就会变成这样
+
+```text
+v.tangent.xyz *= -v.tangent.w;
+```
+
+首先，脑海中浮现的最直观的想法，就是使用一个参数来控制材质的卡通渲染及真实感渲染的比重。而要实现这个效果，我想到了两种方案——①暴力lerp，自由地控制材质效果在pbs框架和卡通渲染shader框架中的比重。②魔改FGD项的内容，或者为FGD项赋予强度控制的参数，可以达到相似的结果，但是调参过程并不直观。最后选择了第一种实现方案。
+
+![img](https://pica.zhimg.com/80/v2-427715cc381939b504ee1bd54d08c464_720w.webp)
+
+pbr比重合适
+
+![img](https://pic4.zhimg.com/80/v2-48c010f99e69929b0c9afa2a3583d173_720w.webp)
+
+pbr比重为零
+
+在前面提到的卡通渲染实现方式中，很多的参数都是可以高度自定义的，包括各种强度、颜色等等，因此，作为某些参数的抽象对象，在pbs中的间接光漫反射、镜面反射强度等也理应是可以自定义的，否则可能会出现不同材质之间的亮度相差过大的问题。
+
+最后是实现各向异性高光。
+
+![img](https://pic1.zhimg.com/80/v2-5c6048c7ff09873c28be6dcb3b7c3e46_720w.webp)
+
+开启各向异性高光
+
+![img](https://pic3.zhimg.com/80/v2-0f9b959d7bf34d5d21e7cb27249360e6_720w.webp)
+
+关闭各向异性高光
+
+代码实现：将ggx brdf的NDF方程中的NdotH项转换成NdotX和NdotY就可以了。
+
+```csharp
+ half D_Function(half NdotH,half roughnessSqr)
+{
+                        half a2=roughnessSqr*roughnessSqr;
+                        half NdotH2=NdotH*NdotH;
+                        half nom=a2;
+                        half denom=NdotH2*(a2-1)+1;
+                        denom=denom*denom*PI;
+                        return nom/denom;
+ }
+
+half GGXAnisotropicNormalDistribution(half anisotropic, half roughness, half NdotH, half HdotX, half HdotY)
+{
+                        half aspect = sqrt(1.0 - 0.9 * anisotropic);
+                        half a2 = roughness*roughness;
+                        half NdotH2=NdotH*NdotH;
+                        half ax = roughness / aspect;
+                        half ay = roughness * aspect;
+                        half HdotX2 = HdotX * HdotX;
+                        half HdotY2 = HdotY * HdotY;
+
+                        half nom = ax * ay;
+                        half denom = HdotX2 * ay/ax + HdotY2 * ax/ay + NdotH2 * ax*ay;
+
+                        denom=denom*denom*PI;
+                        return nom/denom;
+
+}
+```
+
+
+
+
+
 
 
 ## **以少前2为例**
