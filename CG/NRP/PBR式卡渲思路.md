@@ -12,11 +12,708 @@
 
 ## **以少前2为例**
 
+## 一、贴图分析
+
+
+PBR流程，贴图mask只有PBR的roughness、metallic、occlusion，不像[战双](https://zhida.zhihu.com/search?q=战双&zhida_source=entity&is_preview=1)那种PBRMask和ILM贴图全上。模型和[法线](https://zhida.zhihu.com/search?q=法线&zhida_source=entity&is_preview=1)做的很细，拆成两张图来存保证精度。
+
+### 衣物
+
+![img](https://pic1.zhimg.com/80/v2-a844399101113841e05209f78737164c_720w.webp)
+
+![img](https://pica.zhimg.com/80/v2-514f19218de555af87c963078c4af4a4_720w.webp)
+
+RampTex
+
+
+RampTex，
+第一行：additional light shadowRamp
+第二行：metal env blinnphong specularRamp (NdotH to ramp? undetermind)
+第三行：direct/additional light specularRamp
+第四行：direct light shadowRamp
+注意到directlight shadowRamp的最左边不为0，可能是想往暗部加一种[散射](https://zhida.zhihu.com/search?q=散射&zhida_source=entity&is_preview=1)的感觉把，pbr模型的直接光阴影部分是全黑的，加一个基础色。额外光源就是一个很软的过渡。
+specularRamp最左边都为0，高光只影响到高光区域。
+
+
+
+### 皮肤
+
+
+贴图和上面衣物一样，
+
+![img](https://pic3.zhimg.com/80/v2-f607d4718a67000e3eae0d529a93dc94_720w.webp)
+
+skin RampTex
+
+
+能看到皮肤的shadowRamp的sss效果很明显
+
+
+
+### 头发 
+
+![img](https://pic4.zhimg.com/80/v2-3ff78c2407e9b13c7ac6a697cbbec091_720w.webp)
+
+
+
+![img](https://pic3.zhimg.com/80/v2-e10571267d3879c0dd583b2fbca14804_720w.webp)
+
+hairRampTex
+
+
+没有做法线，模型本身是映射的球形法线。
+仅仅一张高光mask，diffuse图比较明显得加上了AO信息。金属度粗糙度就到材质球直接整体调整了。
+
+
+
+### 面部
+
+![img](https://picx.zhimg.com/80/v2-698a60d958e8ede0f8d309bd51e1f4b7_720w.webp)
+
+
+
+![img](https://pica.zhimg.com/80/v2-734e4038aa1691de825c65d2ac4b0632_720w.webp)
+
+faceRampTex
+
+
+很经典的SDF面部阴影图，很精细，但它多了个ba通道，这个之后说。
+
+
+
+### 眼睛
+
+![img](https://pic1.zhimg.com/80/v2-1d7b0b66afb2913adce3759126b56814_720w.webp)
+
+眼睛、高光、阴影单独做，这样有一个好处就是阴影和高光都能根据视角发生变化，给人的感觉就是正确的眼球表面高光，正确的眉投射下的阴影。
 
 
 
 
-## **具体实现**
+
+### 绒绒毛
+
+![img](https://pic2.zhimg.com/80/v2-b649d8a552e8f0f1df4c1a8f805f1b6d_720w.webp)
+
+
+
+![img](https://pic4.zhimg.com/80/v2-c614303b37caf5315ded0285081128f1_720w.webp)
+
+Plush RampTex
+
+heightNoise，多Pass毛的噪声。d和n是对应的，用sd很好做出来。但是，这里多Pass出来的AO没有加，加上也很难看，只是表现个凸出边边。
+ramp图的[漫反射](https://zhida.zhihu.com/search?q=漫反射&zhida_source=entity&is_preview=1)是青光的，高光是蓝白的，我有点在意为什么有个青色而不是淡蓝。
+
+## 二、模型分析
+
+###  衣物、皮肤
+
+![img](https://pic1.zhimg.com/80/v2-4ec19f87a1ef7ec7ee907f1987530084_720w.webp)
+
+材质以双面/单面渲染拆分。
+顶点色控制描边，存储平滑法线和描边宽度。
+
+
+
+### 头发
+
+![img](https://pic1.zhimg.com/80/v2-8f53a52db12a8557c275e1b89e03c1d4_720w.webp)
+
+材质中将刘海单独提出来处理面部阴影和眉眼透视。
+法线存的球形法线
+uv0用来采diffuse图，uv1用来采hairSpec做能动的高光。
+
+
+
+### 面部
+
+![img](https://pic2.zhimg.com/80/v2-c3b6f182ebd7c2226f5f642b2d605f29_720w.webp)
+
+材质分成眉毛睫毛、眼睛、眼阴影、面部其他。
+从uv0中可以看到眼睛是模拟物理做了视差采样。
+uv1是面部采样sdf阴影的uv。
+
+
+
+## 三、效果分类
+
+
+单就veprin来说，可以将shader分成PBRBase、hair、fringe(英式用法，刘海)、face、eye、eye_blend、plush。
+
+### 1. PBRBase：
+
+漫反射和高光的Ramp
+
+![img](https://picx.zhimg.com/80/v2-c48d81d72bf1e8152904a8612e6b9903_720w.webp)
+
+### 2. hair、fringe：
+
+头发高光，刘海投影，眉眼透视
+
+![img](https://pic3.zhimg.com/80/v2-459f65a20c3ade7d828d372efc2cf73a_720w.webp)
+
+### 3. face：
+
+SDF阴影，鼻尖嘴唇SDF高光，接受刘海投影。
+
+![img](https://picx.zhimg.com/80/v2-fe95aa8a69db6388b4c7716c8a97a5af_720w.webp)
+
+### 4. eye：
+
+用视差计算，表现物理的折射和透射
+
+
+
+![img](https://picx.zhimg.com/80/v2-061faffdd7893b627d362260b1bd8b7b_720w.webp)
+
+### 5. eye_blend：
+
+一个是高光直接加上去，一个是阴影乘上去
+
+
+
+![img](https://pic3.zhimg.com/80/v2-61c972ff86acd2f5fe8e907abd13fe78_720w.webp)
+
+### 6. plush：
+
+有动画，用多Pass毛发的做法来渲染
+
+![img](https://picx.zhimg.com/80/v2-36415cf5694794500fb78d2fb9b817d3_720w.webp)
+
+## 四、效果实现
+
+
+大体上还是以雷老师(https://www.zhihu.com/people/zi-xie-42-53)讲的PBR卡通渲染框架为主~
+
+
+
+![img](https://pic2.zhimg.com/80/v2-281d7ca1d62ca43b54c4ecd22d31e793_720w.webp)
+
+很久前就记录了文档，多看几次又会有新理解。
+
+![img](https://pic1.zhimg.com/80/v2-b513e3c489ef0e6c1cd7b9baecce55a2_720w.webp)
+
+整理一下我写时候的框架，其中混入了PBRMask和ILMMask，这里的PBR还是常用的Cook-Torrance BRDF：
+
+```c
+FragmentOutput frag(v2f i)
+{
+    // Tex Sample
+    mainTex
+    pbrMask
+    bump
+    ilmMask
+    
+    // VectorPrepare
+    lightDirWS
+    camDirWS
+    normalWS
+    NdotL
+    ...
+    
+    // Property prepare
+    emission
+    metallic
+    smoothness
+    ...
+    
+        // Remap NdotL ShadowArea
+        shadowArea calculate
+        NdotLRemap = 1 - shadowArea;
+        // TODO: Remap NdotV modify fresnel
+        NdotV
+        // shadowRamp
+        shadowRamp.rgb = Sample(_RampTex, 1 - shadowArea);
+        // Remap ShadowRamp , ILM SecondShadow
+        shadowRamp.rgb = lerp(_SecShadowColor.rgb, shadowRamp.rgb, ilm_AO);
+    
+    // Direct PBR
+    NDF, G, F
+    // NDF GGX/Anisotropy specArea remap
+    NDF = NDF * ilm_SpecMask;
+    // SpecRamp
+    specRamp.rgb = Sample(_RampTex, specArea);
+    // Compose
+    directLightReuslt = (directDiffCol * shadowRamp + directSpecCol * specRamp) * mainlight.color * shadow * directOcclusion;
+    
+    // Indirect PBR
+    // diffuse lerp Normal and Updir, lerp SHColor and self_envColor
+    indirDiff sampleSH RemapSHNormal
+    indirDiff * indirKd * albedo * occlusion
+    // specular use reflectionProbe or Cubemap or Matcap
+    indirSpec sampleCube
+    indirSpec * indirSpeFactor
+    
+    // Other Emission, Rimlight, additional light
+    
+}
+```
+
+
+
+
+
+### 1. RampTex:
+
+管线内实现在Danbaidong Shader GUI
+
+![img](https://pic2.zhimg.com/80/v2-de7da4cce07f784cc4a972b3cbae11b1_720w.webp)
+
+
+
+### 2. PBRBase：
+
+**(1) PropertyPrepare**
+在PropertyPrepare阶段，计算shadowArea，将halfLambert结果用[sigmoid函数](https://zhida.zhihu.com/search?q=sigmoid函数&zhida_source=entity&is_preview=1)将[明暗交界线](https://zhida.zhihu.com/search?q=明暗交界线&zhida_source=entity&is_preview=1)进行重新映射 (用smoothstep也可以)，将结果作为NdotL进入PBR计算；用此结果作为shadowRamp的uv采样得到明暗交界线的颜色；
+
+在这里得到的shadowRamp也可以根据ilm贴图去加上常暗阴影，这样只有受平行光区域给个常暗，灯光转到背面就整体都是一个阴影颜色，或者直接将diffuse去拉黑，这样受光不受光区域都是黑的，两种用法都有。
+
+```glsl
+// Property prepare
+        half emission                 = 1 - mainTex.a;
+        half metallic                 = lerp(0, _Metallic, pbrMask.r);
+        half smoothness               = lerp(0, _Smoothness, pbrMask.g);
+        half occlusion                = lerp(1 - _Occlusion, 1, pbrMask.b);
+        half directOcclusion          = lerp(1 - _DirectOcclusion, 1, pbrMask.b);
+        half3 albedo = mainTex.rgb * _BaseColor.rgb;
+        // NPR diffuse
+        float shadowArea = sigmoid(1 - halfLambert, _ShadowOffset, _ShadowSmooth * 10) * _ShadowStrength;
+        half3 shadowRamp = lerp(1, _ShadowColor.rgb, shadowArea);
+        //Remap NdotL for PBR Spec
+        half NdotLRemap = 1 - shadowArea;
+    #if _SHADOW_RAMP
+        shadowRamp = SampleDirectShadowRamp(TEXTURE2D_ARGS(_ShadowRampTex, sampler_ShadowRampTex), NdotLRemap);
+    #endif
+        
+        // NdotV modify fresnel
+
+        // ilmShadow
+        shadowRamp.rgb = lerp(_SecShadowColor.rgb, shadowRamp.rgb, ilmAO);
+```
+
+**(2) 直接光部分**
+在直接光照计算中计算DFG，其中D可以用贴图控制一下，除去[菲涅尔](https://zhida.zhihu.com/search?q=菲涅尔&zhida_source=entity&is_preview=1)的高光结果用来采specRampTex，将采样结果与原本高光叠加一下，最后混合乘上F项与shadowRamp的颜色。
+
+```glsl
+// Direct
+        float3 directDiffColor = albedo.rgb;
+        float perceptualRoughness = PerceptualSmoothnessToPerceptualRoughness(smoothness);
+        float roughness           = max(PerceptualRoughnessToRoughness(perceptualRoughness), HALF_MIN_SQRT);
+        float roughnessSquare     = max(roughness * roughness, HALF_MIN);
+        float3 F0 = lerp(0.04, albedo, metallic);
+        float NDF = DistributionGGX(NdotH, roughnessSquare);
+        float G = GeometrySmith(NdotLRemap, NdotV, pow(roughness + 1.0, 2.0) / 8.0);
+        float3 F = fresnelSchlick(HdotV, F0);
+    
+        // GGX specArea remap
+        NDF = NDF * ilmSpecMask;
+        float3 kSpec = F;
+        // LightUpDiff: (1.0 - F) => (1.0 - F) * 0.5 + 0.5
+        float3 kDiff = ((1.0 - F) * 0.5 + 0.5) * (1.0 - metallic);
+        float3 nom = NDF * G * F;
+        float3 denom = 4.0 * NdotV * NdotLRemap + 0.0001;
+        float3 BRDFSpec = nom / denom;
+        directDiffColor = kDiff * albedo;
+        float3 directSpecColor = BRDFSpec * PI;
+    #if _SHADOW_RAMP
+        float specRange= saturate(NDF * G / denom.x);
+        half4 specRampCol = SampleDirectSpecularRamp(TEXTURE2D_ARGS(_ShadowRampTex, sampler_ShadowRampTex), specRange);
+        directSpecColor = clamp(specRampCol.rgb * 3 + BRDFSpec * PI / F, 0, 10) * F * shadowRamp;
+    #endif
+        // Compose direct lighting
+        float3 directLightResult = (directDiffColor * shadowRamp + directSpecColor * NdotLRemap)
+                                  * mainLight.color * mainLight.shadowAttenuation * directOcclusion;
+```
+
+![img](https://pic1.zhimg.com/80/v2-fa25e744d419db8f0972e1fbb019d17c_720w.webp)
+
+**(3) 环境光部分**
+添加自定义的环境光漫反射颜色，与本身环境光做一个lerp，受但又不全受环境影响，感觉之后也可以像[蓝色协议](https://zhida.zhihu.com/search?q=蓝色协议&zhida_source=entity&is_preview=1)那样算一个色值要好点。
+环境光[镜面反射](https://zhida.zhihu.com/search?q=镜面反射&zhida_source=entity&is_preview=1)也是同样道理。去加一个cubemap或matcap来作为环境光镜面反射的来源，也可以与本身的进行lerp。
+但少前2这部分是不是没弄呀只用了个cubemap，不是很确定。
+
+![img](https://pic3.zhimg.com/80/v2-e0f0fbfabef99c1f41021622f49f395c_720w.webp)
+
+**(4) 叠加**
+计算结果叠加后，调一调可以得到游戏中差不多的效果
+
+![img](https://pic1.zhimg.com/80/v2-b79c047b019cfa54516dc8c741b14d4e_720w.webp)
+
+### 3. Hair、fringe：
+
+
+
+**(1) 头发高光**
+头发的uv排列整齐，区域形状是画好的，少前2这用的是根据uv进行上下移动来表现动态变化，还是用下雷老师的图示例~
+
+
+
+![img](https://pica.zhimg.com/80/v2-e0e4fc302baa8b6b88d883c72dde052a_720w.webp)
+
+再来看看veprin头上的高光，应该就明白了这里是怎么做了，用个BlinnPhong算出高光再乘上[mask](https://zhida.zhihu.com/search?q=mask&zhida_source=entity&is_preview=1)，给个最小值来个基础色。
+
+![img](https://pic2.zhimg.com/80/v2-3b4ff836b8df9c2d87ba1aa13623bb87_720w.webp)
+
+
+
+![动图封面](https://pic3.zhimg.com/v2-b9c21e153db9feb2c76c91795aa031ac_b.jpg)
+
+
+
+```glsl
+// Hair Spec
+float anisotropicOffsetV = - viewDirWS.y * _AnisotropicSlide + _AnisotropicOffset;
+half3 hairSpecTex = SAMPLE_TEXTURE2D(_HairSpecTex, sampler_LinearClamp, float2(UV1.x, UV1.y + anisotropicOffsetV));
+float hairSpecStrength = _SpecMinimum + pow(NdotH, _BlinnPhongPow) * NdotLRemap;
+half3 hairSpecColor = hairSpecTex * _SpecColor * hairSpecStrength;
+```
+
+
+
+**(2) 刘海投影**
+模板测试~
+
+![img](https://pica.zhimg.com/80/v2-9455da198574cc2e3d34a209c6b7eee6_720w.webp)
+
+角色正常绘制，finger在顶点着色中根据灯光方向进行偏移，不过相机视角在上面和下面的时候，y方向偏移的距离一样，但实际光照的时候我们在头顶看是看不到阴影的，所以这块加一个camDirFactor
+
+![img](https://pic2.zhimg.com/80/v2-e10346824bcf22f650f379ca9020bd01_720w.webp)
+
+```csharp
+// 本文中所用到的StencilUsage
+//MaterialMask            = 0b_1110_0000,
+//...
+//MaterialCharacterLit    = 0b_0110_0000,
+//MaterialCharFeatureMask = 0b_0110_0011,
+//MaterialFringeShadow    = 0b_0110_0001,
+//MaterialEyelash         = 0b_0110_0010,
+
+Name "FringeShadowCaster"
+Tags
+{
+    "LightMode" = "GBufferFringeShadowCaster"
+}
+Stencil
+{
+        Ref[_FriStencil]//MaterialCharacterLit
+        Comp[_FriStencilComp]//Equal
+        Pass[_FriStencilOp]//IncrementSaturate
+        ReadMask[_FriStencilReadMask]//MaterialFringeShadow
+        WriteMask[_FriStencilWriteMask]//MaterialFringeShadow
+}
+Cull Back
+ZWrite Off
+ColorMask [_FriColorMask]
+...
+FringeShadowCaster_v2f FringeShadowCasterVert(FringeShadowCaster_a2v v)
+{
+    FringeShadowCaster_v2f o;
+    Light mainLight = GetMainLight();
+    float3 lightDirWS = normalize(mainLight.direction);
+    float3 lightDirVS = normalize(TransformWorldToViewDir(lightDirWS));
+    // Cam is Upward: let shadow close to face.
+    float3 camDirOS = normalize(TransformWorldToObject(GetCameraPositionWS()));
+    float camDirFactor = 1 - smoothstep(0.1, 0.9, camDirOS.y);
+    float3 positionVS = TransformWorldToView(TransformObjectToWorld(v.vertex));
+        
+    positionVS.x -= 0.004 * lightDirVS.x * _ScreenOffsetScaleX;
+    positionVS.y -= 0.007 * _ScreenOffsetScaleY * camDirFactor;
+    o.positionHCS = TransformWViewToHClip(positionVS);
+    return o;
+}
+```
+
+然后再渲一遍脸部，Face的shader中加一个Pass把匹配模板的地方都输出成阴影。
+
+```glsl
+Name "FringeShadowReceiver"
+Tags
+{
+    "LightMode" = "GBufferFringeShadowReceiver"
+}
+Stencil
+{
+        Ref[_FriStencil]//MaterialCharacterLit
+        Comp[_FriStencilComp]//Equal
+        Pass[_FriStencilOp]//Keep
+        ReadMask[_FriStencilReadMask]//MaterialFringeShadow
+        WriteMask[_FriStencilWriteMask]//MaterialFringeShadow
+}
+Cull Back
+ZWrite Off
+ColorMask [_FriColorMask]
+```
+
+
+
+![动图封面](https://picx.zhimg.com/v2-5c5be2de4c0e5f45ec254b37cd671c9f_b.jpg)
+
+
+
+刘海投影
+
+插一句，只用原模型来做[只能这样](https://zhida.zhihu.com/search?q=只能这样&zhida_source=entity&is_preview=1)了，但是跟我喜欢的效果不一样，我比较喜欢做成下面这种的阴影，加一个mesh片绑骨骼应该也可以也不耗，早就有这个做法。
+
+![img](https://pic2.zhimg.com/80/v2-1507261d105cdb29325c7fc44baffd3f_720w.webp)
+
+### 4. Face：
+
+常规的SDF的阴影，渐变区域我也用的sigmoid：
+
+![img](https://pic3.zhimg.com/80/v2-a34ea79cb80267c1c7fcc727e5bb9792_720w.webp)
+
+```glsl
+// vert
+// Face lightmap dot value
+Light mainLight = GetMainLight();
+float3 lightDirWS = mainLight.direction;
+lightDirWS.xz = normalize(lightDirWS.xz);
+_FaceRightDirWS.xz = normalize(_FaceRightDirWS.xz);
+o.faceLightDot.x = dot(lightDirWS.xz, _FaceRightDirWS.xz);
+o.faceLightDot.y = saturate(dot(-lightDirWS.xz, _FaceFrontDirWS.xz) * 0.5 + _ShadowOffset);
+
+// frag
+// FaceLightMap
+float2 faceLightMapUV = UV1;
+faceLightMapUV.x = 1 - faceLightMapUV.x;
+faceLightMapUV.x = i.faceLightDot.x < 0 ? 1 - faceLightMapUV.x : faceLightMapUV.x;
+half4 faceLightMap = SAMPLE_TEXTURE2D(_FaceLightMap, sampler_FaceLightMap, faceLightMapUV);
+half faceSDF = faceLightMap.r;
+half faceShadowArea = faceLightMap.a;
+float faceMapShadow = sigmoid(faceSDF, i.faceLightDot.y, _ShadowSmooth * 10) * faceShadowArea;
+shadowArea = (1 - faceMapShadow) * _ShadowStrength;
+```
+
+鼻尖高光的部分是最神奇的：
+
+![img](https://picx.zhimg.com/80/v2-95c975f81eca1154d2b4fdfd9a512e39_720w.webp)
+
+单看嘴唇部分，应该是这两个一起表现的高光点的移动，易得是两个step结果相乘，能想到做成这样是真的牛批。与sdf阴影会叠一块不好看，可以选择加个smoothstep控一下。
+
+```glsl
+// Nose Spec
+float faceSpecStep = clamp(i.faceLightDot.y, 0.001, 0.999);
+faceLightMapUV.x = 1 - faceLightMapUV.x;
+faceLightMap = SAMPLE_TEXTURE2D(_FaceLightMap, sampler_FaceLightMap, faceLightMapUV);
+float noseSpecArea1 = step(faceSpecStep, faceLightMap.g);
+float noseSpecArea2 = step(1 - faceSpecStep, faceLightMap.b);
+float noseSpecArea = noseSpecArea1 * noseSpecArea2;
+// alternative: noseSpecArea *= smoothstep(_NoseSpecMin, _NoseSpecMax, 1 - i.faceLightDot.y)
+```
+
+
+
+![动图封面](https://pic3.zhimg.com/v2-a58f25b96406d3c741fd3fd661ed0d54_b.jpg)
+
+
+
+鼻尖高光点的移动
+
+插一句，我这只将鼻尖高光加到了平行光照到的地方，感觉背光处也可以加一点淡淡的。脸颊高光点的地方是不是也能加上来。
+
+
+
+![img](https://pic4.zhimg.com/80/v2-8e525c67fbdc69799b8835a5acdd3c8f_720w.webp)
+
+
+
+![动图封面](https://pic1.zhimg.com/v2-47258641ee34b64522b539d1ffa83ba4_b.jpg)
+
+
+
+### 5. Eye、EyeBlend:
+
+主体内陷的模型，不是单层外轮廓那种，可以加视差偏移uv加强一下效果也可以不加。
+中间部分模型为高光，最外侧模型为阴影，都是透明进行叠加或混合。最外侧阴影这个效果真好，能根据视角移动产生变化。
+
+
+
+![img](https://pic3.zhimg.com/80/v2-98a995b722c2aeda9303d1a982cacc82_720w.webp)
+
+但这里我感觉还是单层外轮廓加视差偏移比较好，游戏中眼睛是没有透过头发的，如果要做透过的，就会出现头发把透明片挡住的情况。不是很明白这里的高光点为什么做成透明的，个人认为有两个改进的地方：
+
+![img](https://picx.zhimg.com/80/v2-b5e75fd1f7cb05eab9e6a01d338df1c3_720w.webp)
+
+
+
+1. 这里和eyelash睫毛不知道为什么没把材质赋一起。一个透一个断了。
+2. 眼睛高光和眼睛主体做一起走不透明的渲染。
+
+```glsl
+// Eye
+// Parallax
+float3 viewDirOS = TransformWorldToObjectDir(viewDirWS);
+viewDirOS = normalize(viewDirOS);
+float2 parallaxOffset = viewDirOS.xy;
+parallaxOffset.y *= -1;
+float2 parallaxUV = i.uv + _ParallaxScale * parallaxOffset;
+// parallaxMask
+float2 centerVec = i.uv - float2(0.5, 0.5);
+half centerDist = dot(centerVec, centerVec);
+half parallaxMask = smoothstep(_ParallaxMaskEdge, _ParallaxMaskEdge + _ParallaxMaskEdgeOffset, 1 - centerDist);
+// Tex Sample
+half4 mainTex = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, lerp(UV, parallaxUV, parallaxMask));
+...
+
+// Eye spec add
+BlendOp [_BlendOp]// Add
+Blend [_BlendSrc] [_BlendDst]// SrcAlpha One
+
+
+// Eye shadow blend
+BlendOp [_BlendOp]// Add
+Blend [_BlendSrc] [_BlendDst]// SrcColor Zero
+```
+
+### 6. Plush：
+
+普通的多Pass毛发，根据噪声图直接拉出顶点没有其他操作。
+
+```glsl
+v2f vert (a2v v)
+{
+    ...
+    float offsetDist = _MULTIPASS_PARAMS.z * _FurLength;
+    float3 offsetPositionWS = TransformObjectToWorld(v.vertex);
+    float3 normalWS = TransformObjectToWorldNormal(v.normal);
+    offsetPositionWS += offsetDist * normalWS;
+    o.positionHCS = TransformWorldToHClip(offsetPositionWS);
+    o.positionWS = offsetPositionWS;
+    ...
+    o.clipThreshold = _FurCLipMin + (_FurCLipMax - _FurCLipMin) * pow(_MULTIPASS_PARAMS.z, _FurPowShape);
+    return o;
+}
+FragmentOutput frag(v2f i)
+{
+    UNITY_SETUP_INSTANCE_ID(i);
+    // Fur Clip
+    half furNoise = SAMPLE_TEXTURE2D(_FurNoise, sampler_FurNoise, i.uv.zw);
+    clip(furNoise - i.clipThreshold);
+    ...
+}
+```
+
+7. 管线设置：
+
+在RenderGBuffer阶段插入的Pass
+
+
+
+![img](https://pic2.zhimg.com/80/v2-957a61dc9e43ed9b1ee2f4c6c018d6fd_720w.webp)
+
+## 五、其他实现
+
+
+到这部分就不是纯还原游戏中的效果了，主要是边缘光和多光源的延迟着色计算。
+
+### 1. 边缘光
+
+如果要深入的话，一个是宽度控制，一个是跟阴影的结合，或是单独的边缘光光源。
+
+![img](https://pic2.zhimg.com/80/v2-248bb62db4962a3e2f6af92ec54c373f_720w.webp)
+
+目前只是在延迟着色中，计算了个深度偏移边缘光，角色只做屏幕左右两边深度偏移，场景的话就向灯光方向。计算向光和背光区域，分别给个暖色和冷色。
+
+![img](https://pic2.zhimg.com/80/v2-ab8f721b0f36596db27ed8076b8a3be5_720w.webp)
+
+### 2. 多光源
+
+未做[特殊处理](https://zhida.zhihu.com/search?q=特殊处理&zhida_source=entity&is_preview=1)，比如面部阴影、ramp等，最大的原因是延迟这块不好做，实在要做可以查表。另外我不喜欢油油的，把光滑度减弱了。
+光照部分：
+
+
+
+![img](https://pic1.zhimg.com/80/v2-0a5d258396e8ea5cedd292335548d8f4_720w.webp)
+
+边缘光向光源方向偏移。
+
+![img](https://pica.zhimg.com/80/v2-1da10bf693d4ff5b40f01c53eb56d7ec_720w.webp)
+
+叠加后：
+
+
+
+![img](https://pic4.zhimg.com/80/v2-adb2a50c06922a15fe8be11889237a6d_720w.webp)
+
+### 3. 描边光照
+
+要做好看的断裂采一张噪声就可以。
+
+![img](https://pic2.zhimg.com/80/v2-4cb961c28cdf2d53a0101e33cd246405_720w.webp)
+
+计算后发现还挺可以的就没有加噪声了：
+
+![img](https://pic1.zhimg.com/80/v2-53cc47143da71417acfa09bb8ac0b310_720w.webp)
+
+多光源的描边：
+
+
+
+![img](https://picx.zhimg.com/80/v2-a0aa7d01864856424603d11cadc41c87_720w.webp)
+
+写法上不要纠结，就是NdotL截个范围。
+
+```glsl
+// Outline
+if ((data.materialFlags & kCharacterMaterialFlagOutline) != 0)
+{
+    float lightMask = 1 - smoothstep(0.5, 0.8, abs(lightDirVS.z));
+    float outLineLightResult = step(0.8, NdotL * NdotL) * alpha * lightMask;
+#if defined(_DIRECTIONAL)
+    return half4(unityLight.color * outLineLightResult, 1);
+#else
+    outLineLightResult = step(0.8, pow(NdotL, 3)) * alpha;
+    return half4(unityLight.color * outLineLightResult, 1);
+#endif
+}
+```
+
+## 七、参考文章
+
+
+https://www.zhihu.com/people/zi-xie-42-53/posts
+[https://github.com/JasonMa0012/JTRP](https://link.zhihu.com/?target=https%3A//github.com/JasonMa0012/JTRP)
+https://zhuanlan.zhihu.com/p/57897827
+https://zhuanlan.zhihu.com/p/361993606
+[https://zhuanlan.zhihu.com/p/43](https://zhuanlan.zhihu.com/p/434576854)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## **知乎案例**
 
 ## **第一章、Disney Principled BRDF**
 
