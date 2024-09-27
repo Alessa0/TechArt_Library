@@ -6,11 +6,1230 @@
 
 简单来说PBR式卡渲就是用一些小trick来体现例如sss，平滑的明暗过度，真实感的高光等PBR流程中的特性。
 
+### 从NdotL到PBR
+
+本篇内容将会用最通俗易懂的方式讲解PBR到NPR的各种渲染效果实现，首先让我们从最基础的光照效果开始
+
+（本篇内容的所有实现都是基于Unity的[URP](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=URP&zhida_source=entity)管线，想一步步跟着实现的话最好先新建一个URP项目）
+
+首先新建一个Unlit [shader](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=shader&zhida_source=entity)，并基于该shader创建材质赋上模型，你会看到一个本来有光照的球变成了这样：
+
+![img](https://pic1.zhimg.com/80/v2-276d36d3f2f49287b80a7b3075c8ce56_720w.webp)
+
+Unlit
+
+打开shader我们可以发现，frag函数中是这样返回的
+
+```glsl
+// sample the texture
+fixed4 col = tex2D(_MainTex, i.uv);
+// apply fog
+UNITY_APPLY_FOG(i.fogCoord, col);
+return col;
+```
+
+写过shader的同学应该都能看出来，这里是返回了一个贴图颜色
+
+```glsl
+_MainTex ("Texture", 2D) = "white" {}
+```
+
+在Properties中，这个贴图是默认定义为白色，所以就会返回一个纯白的球体了
+
+我们在shader中获取到模型的法线
+
+```glsl
+#pragma vertex vert
+#pragma fragment frag
+struct Attributes
+{
+    float4 positionOS : POSITION;
+    float4 normalOS : NORMAL;
+    float4 tangentOS:TANGENT;
+    float4 texcoord : TEXCOORD0;
+};
+struct Varings
+{
+    float4 positionCS : SV_POSITION;
+    float4 uv : TEXCOORD0;
+    float3 positionWS : TEXCOORD1;
+    float3 viewDirWS : TEXCOORD2;
+    float3 TtoW0  : TEXCOORD3;
+    float3 TtoW1  : TEXCOORD4;
+    float3 TtoW2  : TEXCOORD5;
+    float4 shadowCoord : TEXCOORD6;
+};
+```
+
+然后再frag函数中稍微加两行代码：（此时已经替换成了HLSL的写法）
+
+```glsl
+Light light = GetMainLight(TransformWorldToShadowCoord(IN.positionWS));
+half NdotL = saturate(dot(normalWS, light.direction));
+```
+
+然后让frag函数返回`return float4(NdotL, NdotL, NdotL, 1);` 再重新返回Scene面板观察小球，变成了这样：
+
+![img](https://pic2.zhimg.com/80/v2-84ae4a14043a510cb66b369d00059341_720w.webp)
+
+NdotL
+
+这个就是最基本的光照模型
+
+![img](https://pic3.zhimg.com/80/v2-e10ad134a5f2b17478cb123dde5ec17a_720w.webp)
+
+NdotL = cosθ
+
+我们简单的返回了光照和法线之间的角度值，就能获得一个接近光照效果的结果。在此基础上，我们加入一些[镜面光照](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=镜面光照&zhida_source=entity)，也就是传统意义上的高光效果。根据日常生活的经验我们可以知道，当视角和光线的[反射角度](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=反射角度&zhida_source=entity)越接近，人眼看到的结果就越亮
+
+![img](https://pic1.zhimg.com/80/v2-20036087da842fc18b045fe375ee6334_720w.webp)
+
+viewDir · reflectDir
+
+我们对刚刚的frag函数稍作修改:
+
+```glsl
+float3 reflectDir = reflect(-light.direction, normalWS);
+float spec = max(dot(IN.viewDirWS, reflectDir), 0.0);
+return float4(spec, spec, spec, 1);
+```
+
+我们将这个结果输出后法线，确实有了一点高光的味道，但是似乎和现实生活中的高光有点不太一样，真正的高光应该比这个收敛一些
+
+![img](https://pica.zhimg.com/80/v2-d9f5ea4c99310ea8430cc29d780ad0a4_720w.webp)
+
+单纯的点乘效果似乎不太好
+
+我们通过一个指数函数去达到收敛的效果，故将上述的 spec 值计算公式改为`float spec = pow(max(dot(IN.viewDirWS, reflectDir), 0.0), 32);` 能看到小球上多了一块明显的光斑，这就是高光。
+
+![img](https://pica.zhimg.com/80/v2-fe9e7a9ba17471a86ca4bf87d2716c12_720w.webp)
+
+通过指数函数收敛
+
+达成这个效果后，我们可以揭晓，这就是经典的[冯氏光照模型](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=冯氏光照模型&zhida_source=entity)。
+
+了解了基本的光照模型后，我们继续深入优化光照效果，除了冯氏光照模型以外，还有[布林冯模型](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=布林冯模型&zhida_source=entity)，通过半程向量优化了高光的拖尾效果，更有兰伯特，[半兰伯特模型](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=半兰伯特模型&zhida_source=entity)等其他的不一样的模型，但基本原理是一致的，除了这些最基本的光照模型以外，我们来到了PBR模型
+
+PBR是指基于物理的渲染(Physically Based Rendering)，我们完全不必被冗长的公式所吓倒，大致理解公式的由来后，一步一步去实现可以发现，PBR其实不过也是一个稍微复杂点的光照模型而已
+
+如果你曾看过PBR的公式，那么应该已经忘了，这玩意长这样 ∫Ωfr(p,ωi,ωo)Li(p.ωi)n⋅ωidωi ，一般人会让你从[辐射度量学](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=辐射度量学&zhida_source=entity)开始学起，从立体角到辐射率再到辐射通量......其实这个是 [反射率方程](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=反射率方程&zhida_source=entity)的通式，他不代表任何实现和任何光照模型，其中我们只需要知道 fr(p,ωi,ωo) 即为[双向反射分布函数](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=双向反射分布函数&zhida_source=entity)，也就是我们需要自己实现的光照模型部分，最后这个通式其实就可以简化成 fr(p,ωi,ωo)⋅NdotL ,关于其他部分的原理和内容知道有这么回事就行（老学究和[学院派](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=学院派&zhida_source=entity)们别急，并不是让学习者不去了解这部分，只是我想从比较通俗的角度去让公式更接地气一点）
+
+图形学最快的学习方式是上手做，从现在比较常用的 Cook-Torrance BRDF 漫反射模型入手，Learn-OpenGL网站上有比较详细的理论内容，
+
+该模型的内容是这样的 fr=kdflambert+ksfcook−torrance 我们可以把该模型用人话描述一遍： 渲染结果某系数漫反射颜色某系数高光颜色渲染结果=某系数×漫反射颜色+(1−某系数)×高光颜色
+
+因此可以看出，在这个模型的双向反射分布函数的结构里，有三项比较重要的内容：1. 漫反射颜色 2. 高光颜色 3. 系数
+
+根据上述结构，我们可以在 shader 内定义如下[结构体](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=结构体&zhida_source=entity)
+
+```glsl
+struct PBRLightingInfo
+{
+    half3 Kd;
+    float3 diffuse;
+    float3 specular;
+};
+```
+
+然后就是逐步计算这几部分内容了
+
+### diffuse/Lambert
+
+这部分内容是最简单的，直接上公式 flambert=cπ ,其中c表示表面颜色
+
+### specular
+
+这部分是该PBR模型的重点内容了，首先把公式先扔出来 fcook−torrance=DFG4(ωo⋅n)(ωi⋅n) 在Learn-OpenGL 网站上这部分内容也很清晰，D F G三部分内容分别指的是[法线分布函数](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=法线分布函数&zhida_source=entity)(Normal **D**istribution Function)，[菲涅尔方程](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=菲涅尔方程&zhida_source=entity)(**F**resnel Function)和几何函数(**G**eometry Function)
+
+### 法线分布函数 D
+
+表达式： D=a2π((n⋅h)2(a2−1)+1)2 h为半程向量，a为粗糙度的平方值
+
+```glsl
+// D
+half a = pow(r, 2);
+half a2 = pow(a, 2);
+half D = a2 / (pi * pow((pow(NdotH, 2) * (a2 - 1) + 1), 2));
+```
+
+![img](https://pica.zhimg.com/80/v2-976eca4dd24562135d89214150953d64_720w.webp)
+
+learn-opengl图例
+
+这是网站上给出的不同粗糙度情况下的D值输出
+
+下列图是我们自己粗糙图为 0.1-1.0 的D值输出，可以看出基本是一致的
+
+![img](https://pic2.zhimg.com/80/v2-84d1eb324cda4f8b2c3480d8edfcfbd1_720w.webp)
+
+Unity中的实现结果
+
+### 几何函数G
+
+G=n⋅v(n⋅v)(1−k)+k 其中 k=(a+1)28
+
+```glsl
+half GGX(float cos, float k)
+{
+    return cos / (k + (1 - k) * cos);
+}
+...
+//G
+half k = pow((a + 1), 2) / 8;
+half G = GGX(saturate(NdotL), k) * GGX(saturate(NdotV), k);
+```
+
+![img](https://pica.zhimg.com/80/v2-9fc186779541c123260a3216eda11dbe_720w.webp)
+
+learn-opengl图例
+
+### 菲涅尔F
+
+F=F0+(1−F0)(1−(h⋅v))5
+
+```glsl
+//F
+half3 F0 = half3(0.04, 0.04, 0.04);
+F0 = lerp(F0, albedo, m);
+half3 F = F0 + (1 - F0) * pow(abs(1 - NdotV), 5);
+```
+
+### Kd漫[反射系数](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=反射系数&zhida_source=entity)
+
+计算完DFG三项之力后就是Kd参数
+
+```glsl
+half Ks = F;
+half3 Kd = saturate(half3(1, 1, 1) - Ks) * (1 - m);
+```
+
+计算完这三大块内容后，我们组合成PBR结构体
+
+```glsl
+half3 specular = (D * F * G) / max((4 * NdotV * NdotL), 0.002);
+
+PBRLightingInfo pbr;
+pbr.Kd = Kd;
+pbr.diffuse = lambert;
+pbr.specular = specular;
+```
+
+最终我们在 frag 函数内如下返回
+
+```
+return ((PBR.Kd) * PBR.diffuse + (1 - PBR.Kd) * PBR.specular) * NdotL
+```
+
+![img](https://pic1.zhimg.com/80/v2-387eebd51b342707dd706cf2dd244ee0_720w.webp)
+
+PBR效果展示
 
 
-### 材质设计思路
 
-充分利用真实感渲染的特性以及PBR的思想，补足卡通渲染在金属、皮革等材质上的不足，加上ibl同时探索材质抽象方式在整体和局部的合理表达。
+你能分辨出哪一个是Unity自带的Lit吗？
+
+------
+
+### 各向异性高光
+
+传统的一个cook-torrance模型就如上所示（IBL后续再说），但是在很多时候，这种圆润光滑的高光并不适用，比如在具有各向异性的金属以及头发类似的材质上，所以接下来我们对上述双向反射分布函数的高光部分进行一部分改造：
+
+主要的改造部分在 D 和 G 上
+
+### 各向异性法线分布函数 D-anisotropy
+
+我们将`_Anisotropy`定义为`Range(-1,1)`的 float，以此来控制
+
+```glsl
+// D_aniso
+half anisotropy = _Anisotropy;
+float at = max(r * (1.0 + anisotropy), 0.001);
+float ab = max(r * (1.0 - anisotropy), 0.001);
+half a_2 = at * ab;
+half TdotH = dot(t, h);
+half BdotH = dot(b, h);
+half D_a = 1 / ((pi * at * ab) * pow((pow(TdotH, 2) / pow(at, 2) + pow(BdotH, 2) / pow(ab, 2) + pow(NdotH, 2)), 2));
+```
+
+### 各向异性几何函数 G-anisotropy
+
+```glsl
+// G_aniso
+half TdotV = dot(t, v);
+half TdotL = dot(t, l);
+half BdotV = dot(b, v);
+half BdotL = dot(b, l);
+float lambdaV = NdotL * length(half3(at * TdotV, ab * BdotV, NdotV));
+float lambdaL = NdotV * length(half3(at * TdotL, ab * BdotL, NdotL));
+float v_a = saturate(0.5 / (lambdaV + lambdaL));
+```
+
+下列效果是Anisotropy值从-0.8-0.8过渡的效果：
+
+![img](https://pic3.zhimg.com/80/v2-17b746089c4864dd7626c29bb8dbc840_720w.webp)
+
+各向异性高光效果
+
+### IBL光照
+
+Unity本身对生成或导入的 CubeMap 都是可以生成 [mipmaps](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=mipmaps&zhida_source=entity) 的，我们在采样的时候将 roughness 与 mipmaps 的生成个数相乘就能根据粗糙程度采样到合适的环境光效果。这里的ambient计算方式是我自己琢磨出来的，不能说很符合物理，但是一定符合图形学[第一定律](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=第一定律&zhida_source=entity) “看上去是对的他就是对的”。整体的思路就是尽量贴近 Unity 本身的 Lit 材质效果。
+
+```glsl
+half4 envCol = texCUBElod(_Environment, half4(reflectDir.xyz, roughness * 7));
+half3 envHDRCol = DecodeHDREnvironment(envCol, unity_SpecCube0_HDR);
+pbr.ambient = lerp( lerp(ambient * 0.9 + irradiance * 0.1, ambient, (1 + 1 / 10) * (1 - 1 / (10 * r + 1))),
+            	     lerp(irradiance, irradiance * 0.5, r),m);
+```
+
+![img](https://pic1.zhimg.com/80/v2-0463248a42bbf17b6cc40d14cf2b992e_720w.webp)
+
+roughtness = 1.0
+
+![img](https://pic4.zhimg.com/80/v2-4b4783635d8145e5b6b3455dea57bd11_720w.webp)
+
+roughtness = 0.5
+
+![img](https://pic3.zhimg.com/80/v2-57375ceaf11913d5611ed98587df1fa6_720w.webp)
+
+roughtness = 0
+
+可以看出来还是有一点区别，但是基本效果已经大差不差了。
+
+------
+
+
+
+### 从PBR到[卡通渲染](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=卡通渲染&zhida_source=entity)
+
+本篇内容主要实现的是类似[少女前线2](https://zhida.zhihu.com/search?content_id=233892022&content_type=Article&match_order=1&q=少女前线2&zhida_source=entity)那种 PBR+NPR 混合风格的渲染方式，仔细观察能发现角色身上的高光是很细节的，但是同时也具有明暗界限分明的特征。这里笔者也不清楚他们究竟采用的是何种渲染方式，但基于结果，我们可以采用明暗两部分分别采用PBR高光和普通卡渲的方式去达到类似的效果。（这里不考虑Matcap实现方式，毕竟是一种很作弊的实时trick~,虽然在实机的角色展示中可能大概率为了性能还是采用了matcap）
+
+关于描边等卡通渲染常见的概念和实现方式可以参考我之前写的另一篇文章
+
+[Unity-URP 中的非真实感渲染23 赞同 · 0 评论文章](https://zhuanlan.zhihu.com/p/648899016)
+
+首先是在shader中实现一遍PBR先，这里直接省略了，和上文内容类似。同时进行法线纹理采样和应用
+
+```glsl
+// vert函数内
+float3 worldPos = mul(UNITY_MATRIX_M, IN.positionOS).xyz;
+float3 worldNormal = TransformObjectToWorldNormal(IN.normalOS);
+float3 worldTangent = TransformObjectToWorldDir(IN.tangentOS.xyz);
+float3 worldBinormal = cross(worldNormal, worldTangent) * IN.tangentOS.w;
+
+OUT.TtoW0 = float4(worldTangent.x, worldBinormal.x, worldNormal.x, worldPos.x);
+OUT.TtoW1 = float4(worldTangent.y, worldBinormal.y, worldNormal.y, worldPos.y);
+OUT.TtoW2 = float4(worldTangent.z, worldBinormal.z, worldNormal.z, worldPos.z);
+
+// frag函数内
+half3 bump = UnpackNormal(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, IN.uv.xy));//对法线纹理采样
+bump.xy *= _NormalScale;
+bump.z = sqrt(1.0 - saturate(dot(bump.xy, bump.xy)));
+bump = normalize(half3(dot(IN.TtoW0.xyz, bump), dot(IN.TtoW1.xyz, bump), dot(IN.TtoW2.xyz, bump)));
+```
+
+为了方便修改卡渲的效果，我们定义一个明暗分界的参数 LowBoard 和 Distance，名字取的有点费解，大概意思就是开始区分明暗界限的阈值和 Smoothstep 的距离，LowBoard 越大暗部越大，Distance越大越接近NdotL结果，越小越接近step结果
+
+```
+half diffuseRad = smoothstep(_LowBoard, saturate(_LowBoard + _Distance), NdotL * shadow * ao);
+```
+
+输出 diffuseRad 的效果图如下所示：
+
+![img](https://pic1.zhimg.com/80/v2-8e01afdb780023c6247295d2c21459ba_720w.webp)
+
+Lowboard 从 0.0 - 0.5
+
+![img](https://pica.zhimg.com/80/v2-7a5f7835c815cf88edbb3d72b1ce1b56_720w.webp)
+
+distance 从 0.0 - 1.0
+
+
+
+除此之外可以额外定义亮部和暗部的颜色偏移值，以达到Ramp贴图的效果
+
+我们将PBR计算出的结果作为中间结果，用具有明暗分界的diffuseRad作为参数去插值。其中亮部额外通过一个可调整的PBRFractor去控制从固有色到PBR渲染结果直接的一个插值效果。
+
+```glsl
+half3 midres = ((PBR.Kd) * PBR.diffuse + (1 - PBR.Kd) * PBR.specular) * NdotL + PBR.ambient;
+half3 brightColor = lerp(_BrightColor * midres, _BrightColor * PBR.diffuse, 1-_PBRfractor);
+half3 res = lerp(_DarkColor * PBR.diffuse * (1 - metallic), brightColor, diffuseRad) + emmColor + rimLightColor;
+```
+
+这里插值的时候我们把暗部的颜色额外乘以了一个`1-metallic`就是为了实现在不同金属度下材质整体的明暗保持统一
+
+最后加上法线外扩的描边，最终就能得出这样的结果：
+
+![img](https://picx.zhimg.com/80/v2-36de4b34939bb66d401428f40ddd475f_720w.webp)
+
+
+
+
+
+## 材质设计思路
+
+充分利用真实感渲染的特性以及PBR的思想，补足卡通渲染在金属、皮革等材质上的不足，加上ibl环境光以及Specular等特性的支持，同时探索材质抽象方式在整体和局部的合理表达。
+
+### BRDF Data
+
+使用URP自带的
+
+```glsl
+struct BRDFData
+{
+    half3 albedo;
+    half3 diffuse;
+    half3 specular;
+    half reflectivity;
+    half perceptualRoughness;
+    half roughness;
+    half roughness2;
+    half grazingTerm;
+
+    // We save some light invariant BRDF terms so we don't have to recompute
+    // them in the light loop. Take a look at DirectBRDF function for detailed explaination.
+    half normalizationTerm;     // roughness * 4.0 + 2.0
+    half roughness2MinusOne;    // roughness^2 - 1.0
+};
+```
+
+### Surface Data
+
+```glsl
+#ifndef UNIVERSAL_NPR_SURFACE_DATA_INCLUDED
+#define UNIVERSAL_NPR_SURFACE_DATA_INCLUDED
+
+// Must match Universal ShaderGraph master node
+struct NPRSurfaceData
+{
+    half3 albedo;
+    half3 specular;
+    half3 normalTS;
+    half3 emission;
+    
+    half  metallic;
+    half  smoothness;
+    half  occlusion;
+    half  alpha;
+    half  clearCoatMask;
+    half  clearCoatSmoothness;
+    half  specularIntensity;
+    half  diffuseID;
+    half  innerLine;
+    
+    #if EYE
+        half3 corneaNormalData;
+        half3 irisNormalData;
+        half  parallax;
+    #endif
+};
+
+struct AnisoSpecularData
+{
+    half3 specularColor;
+    half3 specularSecondaryColor;
+    half specularShift;
+    half specularSecondaryShift;
+    half specularStrength;
+    half specularSecondaryStrength;
+    half specularExponent;
+    half specularSecondaryExponent;
+    half spread1;
+    half spread2;
+};
+
+struct AngleRingSpecularData
+{
+    half3 shadowColor;
+    half3 brightColor;
+    half mask;
+    half width;
+    half softness;
+    half threshold;
+    half intensity;
+};
+
+#endif
+```
+
+### Input Data:默认URP input data，加上特殊处理需要的data
+
+```glsl
+#ifndef UNIVERSAL_NPR_INPUT_INCLUDED
+#define UNIVERSAL_NPR_INPUT_INCLUDED
+
+// Must match Universal ShaderGraph master node
+struct NPRAddInputData
+{
+    #if EYE
+        half3 corneaNormalWS;
+        half3 irisNormalWS;
+    #endif
+
+    half linearEyeDepth;
+};
+
+#endif
+```
+
+### Lighting Data
+
+```glsl
+struct LightingData
+{
+    half3 lightColor;
+    half3 HalfDir;
+    half3 lightDir;
+    half NdotL;
+    half NdotLClamp;
+    half HalfLambert;
+    half NdotVClamp;
+    half NdotHClamp;
+    half LdotHClamp;
+    half VdotHClamp;
+    half ShadowAttenuation;
+};
+```
+
+### 初始化操作
+
+```glsl
+//-----------------------------------------------------------Inputs----------------------------------------------------------------------
+void InitializeInputData(Varyings input, half3 normalTS, inout NPRAddInputData addInputData, inout InputData inputData)
+{
+    #if EYE && (defined(_NORMALMAP) || defined(_DETAIL))
+        half3 corneaNormalTS = normalTS;
+        half3 irisNormalTS = half3(-corneaNormalTS.x, -corneaNormalTS.y, corneaNormalTS.z);
+        half3 tempNormal = corneaNormalTS;
+        corneaNormalTS = lerp(corneaNormalTS, irisNormalTS, _BumpIrisInvert);
+        irisNormalTS = lerp(irisNormalTS, tempNormal, _BumpIrisInvert);
+        addInputData.corneaNormalWS = NormalizeNormalPerPixel(TransformTangentToWorld(corneaNormalTS, inputData.tangentToWorld));
+        addInputData.irisNormalWS = NormalizeNormalPerPixel(TransformTangentToWorld(irisNormalTS, inputData.tangentToWorld));
+        inputData.normalWS = addInputData.corneaNormalWS;
+    #elif (defined(_NORMALMAP) || defined(_DETAIL))
+        inputData.normalWS = TransformTangentToWorld(normalTS, inputData.tangentToWorld);
+        inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
+    #endif
+
+    #if defined(DYNAMICLIGHTMAP_ON)
+        inputData.bakedGI = SAMPLE_GI(input.staticLightmapUV, input.dynamicLightmapUV, input.vertexSH, inputData.normalWS);
+    #else
+        inputData.bakedGI = SAMPLE_GI(input.staticLightmapUV, input.vertexSH, inputData.normalWS);
+    #endif
+}
+//-----------------------------------------------------------灯光----------------------------------------------------------------------
+LightingData InitializeLightingData(Light mainLight, Varyings input, half3 normalWS, half3 viewDirectionWS,
+                                    NPRAddInputData addInputData)
+{
+    LightingData lightData;
+    lightData.lightColor = mainLight.color;
+    #if EYE
+    lightData.NdotL = dot(addInputData.irisNormalWS, mainLight.direction.xyz);
+    #else
+    lightData.NdotL = dot(normalWS, mainLight.direction.xyz);
+    #endif
+    lightData.NdotLClamp = saturate(lightData.NdotL);
+    lightData.HalfLambert = lightData.NdotL * 0.5 + 0.5;
+    half3 halfDir = SafeNormalize(mainLight.direction + viewDirectionWS);
+    lightData.LdotHClamp = saturate(dot(mainLight.direction.xyz, halfDir.xyz));
+    lightData.NdotHClamp = saturate(dot(normalWS.xyz, halfDir.xyz));
+    lightData.NdotVClamp = saturate(dot(normalWS.xyz, viewDirectionWS.xyz));
+    lightData.HalfDir = halfDir;
+    lightData.lightDir = mainLight.direction;
+    #if defined(_RECEIVE_SHADOWS_OFF)
+    lightData.ShadowAttenuation = 1;
+    #elif _DEPTHSHADOW
+    lightData.ShadowAttenuation = DepthShadow(_DepthShadowOffset, _DepthOffsetShadowReverseX, _DepthShadowThresoldOffset, _DepthShadowSoftness, input.positionCS.xy, mainLight.direction, addInputData);
+    #else
+    lightData.ShadowAttenuation = mainLight.shadowAttenuation * mainLight.distanceAttenuation;
+    #endif
+
+    return lightData;
+}
+
+
+//-----------------------------------------------------------BRDF----------------------------------------------------------------------
+
+
+#ifndef UNIVERSAL_NPR_BSDF_INCLUDED
+#define UNIVERSAL_NPR_BSDF_INCLUDED
+
+BRDFData CreateNPRClearCoatBRDFData(NPRSurfaceData surfaceData, inout BRDFData brdfData)
+{
+    BRDFData brdfDataClearCoat = (BRDFData)0;
+
+    #if _CLEARCOAT
+        // base brdfData is modified here, rely on the compiler to eliminate dead computation by InitializeBRDFData()
+        InitializeBRDFDataClearCoat(surfaceData.clearCoatMask, surfaceData.clearCoatSmoothness, brdfData, brdfDataClearCoat);
+    #endif
+
+    return brdfDataClearCoat;
+}
+
+void InitializeNPRBRDFData(NPRSurfaceData surfaceData, out BRDFData outBRDFData, out BRDFData outClearBRDFData)
+{
+    InitializeBRDFData(surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.alpha, outBRDFData);
+    outClearBRDFData = outBRDFData;
+    #if _CLEARCOAT
+    outClearBRDFData = CreateNPRClearCoatBRDFData(surfaceData, outBRDFData);
+    #endif
+}
+
+#endif
+
+
+//-----------------------------------------------------------Surface-------------------------------------------------------------------
+inline void InitializeNPRStandardSurfaceData(float2 uv, out NPRSurfaceData outSurfaceData)
+{
+    outSurfaceData = (NPRSurfaceData)0;
+    half4 shadingMap01 = SAMPLE_TEXTURE2D(_ShadingMap01, sampler_ShadingMap01, uv);
+    half2 uvOffset = 0;
+    uv += uvOffset;
+    half4 albedoAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+    half4 pbrLightMap = SAMPLE_TEXTURE2D(_LightMap, sampler_LightMap, uv);
+    half4 pbrChannel = SamplePBRChannel(pbrLightMap, shadingMap01);
+    outSurfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
+    outSurfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
+    outSurfaceData.normalTS = SampleNormal(uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
+    outSurfaceData.smoothness = _Smoothness * pbrChannel.a;
+    outSurfaceData.metallic = _Metallic * pbrChannel.r;
+    outSurfaceData.occlusion = LerpWhiteTo(pbrChannel.g, _OcclusionStrength);
+    outSurfaceData.clearCoatMask = _ClearCoatMask;
+    outSurfaceData.clearCoatSmoothness = _ClearCoatSmoothness;
+    outSurfaceData.specularIntensity = GetVauleFromChannel(pbrLightMap, shadingMap01, _SpecularIntensityChannel);
+    outSurfaceData.emission = EmissionColor(pbrLightMap, shadingMap01, outSurfaceData.albedo, uv);
+}
+```
+
+### DiffuseLighting
+
+```glsl
+half3 NPRDiffuseLighting(BRDFData brdfData, half4 uv, LightingData lightingData, half radiance)
+{
+    half3 diffuse = 0;
+
+    #if _CELLSHADING
+        diffuse = CellShadingDiffuse(radiance, _CELLThreshold, _CELLSmoothing, _HighColor.rgb, _DarkColor.rgb);
+    #elif _LAMBERTIAN
+    diffuse = lerp(_DarkColor.rgb, _HighColor.rgb, radiance);
+    #elif _RAMPSHADING
+        diffuse = RampShadingDiffuse(radiance, _RampMapVOffset, _RampMapUOffset, TEXTURE2D_ARGS(_DiffuseRampMap, sampler_DiffuseRampMap));
+    #elif _CELLBANDSHADING
+        diffuse = CellBandsShadingDiffuse(radiance, _CELLThreshold, _CellBandSoftness, _CellBands,  _HighColor.rgb, _DarkColor.rgb);
+    #elif _SDFFACE
+        diffuse = SDFFaceDiffuse(uv, lightingData, _SDFShadingSoftness, _HighColor.rgb, _DarkColor.rgb, TEXTURECUBE_ARGS(_SDFFaceTex, sampler_SDFFaceTex));
+    #endif
+    diffuse *= brdfData.diffuse;
+    return diffuse;
+}
+```
+
+#### PBR:
+
+```glsl
+diffuse = lerp(_DarkColor.rgb, _HighColor.rgb, radiance);
+```
+
+#### NPR:
+
+通过Threshold调整阴影硬度
+
+```glsl
+inline half3 CellShadingDiffuse(inout half radiance, half cellThreshold, half cellSmooth, half3 highColor, half3 darkColor)
+{
+    half3 diffuse = 0;
+    //cellSmooth *= 0.5;
+    radiance = saturate(1 + (radiance - cellThreshold - cellSmooth) / max(cellSmooth, 1e-3));
+    // 0.5 cellThreshold 0.5 smooth = Lambert
+    //radiance = LinearStep(cellThreshold - cellSmooth, cellThreshold + cellSmooth, radiance);
+    diffuse = lerp(darkColor.rgb, highColor.rgb, radiance);
+    return diffuse;
+}
+```
+
+```glsl
+inline half3 CellBandsShadingDiffuse(inout half radiance, half cellThreshold, half cellBandSoftness, half cellBands, half3 highColor, half3 darkColor)
+{
+    half3 diffuse = 0;
+    //cellSmooth *= 0.5;
+    radiance = saturate(1 + (radiance - cellThreshold - cellBandSoftness) / max(cellBandSoftness, 1e-3));
+    // 0.5 cellThreshold 0.5 smooth = Lambert
+    //radiance = LinearStep(cellThreshold - cellSmooth, cellThreshold + cellSmooth, radiance);
+
+    #if _CELLBANDSHADING
+        half bandsSmooth = cellBandSoftness;
+        radiance = saturate((LinearStep(0.5 - bandsSmooth, 0.5 + bandsSmooth, frac(radiance * cellBands)) + floor(radiance * cellBands)) / cellBands);
+    #endif
+
+    diffuse = lerp(darkColor.rgb, highColor.rgb, radiance);
+    return diffuse;
+}
+```
+
+### SpecularLighting
+
+```glsl
+half3 NPRSpecularLighting(BRDFData brdfData, NPRSurfaceData surfData, Varyings input, InputData inputData, half3 albedo,
+                          half radiance, LightingData lightData)
+{
+    half3 specular = 0;
+    #if _GGX
+        specular = GGXDirectBRDFSpecular(brdfData, lightData.LdotHClamp, lightData.NdotHClamp) * surfData.specularIntensity;
+    #elif _STYLIZED
+        specular = StylizedSpecular(albedo, lightData.NdotHClamp, _StylizedSpecularSize, _StylizedSpecularSoftness, _StylizedSpecularAlbedoWeight) * surfData.specularIntensity;
+    #elif _BLINNPHONG
+        specular = BlinnPhongSpecular((1 - brdfData.perceptualRoughness) * _Shininess, lightData.NdotHClamp) * surfData.specularIntensity;
+    #elif _KAJIYAHAIR
+        half2 anisoUV = input.uv.xy * _AnisoShiftScale;
+        AnisoSpecularData anisoSpecularData;
+        InitAnisoSpecularData(anisoSpecularData);
+        specular = AnisotropyDoubleSpecular(brdfData, anisoUV, input.tangentWS, inputData, lightData, anisoSpecularData,
+            TEXTURE2D_ARGS(_AnisoShiftMap, sampler_AnisoShiftMap));
+    #elif _ANGLERING
+        AngleRingSpecularData angleRingSpecularData;
+        InitAngleRingSpecularData(surfData.specularIntensity, angleRingSpecularData);
+        specular = AngleRingSpecular(angleRingSpecularData, inputData, radiance, lightData);
+    #endif
+    specular *= _SpecularColor.rgb * radiance * brdfData.specular;
+    return specular;
+}
+```
+
+#### PBR：
+
+使用GGX反射
+
+```glsl
+half GGXDirectBRDFSpecular(BRDFData brdfData, half3 LoH, half3 NoH)
+{
+    float d = NoH.x * NoH.x * brdfData.roughness2MinusOne + 1.00001f;
+    half LoH2 = LoH.x * LoH.x;
+    half specularTerm = brdfData.roughness2 / ((d * d) * max(0.1h, LoH2) * brdfData.normalizationTerm);
+
+    #if defined (SHADER_API_MOBILE) || defined (SHADER_API_SWITCH)
+    specularTerm = specularTerm - HALF_MIN;
+    specularTerm = clamp(specularTerm, 0.0, 100.0); // Prevent FP16 overflow on mobiles
+    #endif
+
+    return specularTerm;
+}
+```
+
+简单Phong 模型
+
+```glsl
+half BlinnPhongSpecular(half shininess, half ndoth)
+{
+    half phongSmoothness = exp2(10 * shininess + 1);
+    half normalize = (phongSmoothness + 7) * INV_PI8; // bling-phong 能量守恒系数
+    half specular = max(pow(ndoth, phongSmoothness) * normalize, 0.001);
+    return specular;
+}
+```
+
+各向异性-头发
+
+```glsl
+half2 anisoUV = input.uv.xy * _AnisoShiftScale;
+AnisoSpecularData anisoSpecularData;
+InitAnisoSpecularData(anisoSpecularData);
+specular = AnisotropyDoubleSpecular(brdfData, anisoUV, input.tangentWS, inputData, lightData, anisoSpecularData,
+    TEXTURE2D_ARGS(_AnisoShiftMap, sampler_AnisoShiftMap));
+    
+    inline void InitAnisoSpecularData(out AnisoSpecularData anisoSpecularData)
+{
+    anisoSpecularData.specularColor = _AnisoSpecularColor.rgb;
+    anisoSpecularData.specularSecondaryColor = _AnisoSecondarySpecularColor.rgb;
+    anisoSpecularData.specularShift = _AnsioSpeularShift;
+    anisoSpecularData.specularSecondaryShift  = _AnsioSecondarySpeularShift;
+    anisoSpecularData.specularStrength = _AnsioSpeularStrength;
+    anisoSpecularData.specularSecondaryStrength = _AnsioSecondarySpeularStrength;
+    anisoSpecularData.specularExponent = _AnsioSpeularExponent;
+    anisoSpecularData.specularSecondaryExponent = _AnsioSecondarySpeularExponent;
+    anisoSpecularData.spread1 = _AnisoSpread1;
+    anisoSpecularData.spread2 = _AnisoSpread2;
+}
+
+inline half3 AnisotropyDoubleSpecular(BRDFData brdfData, half2 uv, half4 tangentWS, InputData inputData, LightingData lightingData,
+    AnisoSpecularData anisoSpecularData, TEXTURE2D_PARAM(anisoDetailMap, sampler_anisoDetailMap))
+{
+    half specMask = 1; // TODO ADD Mask
+    half4 detailNormal = SAMPLE_TEXTURE2D(anisoDetailMap,sampler_anisoDetailMap, uv);
+
+    float2 jitter =(detailNormal.y-0.5) * float2(anisoSpecularData.spread1,anisoSpecularData.spread2);
+
+    float sgn = tangentWS.w;
+    float3 T = normalize(sgn * cross(inputData.normalWS.xyz, tangentWS.xyz));
+    //float3 T = normalize(tangentWS.xyz);
+
+    float3 t1 = ShiftTangent(T, inputData.normalWS.xyz, anisoSpecularData.specularShift + jitter.x);
+    float3 t2 = ShiftTangent(T, inputData.normalWS.xyz, anisoSpecularData.specularSecondaryShift + jitter.y);
+
+    float3 hairSpec1 = anisoSpecularData.specularColor * anisoSpecularData.specularStrength *
+        D_KajiyaKay(t1, lightingData.HalfDir, anisoSpecularData.specularExponent);
+    float3 hairSpec2 = anisoSpecularData.specularSecondaryColor * anisoSpecularData.specularSecondaryStrength *
+        D_KajiyaKay(t2, lightingData.HalfDir, anisoSpecularData.specularSecondaryExponent);
+
+    float3 F = F_Schlick(half3(0.2,0.2,0.2), lightingData.LdotHClamp);
+    half3 anisoSpecularColor = 0.25 * F * (hairSpec1 + hairSpec2) * lightingData.NdotLClamp * specMask * brdfData.specular;
+    return anisoSpecularColor;
+}
+```
+
+#### NPR：
+
+```glsl
+half3 StylizedSpecular(half3 albedo, half ndothClamp, half specularSize, half specularSoftness, half albedoWeight)
+{
+    half specSize = 1 - (specularSize * specularSize);
+    half ndothStylized = (ndothClamp - specSize * specSize) / (1 - specSize);
+    half3 specular = LinearStep(0, specularSoftness, ndothStylized);
+    specular = lerp(specular, albedo * specular, albedoWeight);
+    return specular;
+}
+```
+
+头发天使环
+
+```glsl
+AngleRingSpecularData angleRingSpecularData;
+InitAngleRingSpecularData(surfData.specularIntensity, angleRingSpecularData);
+specular = AngleRingSpecular(angleRingSpecularData, inputData, radiance, lightData);
+
+inline void InitAngleRingSpecularData(half mask, out AngleRingSpecularData angleRingSpecularData)
+{
+    angleRingSpecularData.shadowColor = _AngleRingShadowColor.rgb;
+    angleRingSpecularData.brightColor = _AngleRingBrightColor.rgb;
+    angleRingSpecularData.mask = mask;
+    angleRingSpecularData.width = _AngleRingWidth;
+    angleRingSpecularData.softness = _AngleRingSoftness;
+    angleRingSpecularData.threshold = _AngleRingThreshold;
+    angleRingSpecularData.intensity = _AngleRingIntensity;
+}
+
+inline half3 AngleRingSpecular(AngleRingSpecularData specularData, InputData inputData, half radiance, LightingData lightingData)
+{
+    half3 specularColor = 0;
+    half mask = specularData.mask;
+    float3 normalV = mul(UNITY_MATRIX_V, half4(inputData.normalWS, 0)).xyz;
+    float3 halfV = mul(UNITY_MATRIX_V, half4(lightingData.HalfDir, 0)).xyz;
+    half ndh = dot(normalize(normalV.xz), normalize(halfV.xz));
+
+    ndh = pow(ndh, 6) * specularData.width * radiance;
+
+    half lightFeather = specularData.softness * ndh;
+
+    half lightStepMax = saturate(1 - ndh + lightFeather);
+    half lightStepMin = saturate(1 - ndh - lightFeather);
+
+    half brightArea = LinearStep(lightStepMin, lightStepMax, min(mask, 0.99));
+    half3 lightColor_B = brightArea * specularData.brightColor;
+    half3 lightColor_S = LinearStep(specularData.threshold, 1, mask) * specularData.shadowColor;
+    specularColor = (lightColor_S + lightColor_B) * specularData.intensity;
+    return specularColor;
+}
+```
+
+### 光照模型
+
+#### 主光源：
+
+```glsl
+half3 NPRMainLightDirectLighting(BRDFData brdfData, BRDFData brdfDataClearCoat, Varyings input, InputData inputData,
+                                 NPRSurfaceData surfData, half radiance, LightingData lightData)
+{
+    half3 diffuse = NPRDiffuseLighting(brdfData, input.uv, lightData, radiance);
+    half3 specular = NPRSpecularLighting(brdfData, surfData, input, inputData, surfData.albedo, radiance, lightData);
+    half3 brdf = (diffuse + specular) * lightData.lightColor;
+
+    #if defined(_CLEARCOAT)
+        // Clear coat evaluates the specular a second timw and has some common terms with the base specular.
+        // We rely on the compiler to merge these and compute them only once.
+        half3 brdfCoat = kDielectricSpec.r * NPRSpecularLighting(brdfDataClearCoat, surfData, input, inputData, surfData.albedo, radiance, lightData);
+        // Mix clear coat and base layer using khronos glTF recommended formula
+        // https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_materials_clearcoat/README.md
+        // Use NoV for direct too instead of LoH as an optimization (NoV is light invariant).
+        half NoV = saturate(dot(inputData.normalWS, inputData.viewDirectionWS));
+        // Use slightly simpler fresnelTerm (Pow4 vs Pow5) as a small optimization.
+        // It is matching fresnel used in the GI/Env, so should produce a consistent clear coat blend (env vs. direct)
+        half coatFresnel = kDielectricSpec.x + kDielectricSpec.a * Pow4(1.0 - NoV);
+
+        brdf = brdf * (1.0 - surfData.clearCoatMask * coatFresnel) + brdfCoat * surfData.clearCoatMask * lightData.lightColor;
+    #endif // _CLEARCOAT
+
+    return brdf;
+}
+```
+
+#### 额外光源：
+
+```glsl
+half3 NPRVertexLighting(float3 positionWS, half3 normalWS)
+{
+    half3 vertexLightColor = half3(0.0, 0.0, 0.0);
+
+    #ifdef _ADDITIONAL_LIGHTS_VERTEX
+    uint lightsCount = GetAdditionalLightsCount();
+    LIGHT_LOOP_BEGIN(lightsCount)
+        Light light = GetAdditionalLight(lightIndex, positionWS);
+        half3 lightColor = light.color * light.distanceAttenuation;
+        float pureIntencity = max(0.001,(0.299 * lightColor.r + 0.587 * lightColor.g + 0.114 * lightColor.b));
+        lightColor = max(0, lerp(lightColor, lerp(0, min(lightColor, lightColor / pureIntencity * _LightIntensityClamp), 1), _Is_Filter_LightColor));
+        vertexLightColor += LightingLambert(lightColor, light.direction, normalWS);
+    LIGHT_LOOP_END
+    #endif
+
+    return vertexLightColor;
+}
+
+/**
+ * \brief AdditionLighting, Lighting Equation base on MainLight, TODO: if cell-shading should use other lighting equation
+ * \param brdfData 
+ * \param brdfDataClearCoat 
+ * \param input 
+ * \param inputData 
+ * \param surfData 
+ * \param addInputData 
+ * \param shadowMask 
+ * \param meshRenderingLayers 
+ * \param aoFactor 
+ * \return 
+ */
+half3 NPRAdditionLightDirectLighting(BRDFData brdfData, BRDFData brdfDataClearCoat, Varyings input, InputData inputData,
+                                     NPRSurfaceData surfData,
+                                     NPRAddInputData addInputData, half4 shadowMask, half meshRenderingLayers,
+                                     AmbientOcclusionFactor aoFactor)
+{
+    half3 additionLightColor = 0;
+    #if defined(_ADDITIONAL_LIGHTS)
+    uint pixelLightCount = GetAdditionalLightsCount();
+
+    #if USE_FORWARD_PLUS
+    for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
+    {
+        FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+
+        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+
+    #ifdef _LIGHT_LAYERS
+        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+    #endif
+        {
+            LightingData lightingData = InitializeLightingData(light, input, inputData.normalWS, inputData.viewDirectionWS, addInputData);
+            half radiance = LightingRadiance(lightingData, _UseHalfLambert, surfData.occlusion, _UseRadianceOcclusion);
+            // Additional Light Filter Referenced from https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project
+            float pureIntencity = max(0.001,(0.299 * lightingData.lightColor.r + 0.587 * lightingData.lightColor.g + 0.114 * lightingData.lightColor.b));
+            lightingData.lightColor = max(0, lerp(lightingData.lightColor, lerp(0, min(lightingData.lightColor, lightingData.lightColor / pureIntencity * _LightIntensityClamp), 1), _Is_Filter_LightColor));
+            half3 addLightColor = NPRMainLightDirectLighting(brdfData, brdfDataClearCoat, input, inputData, surfData, radiance, lightingData);
+            additionLightColor += addLightColor;
+        }
+    }
+    #endif
+
+    #if USE_CLUSTERED_LIGHTING
+    for (uint lightIndex = 0; lightIndex < min(_AdditionalLightsDirectionalCount, MAX_VISIBLE_LIGHTS); lightIndex++)
+    {
+        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+    #ifdef _LIGHT_LAYERS
+        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+    #endif
+        {
+            LightingData lightingData = InitializeLightingData(light, input, inputData.normalWS, inputData.viewDirectionWS, addInputData);
+            half radiance = LightingRadiance(lightingData, _UseHalfLambert, surfData.occlusion, _UseRadianceOcclusion);
+            // Additional Light Filter Referenced from https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project
+            float pureIntencity = max(0.001,(0.299 * lightingData.lightColor.r + 0.587 * lightingData.lightColor.g + 0.114 * lightingData.lightColor.b));
+            lightingData.lightColor = max(0, lerp(lightingData.lightColor, lerp(0, min(lightingData.lightColor, lightingData.lightColor / pureIntencity * _LightIntensityClamp), 1), _Is_Filter_LightColor));
+            half3 addLightColor = NPRMainLightDirectLighting(brdfData, brdfDataClearCoat, input, inputData, surfData, radiance, lightingData);
+            additionLightColor += addLightColor;
+        }
+    }
+    #endif
+
+    LIGHT_LOOP_BEGIN(pixelLightCount)
+        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+    #ifdef _LIGHT_LAYERS
+        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+    #endif
+        {
+            LightingData lightingData = InitializeLightingData(light, input, inputData.normalWS, inputData.viewDirectionWS, addInputData);
+            half radiance = LightingRadiance(lightingData, _UseHalfLambert, surfData.occlusion, _UseRadianceOcclusion);
+            // Additional Light Filter Referenced from https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project
+            float pureIntencity = max(0.001,(0.299 * lightingData.lightColor.r + 0.587 * lightingData.lightColor.g + 0.114 * lightingData.lightColor.b));
+            lightingData.lightColor = max(0, lerp(lightingData.lightColor, lerp(0, min(lightingData.lightColor, lightingData.lightColor / pureIntencity * _LightIntensityClamp), 1), _Is_Filter_LightColor));
+            half3 addLightColor = NPRMainLightDirectLighting(brdfData, brdfDataClearCoat, input, inputData, surfData, radiance, lightingData);
+            additionLightColor += addLightColor;
+        }
+    LIGHT_LOOP_END
+    #endif
+
+    // vertex lighting only lambert diffuse for now...
+    #if defined(_ADDITIONAL_LIGHTS_VERTEX)
+        additionLightColor += inputData.vertexLighting * brdfData.diffuse;
+    #endif
+
+    return additionLightColor;
+}
+```
+
+#### Rim光：
+
+```glsl
+half3 NPRRimLighting(LightingData lightingData, InputData inputData, Varyings input, NPRAddInputData addInputData)
+{
+    half3 rimColor = 0;
+
+    #if _FRESNELRIM
+        half ndv4 = Pow4(1 - lightingData.NdotVClamp);
+        rimColor = LinearStep(_RimThreshold, _RimThreshold + _RimSoftness, ndv4);
+        rimColor *= LerpWhiteTo(lightingData.NdotLClamp, _RimDirectionLightContribution);
+    #elif _SCREENSPACERIM
+        half depthRim = DepthRim(_DepthRimOffset, _DepthOffsetRimReverseX, _DepthRimThresoldOffset, input.positionCS.xy, lightingData.lightDir, addInputData);
+        rimColor = depthRim;
+    #endif
+    rimColor *= _RimColor.rgb;
+    return rimColor;
+}
+```
+
+#### 非直接光：
+
+```glsl
+half3 NPRIndirectLighting(BRDFData brdfData, InputData inputData, Varyings input, half occlusion)
+{
+    half3 indirectDiffuse = inputData.bakedGI * occlusion;
+    half3 reflectVector = reflect(-inputData.viewDirectionWS, inputData.normalWS);
+    half NoV = saturate(dot(inputData.normalWS, inputData.viewDirectionWS));
+    half fresnelTerm = Pow4(1.0 - NoV);
+    #if _RENDERENVSETTING || _CUSTOMENVCUBE
+        half3 indirectSpecular = NPRGlossyEnvironmentReflection(reflectVector, inputData.positionWS, inputData.normalizedScreenSpaceUV, brdfData.perceptualRoughness, occlusion);
+    #else
+    half3 indirectSpecular = 0;
+    #endif
+    half3 indirectColor = EnvironmentBRDF(brdfData, indirectDiffuse, indirectSpecular, fresnelTerm);
+
+    #if _MATCAP
+        half3 matCap = SamplerMatCap(_MatCapColor, input.uv.zw, inputData.normalWS, inputData.normalizedScreenSpaceUV, TEXTURE2D_ARGS(_MatCapTex, sampler_MatCapTex));
+        indirectColor += lerp(matCap, matCap * brdfData.diffuse, _MatCapAlbedoWeight);
+    #endif
+
+    return indirectColor;
+}
+```
+
+
+
+### 顶点和片段shader
+
+```glsl
+struct Attributes
+{
+    float4 positionOS : POSITION;
+    float3 normalOS : NORMAL;
+    float4 tangentOS : TANGENT;
+    float2 texcoord : TEXCOORD0;
+    float2 staticLightmapUV : TEXCOORD1;
+    float2 dynamicLightmapUV : TEXCOORD2;
+    UNITY_VERTEX_INPUT_INSTANCE_ID
+};
+
+struct Varyings
+{
+    float4 uv : TEXCOORD0; // zw：MatCap
+
+    float3 positionWS : TEXCOORD1;
+
+    float3 normalWS : TEXCOORD2;
+    #if defined(REQUIRES_WORLD_SPACE_TANGENT_INTERPOLATOR)
+    half4 tangentWS : TEXCOORD3; // xyz: tangent, w: sign
+    #endif
+    float3 viewDirWS : TEXCOORD4;
+
+    #ifdef _ADDITIONAL_LIGHTS_VERTEX
+    half4 fogFactorAndVertexLight   : TEXCOORD5; // x: fogFactor, yzw: vertex light
+    #else
+    half fogFactor : TEXCOORD5;
+    #endif
+
+    #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+    float4 shadowCoord              : TEXCOORD6;
+    #endif
+
+    #if defined(REQUIRES_TANGENT_SPACE_VIEW_DIR_INTERPOLATOR)
+    half3 viewDirTS                : TEXCOORD7;
+    #endif
+
+    DECLARE_LIGHTMAP_OR_SH(staticLightmapUV, vertexSH, 8);
+    #ifdef DYNAMICLIGHTMAP_ON
+    float2  dynamicLightmapUV : TEXCOORD9; // Dynamic lightmap UVs
+    #endif
+
+    float4 positionCS : SV_POSITION;
+    UNITY_VERTEX_INPUT_INSTANCE_ID
+    UNITY_VERTEX_OUTPUT_STEREO
+};
+
+
+Varyings LitPassVertex(Attributes input)
+{
+    Varyings output = (Varyings)0;
+
+    UNITY_SETUP_INSTANCE_ID(input);
+    UNITY_TRANSFER_INSTANCE_ID(input, output);
+    UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
+
+    VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
+
+    // normalWS and tangentWS already normalize.
+    // this is required to avoid skewing the direction during interpolation
+    // also required for per-vertex lighting and SH evaluation
+    VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
+
+    half3 vertexLight = NPRVertexLighting(vertexInput.positionWS, normalInput.normalWS);
+
+    half fogFactor = 0;
+    #if !defined(_FOG_FRAGMENT)
+        fogFactor = ComputeFogFactor(vertexInput.positionCS.z);
+    #endif
+
+    output.uv.xy = TRANSFORM_TEX(input.texcoord, _BaseMap);
+
+    // already normalized from normal transform to WS.
+    output.normalWS = normalInput.normalWS;
+    
+    #if defined(REQUIRES_WORLD_SPACE_TANGENT_INTERPOLATOR) || defined(REQUIRES_TANGENT_SPACE_VIEW_DIR_INTERPOLATOR)
+        real sign = input.tangentOS.w * GetOddNegativeScale();
+        half4 tangentWS = half4(normalInput.tangentWS.xyz, sign);
+    #endif
+    
+    #if defined(REQUIRES_WORLD_SPACE_TANGENT_INTERPOLATOR)
+        output.tangentWS = tangentWS;
+    #endif
+
+    #if defined(REQUIRES_TANGENT_SPACE_VIEW_DIR_INTERPOLATOR)
+        half3 viewDirWS = GetWorldSpaceNormalizeViewDir(vertexInput.positionWS);
+        half3 viewDirTS = GetViewDirectionTangentSpace(tangentWS, output.normalWS, viewDirWS);
+        output.viewDirTS = viewDirTS;
+    #endif
+
+    OUTPUT_LIGHTMAP_UV(input.staticLightmapUV, unity_LightmapST, output.staticLightmapUV);
+
+    #ifdef DYNAMICLIGHTMAP_ON
+        output.dynamicLightmapUV = input.dynamicLightmapUV.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
+    #endif
+        OUTPUT_SH(output.normalWS.xyz, output.vertexSH);
+    #ifdef _ADDITIONAL_LIGHTS_VERTEX
+        output.fogFactorAndVertexLight = half4(fogFactor, vertexLight);
+    #else
+        output.fogFactor = fogFactor;
+    #endif
+
+    output.positionWS = vertexInput.positionWS;
+    
+    #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+        output.shadowCoord = GetShadowCoord(vertexInput);
+    #endif
+
+    output.positionCS = vertexInput.positionCS;
+
+    #if _MATCAP
+        half3 normalVS = mul((float3x3)UNITY_MATRIX_V, output.normalWS.xyz);
+        float4 screenPos = ComputeScreenPos(output.positionCS);
+        float3 perspectiveOffset = (screenPos.xyz / screenPos.w) - 0.5;
+        normalVS.xy -= (perspectiveOffset.xy * perspectiveOffset.z) * 0.5;
+        output.uv.zw = normalVS.xy * 0.5 + 0.5;
+        output.uv.zw = output.uv.zw.xy * _MatCapTex_ST.xy + _MatCapTex_ST.zw;
+    #endif
+
+    #if _SDFFACE
+        SDFFaceUV(_SDFDirectionReversal, _SDFFaceArea, output.uv.zw);
+    #endif
+
+    output.positionCS = CalculateClipPosition(output.positionCS, _ZOffset);
+    output.positionCS = PerspectiveRemove(output.positionCS, output.positionWS, input.positionOS);
+
+    return output;
+}
+
+
+void LitPassFragment(
+    Varyings input, half facing : VFACE
+    , out half4 outColor : SV_Target0
+    #ifdef _WRITE_RENDERING_LAYERS
+    , out float4 outRenderingLayers : SV_Target1
+    #endif
+)
+{
+    UNITY_SETUP_INSTANCE_ID(input);
+    UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+
+    InputData inputData;
+    NPRAddInputData addInputData;
+    PreInitializeInputData(input, facing, inputData, addInputData);
+
+    NPRSurfaceData surfaceData;
+    InitializeNPRStandardSurfaceData(input.uv.xy, inputData, surfaceData);
+
+    InitializeInputData(input, surfaceData.normalTS, addInputData, inputData);
+
+    #if _SPECULARAA
+    surfaceData.smoothness = SpecularAA(inputData.normalWS, surfaceData.smoothness);
+    #endif
+
+    SETUP_DEBUG_TEXTURE_DATA(inputData, input.uv, _BaseMap);
+
+    #ifdef _DBUFFER
+    ApplyDecalToSurfaceData(input.positionCS, surfaceData, inputData);
+    #endif
+
+    half4 shadowMask = CalculateShadowMask(inputData);
+
+    uint meshRenderingLayers = GetMeshRenderingLayer();
+    Light mainLight = GetMainLight(inputData.shadowCoord, inputData.positionWS, shadowMask);
+    NPRMainLightCorrect(_LightDirectionObliqueWeight, mainLight);
+    MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI);
+    #if defined(_SCREEN_SPACE_OCCLUSION)
+        AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(inputData.normalizedScreenSpaceUV);
+        mainLight.color *= aoFactor.directAmbientOcclusion;
+        surfaceData.occlusion = min(surfaceData.occlusion, aoFactor.indirectAmbientOcclusion);
+    #else
+    AmbientOcclusionFactor aoFactor;
+    aoFactor.indirectAmbientOcclusion = 1;
+    aoFactor.directAmbientOcclusion = 1;
+    #endif
+
+    BRDFData brdfData, clearCoatbrdfData;
+    InitializeNPRBRDFData(surfaceData, brdfData, clearCoatbrdfData);
+
+    LightingData lightingData = InitializeLightingData(mainLight, input, inputData.normalWS, inputData.viewDirectionWS,
+                                                       addInputData);
+
+    half radiance = LightingRadiance(lightingData, _UseHalfLambert, surfaceData.occlusion, _UseRadianceOcclusion);
+    half4 color = 1;
+    color.rgb = NPRMainLightDirectLighting(brdfData, clearCoatbrdfData, input, inputData, surfaceData, radiance,
+                                           lightingData);
+    color.rgb += NPRAdditionLightDirectLighting(brdfData, clearCoatbrdfData, input, inputData, surfaceData,
+                                                addInputData, shadowMask, meshRenderingLayers, aoFactor);
+    color.rgb += NPRIndirectLighting(brdfData, inputData, input, surfaceData.occlusion);
+    color.rgb += NPRRimLighting(lightingData, inputData, input, addInputData);
+
+    color.rgb += surfaceData.emission;
+    color.rgb = MixFog(color.rgb, inputData.fogCoord);
+
+    color.a = surfaceData.alpha;
+
+    outColor = color;
+
+    #ifdef _WRITE_RENDERING_LAYERS
+    uint renderingLayers = GetMeshRenderingLayer();
+    outRenderingLayers = float4(EncodeMeshRenderingLayer(renderingLayers), 0, 0, 0);
+    #endif
+}
+```
+
+
+
+
+
+
 
 
 
