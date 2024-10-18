@@ -1,0 +1,74 @@
+{
+    "points": [
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "color": "white",
+            "name": "SM_lantern_01",
+            "shape": "capsule"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "color": "white",
+            "name": "SM_lantern_02",
+            "shape": "capsule"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "color": "red",
+            "name": "SM_lantern_03",
+            "shape": "capsule"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "color": "red",
+            "name": "SM_lantern_05",
+            "shape": "capsule"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "color": "white",
+            "name": "SM_lantern_04",
+            "shape": "sphere"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "color": "white",
+            "name": "SM_lantern_06",
+            "shape": "sphere"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "color": "white",
+            "name": "SM_lantern_07",
+            "shape": "sphere"
+        }
+    ]
+}

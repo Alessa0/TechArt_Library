@@ -1,0 +1,20 @@
+{
+    "connectors": [
+        {
+            "name": "L",
+            "port": "L,BL"
+        },
+        {
+            "name": "S",
+            "port": "S,BS"
+        },
+        {
+            "name": "BL",
+            "port": "L"
+        },
+        {
+            "name": "BS",
+            "port": "S"
+        }
+    ]
+}

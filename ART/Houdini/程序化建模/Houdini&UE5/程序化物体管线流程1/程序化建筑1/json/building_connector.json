@@ -1,0 +1,244 @@
+{
+    "connector": [
+        {
+            "name": "E",
+            "port": "E,W4,WSB,WRE,WR4"
+        },
+        {
+            "name": "WE4",
+            "port": "WSB,RSB,WS1,WS2,RSS1,RSS2,RSS3,RSS4,RF1,RF2,RF3,RF4"
+        },
+        {
+            "name": "WE3",
+            "port": "WS1,WS2,RSS1,RSS2,RSS3,RF1,RF2,RF3"
+        },
+        {
+            "name": "WE2",
+            "port": "WS1,WS2,RSS1,RSS2,RF1,RF2"
+        },
+        {
+            "name": "WE1",
+            "port": "WS1,RSS1,RF1"
+        },
+        {
+            "name": "W4",
+            "port": "W4,E,WSB,WR4"
+        },
+        {
+            "name": "W3",
+            "port": "W3"
+        },
+        {
+            "name": "W2",
+            "port": "W2"
+        },
+        {
+            "name": "W1",
+            "port": "W1"
+        },
+        {
+            "name": "CF44_0",
+            "port": "CF44_0,CF44_1,CF44_2,CF44_3"
+        },
+        {
+            "name": "CF44_1",
+            "port": "CF44_0,CF44_1,CF44_2,CF44_3"
+        },
+        {
+            "name": "CF44_2",
+            "port": "CF44_0,CF44_1,CF44_2,CF44_3"
+        },
+        {
+            "name": "CF44_3",
+            "port": "CF44_0,CF44_1,CF44_2,CF44_3"
+        },
+        {
+            "name": "CF43_0",
+            "port": "CF43_0"
+        },
+        {
+            "name": "CF43_1",
+            "port": "CF43_1"
+        },
+        {
+            "name": "CF43_2",
+            "port": "CF43_2"
+        },
+        {
+            "name": "CF43_3",
+            "port": "CF43_3"
+        },
+        {
+            "name": "CF42_0",
+            "port": "CF42_0"
+        },
+        {
+            "name": "CF42_1",
+            "port": "CF42_1"
+        },
+        {
+            "name": "CF42_2",
+            "port": "CF42_2"
+        },
+        {
+            "name": "CF42_3",
+            "port": "CF42_3"
+        },
+        {
+            "name": "CF41_0",
+            "port": "CF41_0"
+        },
+        {
+            "name": "CF41_1",
+            "port": "CF41_1"
+        },
+        {
+            "name": "CF41_2",
+            "port": "CF41_2"
+        },
+        {
+            "name": "CF41_3",
+            "port": "CF41_3"
+        },
+        {
+            "name": "RS",
+            "port": "RS"
+        },
+        {
+            "name": "RB1",
+            "port": "RB1"
+        },
+        {
+            "name": "RB2",
+            "port": "RB2"
+        },
+        {
+            "name": "RB3",
+            "port": "RB3"
+        },
+        {
+            "name": "RB4",
+            "port": "RB4"
+        },
+        {
+            "name": "RF1",
+            "port": "RF1,WE1,WE2,WE3,WE4"
+        },
+        {
+            "name": "RF2",
+            "port": "RF2,WE2,WE3,WE4"
+        },
+        {
+            "name": "RF3",
+            "port": "RF3,WE3,WE4"
+        },
+        {
+            "name": "RF4",
+            "port": "RF4,WE4"
+        },
+        {
+            "name": "RFE4",
+            "port": "RFE4,WE4"
+        },
+        {
+            "name": "WS1",
+            "port": "WS1,WE1,WE2,WE3,WE4"
+        },
+        {
+            "name": "WS2",
+            "port": "WS2,WE2,WE3,WE4"
+        },
+        {
+            "name": "WSB",
+            "port": "W4,E"
+        },
+        {
+            "name": "RSS1",
+            "port": "RSS1,WE1,WE2,WE3,WE4"
+        },
+        {
+            "name": "RSS2",
+            "port": "RSS2,WE2,WE3,WE4"
+        },
+        {
+            "name": "RSS3",
+            "port": "RSS3,WE3,WE4"
+        },
+        {
+            "name": "RSS4",
+            "port": "RSS4,WE4"
+        },
+        {
+            "name": "RSB",
+            "port": "WE4"
+        },
+        {
+            "name": "WR1",
+            "port": "WR1"
+        },
+        {
+            "name": "WR2",
+            "port": "WR2"
+        },
+        {
+            "name": "WR3",
+            "port": "WR3"
+        },
+        {
+            "name": "WR4",
+            "port": "WR4,W4,E,WRE"
+        },
+        {
+            "name": "WRE",
+            "port": "WRE,W4,E,WR4"
+        },
+        {
+            "name": "WC1",
+            "port": "WC1"
+        },
+        {
+            "name": "WC2",
+            "port": "WC2"
+        },
+        {
+            "name": "WC3",
+            "port": "WC3"
+        },
+        {
+            "name": "WC4",
+            "port": "WC4,E,WRC4"
+        },
+        {
+            "name": "WEC1",
+            "port": "RF1"
+        },
+        {
+            "name": "WEC2",
+            "port": "RF2,RF1"
+        },
+        {
+            "name": "WEC3",
+            "port": "RF3,RF2,RF1"
+        },
+        {
+            "name": "WEC4",
+            "port": "RFE4,RF4,RF3,RF2,RF1"
+        },
+        {
+            "name": "WRC1",
+            "port": "WRC1"
+        },
+        {
+            "name": "WRC2",
+            "port": "WRC2"
+        },
+        {
+            "name": "WRC3",
+            "port": "WRC3"
+        },
+        {
+            "name": "WRC4",
+            "port": "WRC4,E,WRE"
+        }
+    ]
+}

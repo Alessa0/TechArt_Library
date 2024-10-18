@@ -1,0 +1,76 @@
+{
+    "points": [
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "diagonal_pillar_01"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "eave_corner_01"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "eave_normal_01"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "plank_01"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "quad_beam_01"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "rounded_beam_01"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "standing_pillar_bot_01"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "standing_pillar_upper_01"
+        },
+        {
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "straight_pillar_01"
+        }
+    ]
+}

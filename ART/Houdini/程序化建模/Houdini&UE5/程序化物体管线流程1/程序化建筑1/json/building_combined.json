@@ -1,0 +1,7326 @@
+{
+    "points": [
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_400_01_middle",
+            "name": "roof_400x400_01_middle"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_400_01_left",
+            "name": "roof_400x400_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_400_01_right",
+            "name": "roof_400x400_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_300_01_left",
+            "name": "roof_400x300_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_300_01_right",
+            "name": "roof_400x300_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_200_01_left",
+            "name": "roof_400x200_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_200_01_right",
+            "name": "roof_400x200_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_100_01_left",
+            "name": "roof_400x100_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_100_01_right",
+            "name": "roof_400x100_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x300_01",
+            "name": "wall_side_100_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_slope_100_01_right",
+            "name": "wall_side_100_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                -0.10000000149011612,
+                -2.0
+            ],
+            "childName": "overhang_slope_100_01_left",
+            "name": "wall_side_100_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_side_100_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x300_01",
+            "name": "wall_side_100_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                -0.10000000149011612,
+                -2.0
+            ],
+            "childName": "overhang_slope_100_01_middle",
+            "name": "wall_side_100_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_side_100_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x300_01",
+            "name": "wall_side_100_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_slope_100_01_left",
+            "name": "wall_side_100_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                -0.10000000149011612,
+                -2.0
+            ],
+            "childName": "overhang_slope_100_01_right",
+            "name": "wall_side_100_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_side_100_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x300_01",
+            "name": "wall_side_100_01_corner"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.5,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_100x300_01",
+            "name": "wall_side_100_01_corner"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -2.0,
+                -0.10000000149011612,
+                -2.0
+            ],
+            "childName": "overhang_slope_100_01_corner",
+            "name": "wall_side_100_01_corner"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.5,
+                0.0,
+                -1.5
+            ],
+            "childName": "floor_100x100_01",
+            "name": "wall_side_100_01_corner"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x300_01",
+            "name": "wall_side_100_01_standalone"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_slope_100_01_left",
+            "name": "wall_side_100_01_standalone"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_slope_100_01_right",
+            "name": "wall_side_100_01_standalone"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                -0.10000000149011612,
+                -2.0
+            ],
+            "childName": "overhang_slope_100_01_standalone",
+            "name": "wall_side_100_01_standalone"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_side_100_01_standalone"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_1b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_1b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_1b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_1b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_1b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_1b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_1b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_1b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "roof_fenced_1b_400x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "roof_fenced_400_01",
+            "name": "roof_fenced_1b_400x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "roof_fenced_1b_400x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_400_01",
+            "name": "roof_fenced_1b_400x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "roof_fenced_1b_400x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_400_01",
+            "name": "roof_fenced_1b_400x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_400_01",
+            "name": "roof_fenced_1b_400x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                0.0
+            ],
+            "childName": "floor_300x300_01",
+            "name": "roof_fenced_2b_400x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_2b_400x400_adj_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_200_01",
+            "name": "roof_fenced_2b_400x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                1.0
+            ],
+            "childName": "roof_fenced_200_01",
+            "name": "roof_fenced_2b_400x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "roof_fenced_400_01",
+            "name": "roof_fenced_2b_400x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_400_01",
+            "name": "roof_fenced_2b_400x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                1.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "roof_fenced_2b_400x400_opp_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                1.5,
+                -1.0
+            ],
+            "childName": "floor_300x200_01",
+            "name": "roof_fenced_2b_400x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_300_01_corner",
+            "name": "roof_fenced_2b_400x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.5,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_100_01",
+            "name": "roof_fenced_2b_400x300_adj_01_left"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                -1.0
+            ],
+            "childName": "floor_300x200_01",
+            "name": "roof_fenced_2b_400x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_300_01_corner",
+            "name": "roof_fenced_2b_400x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.5,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_100_01",
+            "name": "roof_fenced_2b_400x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                1.5,
+                -1.0
+            ],
+            "childName": "floor_300x100_01",
+            "name": "roof_fenced_2b_400x200_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_2b_400x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_200_01",
+            "name": "roof_fenced_2b_400x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                -1.0
+            ],
+            "childName": "floor_300x100_01",
+            "name": "roof_fenced_2b_400x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_2b_400x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_200_01",
+            "name": "roof_fenced_2b_400x200_adj_01_right"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_100_01_corner",
+            "name": "roof_fenced_2b_400x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.5,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_300_01",
+            "name": "roof_fenced_2b_400x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_100_01_corner",
+            "name": "roof_fenced_2b_400x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -0.5,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_300_01",
+            "name": "roof_fenced_2b_400x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_3b_400x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_3b_400x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_200_01",
+            "name": "roof_fenced_3b_400x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_200_01",
+            "name": "roof_fenced_3b_400x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                0.0
+            ],
+            "childName": "floor_300x200_01",
+            "name": "roof_fenced_3b_400x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_3b_400x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_3b_400x300_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "roof_fenced_100_01",
+            "name": "roof_fenced_3b_400x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "roof_fenced_100_01",
+            "name": "roof_fenced_3b_400x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                -1.0
+            ],
+            "childName": "floor_200x200_01",
+            "name": "roof_fenced_3b_400x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_3b_400x200_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_3b_400x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                -2.0
+            ],
+            "childName": "floor_200x100_01",
+            "name": "roof_fenced_3b_400x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "roof_fenced_100_01_corner",
+            "name": "roof_fenced_3b_400x100_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "roof_fenced_100_01_corner",
+            "name": "roof_fenced_3b_400x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "roof_fenced_200_01",
+            "name": "roof_fenced_3b_400x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "roof_fenced_empty_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "roof_fenced_4b_400x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_4b_400x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_4b_400x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_4b_400x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_fenced_200_01_corner",
+            "name": "roof_fenced_4b_400x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                1.5,
+                0.0
+            ],
+            "childName": "floor_200x200_01",
+            "name": "roof_fenced_4b_400x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x300_01",
+            "name": "wall_side_200_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_slope_200_01_right",
+            "name": "wall_side_200_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                -0.05000000074505806,
+                -2.0
+            ],
+            "childName": "overhang_slope_200_01_left",
+            "name": "wall_side_200_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_side_200_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x300_01",
+            "name": "wall_side_200_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                -0.05000000074505806,
+                -2.0
+            ],
+            "childName": "overhang_slope_200_01_middle",
+            "name": "wall_side_200_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_side_200_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x300_01",
+            "name": "wall_side_200_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_slope_200_01_left",
+            "name": "wall_side_200_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                -0.05000000074505806,
+                -2.0
+            ],
+            "childName": "overhang_slope_200_01_right",
+            "name": "wall_side_200_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_side_200_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x300_01",
+            "name": "wall_side_200_01_standalone"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                -0.05000000074505806,
+                -2.0
+            ],
+            "childName": "overhang_slope_200_01_standalone",
+            "name": "wall_side_200_01_standalone"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_side_200_01_standalone"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_slope_200_01_right",
+            "name": "wall_side_200_01_standalone"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_slope_200_01_left",
+            "name": "wall_side_200_01_standalone"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x300_01",
+            "name": "wall_side_200_01_corner"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_200x300_01",
+            "name": "wall_side_200_01_corner"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -2.0,
+                -0.05000000074505806,
+                -2.0
+            ],
+            "childName": "overhang_slope_200_01_corner",
+            "name": "wall_side_200_01_corner"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "floor_200x200_01",
+            "name": "wall_side_200_01_corner"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_2b_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_2b_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_2b_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_2b_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_2b_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_2b_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_2b_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_2b_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_2b_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x400_01_middle",
+            "name": "roof_side_400x400_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x400_01_left",
+            "name": "roof_side_400x400_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x400_01_right",
+            "name": "roof_side_400x400_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x300_01_middle",
+            "name": "roof_side_400x300_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x300_01_left",
+            "name": "roof_side_400x300_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x300_01_right",
+            "name": "roof_side_400x300_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x200_01_middle",
+            "name": "roof_side_400x200_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x200_01_left",
+            "name": "roof_side_400x200_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x200_01_right",
+            "name": "roof_side_400x200_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x100_01_middle",
+            "name": "roof_side_400x100_01_middle"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x100_01_left",
+            "name": "roof_side_400x100_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "roof_side_400x100_01_right",
+            "name": "roof_side_400x100_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_1b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_1b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                1.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_1b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_1b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_1b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_1b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_1b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_1b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_1b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_1b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_1b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_1b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_1b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_1b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_1b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_1b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_2b_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                1.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_2b_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_2b_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_2b_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                -1.5
+            ],
+            "childName": "wall_roof_fenced_100_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.5
+            ],
+            "childName": "wall_roof_fenced_100_01",
+            "name": "wall_roof_2b_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_roof_2b_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -3.0
+            ],
+            "childName": "wall_roof_fenced_100_01_corner",
+            "name": "wall_roof_2b_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.5,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_300_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -3.0
+            ],
+            "childName": "wall_roof_fenced_100_01_corner",
+            "name": "wall_roof_2b_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -0.5,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_300_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_roof_2b_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_3b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.5
+            ],
+            "childName": "wall_roof_fenced_100_01",
+            "name": "wall_roof_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                -1.5
+            ],
+            "childName": "wall_roof_fenced_100_01",
+            "name": "wall_roof_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_roof_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_roof_3b_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_roof_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_roof_3b_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -3.0
+            ],
+            "childName": "wall_roof_fenced_100_01_corner",
+            "name": "wall_roof_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -3.0
+            ],
+            "childName": "wall_roof_fenced_100_01_corner",
+            "name": "wall_roof_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_roof_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_roof_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_3b_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -0.0,
+                3.5,
+                -0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_4b_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_empty_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_empty_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_4b_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_4b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_4b_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_4b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_4b_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "empty"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_1b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_1b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_1b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_1b_coverted_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_1b_coverted_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_1b_coverted_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_1b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_1b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_1b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_1b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_1b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_1b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                2.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "overhang_side_100_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                0.0,
+                1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "overhang_side_100_01",
+            "name": "wall_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -0.5,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_300_01",
+            "name": "wall_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "overhang_side_100_01_corner",
+            "name": "wall_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.5,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_300_01",
+            "name": "wall_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "overhang_side_100_01_corner",
+            "name": "wall_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "overhang_side_100_01",
+            "name": "wall_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "overhang_side_100_01",
+            "name": "wall_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "overhang_side_100_01_corner",
+            "name": "wall_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "overhang_side_100_01_corner",
+            "name": "wall_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_1b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_1b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                1.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_1b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_1b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_roof_1b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_1b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_1b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_1b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_1b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_roof_1b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_1b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_1b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_1b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_1b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_roof_1b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_1b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_1b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_1b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_1b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_roof_1b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                1.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_400_01",
+            "name": "wall_roof_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_roof_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_400_01",
+            "name": "wall_roof_2b_covered_400x350x400_opp_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                2.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x400_adj_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                -1.5
+            ],
+            "childName": "wall_roof_fenced_100_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                0.0,
+                1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "overhang_side_100_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.5
+            ],
+            "childName": "wall_roof_fenced_100_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "overhang_side_100_01",
+            "name": "wall_roof_2b_covered_400x350x300_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_2b_covered_400x350x200_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -3.0
+            ],
+            "childName": "wall_roof_fenced_100_01_corner",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.5,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_300_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.5,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_300_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "overhang_side_100_01_corner",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_left"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -3.0
+            ],
+            "childName": "wall_roof_fenced_100_01_corner",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -0.5,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_300_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                -0.5,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_300_01",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "overhang_side_100_01_corner",
+            "name": "wall_roof_2b_covered_400x350x100_adj_01_right"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_roof_3b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x300_01",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -1.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                1.0,
+                3.5,
+                -1.5
+            ],
+            "childName": "wall_roof_fenced_100_01",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -1.0,
+                3.5,
+                -1.5
+            ],
+            "childName": "wall_roof_fenced_100_01",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -0.5
+            ],
+            "childName": "wall_300x350_01",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "overhang_side_100_01",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "overhang_side_100_01",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x300_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x200_01",
+            "name": "wall_roof_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_roof_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_200x350_01",
+            "name": "wall_roof_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_3b_covered_400x350x200_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x100_01",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -3.0
+            ],
+            "childName": "wall_roof_fenced_100_01_corner",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -3.0
+            ],
+            "childName": "wall_roof_fenced_100_01_corner",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                -1.5
+            ],
+            "childName": "wall_100x350_01",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -2.0
+            ],
+            "childName": "wall_roof_fenced_200_01",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "overhang_side_100_01_corner",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -3.0
+            ],
+            "childName": "overhang_side_100_01_corner",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "childName": "overhang_side_200_01",
+            "name": "wall_roof_3b_covered_400x350x100_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                2.0,
+                0.0,
+                -0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                0.0,
+                -2.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -2.0,
+                0.0,
+                0.0
+            ],
+            "childName": "wall_400x350_01",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                -0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                -0.0,
+                3.5,
+                -0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                -0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "wall_roof_fenced_200_01_corner",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                3.5,
+                0.0
+            ],
+            "childName": "floor_400x400_01",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                0.0,
+                0.0,
+                -1.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        },
+        {
+            "N": [
+                -1.0,
+                0.0,
+                0.0
+            ],
+            "P": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "childName": "overhang_side_200_01_corner",
+            "name": "wall_roof_4b_covered_400x350x400_01"
+        }
+    ]
+}
