@@ -48,3 +48,20 @@ ComputeRenderGraphPass
 通过AddComputePass添加，处理GPU计算相关的指令与行为
 
 都会返回一个RenderGraphBuilder，用于setup这个pass
+
+## RTHandle System
+
+Unity SRP中用来管理Render Texture的系统。
+RTHandle是Unity引擎中RenderTexture API之上的一个抽象层,用来自动处理渲染纹理的管理：
+1.不再仅使用固定分辨率分配渲染纹理,并且只分配一次就可以应用到不同相机。
+2.在渲染管线渲染每个相机前,声明最大引用尺寸大小,将其作为渲染纹理的实际大小。
+3.每次为渲染纹理声明新的引用尺寸时,RTHandle System会检查它是否大于当前记录的最大引用大小,一旦超过,该系统会重新分配所有渲染纹理。(有例外)
+
+一个管线只需要初始化一个RTHandle System
+
+拓展运用：
+
+- 动态分辨率，超分
+- 如何使用SetReferenceSize与/ResetReferenceSize
+- 如何在Shader中使用RTHandle
+- BufferedRTHandle System
